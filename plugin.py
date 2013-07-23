@@ -10,6 +10,7 @@ import supybot.callbacks as callbacks
 class Github(callbacks.Plugin):
     """Add the help for "@plugin help Github" here
     This should describe *how* to use this plugin."""
+    threaded = True
     pass
 
 

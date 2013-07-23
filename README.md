@@ -1,4 +1,4 @@
-***supybot-github*** is a plugin for the python-based IRC bot Supybot.
+**supybot-github** is a plugin for the python-based IRC bot Supybot.
 
 Its purpose is to announce commits and other important notifications from
 a Github repository on an IRC channel, using Github's post commit hooks.
@@ -10,7 +10,7 @@ my bad python coding style.
 
 Getting started
 ==============
-**Installation instructions to be put here...**
+*Installation instructions to be put here...*
 
 Todo
 ====

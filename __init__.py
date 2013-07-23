@@ -13,14 +13,14 @@ import supybot.world as world
 __version__ = ""
 
 # XXX Replace this with an appropriate author or supybot.Author instance.
-__author__ = supybot.authors.unknown
+__author__ = supybot.Author('kongr45gpen', 'alezakos', 'kongr45gpen@helit.org')
 
 # This is a dictionary mapping supybot.Author instances to lists of
 # contributions.
 __contributors__ = {}
 
 # This is a url where the most recent plugin package can be downloaded.
-__url__ = '' # 'http://supybot.com/Members/yourname/Github/download'
+__url__ = 'https://github.com/kongr45gpen/supybot-github'
 
 import config
 import plugin

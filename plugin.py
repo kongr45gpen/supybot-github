@@ -34,25 +34,33 @@ class Github(callbacks.Plugin):
     threaded = True
     pass
 
-    def ServerStart(meh):
-	server_class = BaseHTTPServer.HTTPServer
-	httpd = server_class(('', 8093), GithubHandler)
-	print time.asctime(), "Server Starts - %s:%s" % ('', 8093)
-        httpd.serve_forever()
+    def ServerStart(main,httpd,irc):
+	try:
+		print time.asctime(), "Server Starts - %s:%s" % ('', 8093)
+		httpd.serve_forever()
+	except:
+            return
 
     def __init__(self, irc):
 	    self.__parent = super(Github, self)
 	    self.__parent.__init__(irc)
 	    self.rng = random.Random()   # create our rng
 	    self.rng.seed()   # automatically seeds with current time
-	    t = threading.Thread(target=self.ServerStart)
-	    t.daemon = True
+	    server_class = BaseHTTPServer.HTTPServer
+	    self.httpd = server_class(('', 8093), GithubHandler)
+	    t = threading.Thread(target=self.ServerStart,args=(self.httpd,irc))
+	    t.daemon = False
 	    t.start()
 	    
     
     def __call__(self, irc, msg):
 	self.__parent.__call__(irc, msg)
 	print "I have no idea what is happeninig"
+    
+    def die(self):
+	print "OH NOES IM DYING"
+	self.httpd.server_close()
+	self.__parent.die()
 
     def toast(self, irc, msg, args, seed, items):
 		"""<seed> <item1> [<item2> ...]

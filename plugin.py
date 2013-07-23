@@ -10,6 +10,7 @@ import BaseHTTPServer
 import supybot.utils as utils
 from supybot.commands import *
 import supybot.plugins as plugins
+import supybot.ircmsgs as ircmsgs
 import supybot.ircutils as ircutils
 import supybot.callbacks as callbacks
 
@@ -30,9 +31,9 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         s.wfile.write('</body></html>')
         s.wfile.write(vars(s))
-        print json.dumps(data, sort_keys=True, indent=4, separators=(','
-                         , ': '))
-
+#       print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+        msg = ircmsgs.privmsg("#main", "Someone committed something, check it out")
+        s.server.irc.queueMsg(msg)
 
 class Github(callbacks.Plugin):
 
@@ -42,7 +43,7 @@ class Github(callbacks.Plugin):
     threaded = True
     pass
 
-    def ServerStart(main, httpd, irc):
+    def ServerStart(self, httpd, irc):
         try:
             print time.asctime(), 'Server Starts - %s:%s' % ('', 8093)
             httpd.serve_forever()
@@ -56,39 +57,27 @@ class Github(callbacks.Plugin):
         self.rng.seed()  # automatically seeds with current time
         server_class = BaseHTTPServer.HTTPServer
         self.httpd = server_class(('', 8093), GithubHandler)
-        t = threading.Thread(target=self.ServerStart, args=(self.httpd,
-                             irc))
+        self.httpd.irc = irc
+	t = threading.Thread(target=self.ServerStart, args=(self.httpd, irc))
         t.daemon = False
         t.start()
 
     def __call__(self, irc, msg):
         self.__parent.__call__(irc, msg)
-        print 'I have no idea what is happeninig'
 
     def die(self):
-        print 'OH NOES IM DYING'
         self.httpd.server_close()
         self.__parent.die()
 
-    def toast(
-        self,
-        irc,
-        msg,
-        args,
-        seed,
-        items,
-        ):
+    def toast(self, irc, msg, args, seed, items):
         """<seed> <item1> [<item2> ...]
 
-........Returns the next random number from the random number generator.
-........"""
-
+        Returns the next random number from the random number generator.
+        """
         if seed < len(items):
-            irc.error('<number of items> must be less than the number of arguments.'
-                      )
+            irc.error('<number of items> must be less than the number of arguments.')
             return
-        irc.reply(str(seed) + str(self.rng.random())
-                   + utils.str.commaAndify(items))
+        irc.reply('%s %s %s' % (str(seed), str(self.rng.random()), utils.str.commaAndify(items)))
 
     toast = wrap(toast, ['float', many('anything')])
 

@@ -45,6 +45,10 @@ def plural(number, s, p):
         return p
     return s
 
+# Possible colours:
+# white, black, (light/dark) blue, (light) green, red, brown, purple,
+# orange, yellow, teal, pink, light/dark gray/grey
+
 class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def do_POST(s):
@@ -67,12 +71,18 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	    msgs = []
 
 	    commitno = len(data['commits'])
-	    msgs.append( ircmsgs.privmsg("#main", "%s pushed %i %s, check them out" % 
-	    (data['pusher']['name'], 
-	    commitno, 
-	    plural(commitno, "commit", "commits"))) )
+	    branch = data['ref'].split('/',2)[2]
 	    
-	    msgs.append( ircmsgs.privmsg("#main", "%s" % (data['compare'])) )
+	    msgs.append( ircmsgs.privmsg("#main", "%s @ %s: %s pushed %i %s (%s)" % (
+	    ircutils.bold(ircutils.mircColor(branch, "blue")),
+	    ircutils.bold(data['repository']['name']),
+	    ircutils.mircColor(data['pusher']['name'], "green"), 
+	    commitno, 
+	    plural(commitno, "commit", "commits"),
+	    data['compare']
+	    )) )
+	    
+	    #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
 	    for msg in msgs:
                 irc.queueMsg(msg)
 

@@ -47,6 +47,10 @@ def plural(number, s, p):
         return p
     return s
     
+def colorAction(action):
+    """Get an action string (e.g. opened, edited) and get a nice IRC colouring"""
+    return action
+    
 def registryValue(plugin, name, channel=None, value=True):
     group = conf.supybot.plugins.get(plugin)
     names = registry.split(name)
@@ -83,25 +87,79 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         s.wfile.write('</body></html>')
         s.wfile.write(vars(s))
-#       print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+       #print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 	for irc in world.ircs:
+	    # Handle different event types
+	    
+	    msgs = []
+
+	    if 'pages' in data:
+	        msgs = s.handle_wiki(irc, data)
+	    elif 'commits' in data:
+	        msgs = s.handle_push(irc, data)
+	    else:
+		msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "Something happened"))
+	    
+	    #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
+	    for msg in msgs:
+                irc.queueMsg(msg)
+		
+    def handle_push(s, irc, data):
 	    msgs = []
 
 	    commitno = len(data['commits'])
 	    branch = data['ref'].split('/',2)[2]
 	    
-	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s pushed %i %s (%s)" % (
+	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s pushed %s %s (%s):" % (
 	    ircutils.bold(ircutils.mircColor(branch, "blue")),
 	    ircutils.bold(data['repository']['name']),
 	    ircutils.mircColor(data['pusher']['name'], "green"), 
-	    commitno, 
+	    ircutils.bold(str(commitno)), 
 	    plural(commitno, "commit", "commits"),
 	    data['compare']
 	    )) )
 	    
-	    #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
-	    for msg in msgs:
-                irc.queueMsg(msg)
+	    for commit in data['commits']:
+		# TODO: Add support for multi-line commit messages
+	    
+	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s) %s " % (
+		ircutils.bold(ircutils.mircColor(branch, "blue")),
+		ircutils.bold(data['repository']['name']),
+		ircutils.mircColor(commit['author']['username'], "green"), 
+		ircutils.bold(commit['id'][0:6]), 
+	        commit['url'],
+		commit['message'],
+		)) )
+	    
+	    return msgs
+		
+    def handle_wiki(s, irc, data):
+	    msgs = []
+
+	    pageno = len(data['pages'])
+
+	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s modified %s wiki %s (%s/wiki):" % (
+	    ircutils.bold(data['repository']['name']),
+	    ircutils.mircColor(data['sender']['login'], "green"), 
+	    ircutils.bold(str(pageno)), 
+	    plural(pageno, "page", "pages"),
+	    data['repository']['html_url']
+	    )) )
+	    
+	    for page in data['pages']:
+		# TODO: Add support for multi-line commit messages
+	    
+	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s) %s " % (
+		ircutils.bold(data['repository']['name']),
+		ircutils.mircColor(data['sender']['login'], "green"),
+		colorAction(page['action']),
+		ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
+		ircutils.bold(page['sha'][0:6]), 
+	        page['html_url'],
+		page['summary']
+		)) )
+	    
+	    return msgs
 
 class Github(callbacks.Plugin):
 

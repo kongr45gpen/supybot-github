@@ -28,6 +28,7 @@
 import random
 import json
 import time
+import urlparse
 import threading
 import BaseHTTPServer
 
@@ -46,7 +47,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Respond to a POST request."""
 
         length = int(s.headers['Content-Length'])
-        data = json.loads(s.rfile.read(length).decode('utf-8'))
+        post_data = urlparse.parse_qs(s.rfile.read(length).decode('utf-8'))
+        data = json.loads(post_data['payload'][0])
 
         s.send_response(200)
         s.send_header('Content-type', 'text/html')
@@ -58,8 +60,12 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write(vars(s))
 #       print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 	for irc in world.ircs:
-	    msg = ircmsgs.privmsg("#main", "Someone committed something, check it out")
-            irc.queueMsg(msg)
+	    msgs = []
+	    #TODO: Plural
+	    msgs.append( ircmsgs.privmsg("#main", "%s pushed %i %s, check them out" % (data['pusher']['name'], len(data['commits']), "commits")) )
+	    msgs.append( ircmsgs.privmsg("#main", "%s" % (data['compare'])) )
+	    for msg in msgs:
+                irc.queueMsg(msg)
 
 class Github(callbacks.Plugin):
 
@@ -69,7 +75,7 @@ class Github(callbacks.Plugin):
     threaded = True
     pass
 
-    def ServerStart(self, httpd, irc):
+    def ServerStart(self, httpd):
         try:
             print time.asctime(), 'Server Starts - %s:%s' % ('', 8093)
             httpd.serve_forever()
@@ -83,7 +89,7 @@ class Github(callbacks.Plugin):
         self.rng.seed()  # automatically seeds with current time
         server_class = BaseHTTPServer.HTTPServer
         self.httpd = server_class(('', 8093), GithubHandler)
-	t = threading.Thread(target=self.ServerStart, args=(self.httpd))
+	t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
         t.daemon = False
         t.start()
 

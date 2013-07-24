@@ -32,6 +32,7 @@ import threading
 import BaseHTTPServer
 
 import supybot.utils as utils
+import supybot.world as world
 from supybot.commands import *
 import supybot.plugins as plugins
 import supybot.ircmsgs as ircmsgs
@@ -56,8 +57,9 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write('</body></html>')
         s.wfile.write(vars(s))
 #       print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
-        msg = ircmsgs.privmsg("#main", "Someone committed something, check it out")
-        s.server.irc.queueMsg(msg)
+	for irc in world.ircs:
+	    msg = ircmsgs.privmsg("#main", "Someone committed something, check it out")
+            irc.queueMsg(msg)
 
 class Github(callbacks.Plugin):
 
@@ -81,8 +83,7 @@ class Github(callbacks.Plugin):
         self.rng.seed()  # automatically seeds with current time
         server_class = BaseHTTPServer.HTTPServer
         self.httpd = server_class(('', 8093), GithubHandler)
-        self.httpd.irc = irc
-	t = threading.Thread(target=self.ServerStart, args=(self.httpd, irc))
+	t = threading.Thread(target=self.ServerStart, args=(self.httpd))
         t.daemon = False
         t.start()
 
@@ -108,3 +109,4 @@ class Github(callbacks.Plugin):
 
 Class = Github
 
+# vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

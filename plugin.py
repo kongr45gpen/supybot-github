@@ -40,6 +40,10 @@ import supybot.ircmsgs as ircmsgs
 import supybot.ircutils as ircutils
 import supybot.callbacks as callbacks
 
+def plural(number, s, p):
+    if number != 1:
+        return p
+    return s
 
 class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
@@ -61,8 +65,13 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 #       print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 	for irc in world.ircs:
 	    msgs = []
-	    #TODO: Plural
-	    msgs.append( ircmsgs.privmsg("#main", "%s pushed %i %s, check them out" % (data['pusher']['name'], len(data['commits']), "commits")) )
+
+	    commitno = len(data['commits'])
+	    msgs.append( ircmsgs.privmsg("#main", "%s pushed %i %s, check them out" % 
+	    (data['pusher']['name'], 
+	    commitno, 
+	    plural(commitno, "commit", "commits"))) )
+	    
 	    msgs.append( ircmsgs.privmsg("#main", "%s" % (data['compare'])) )
 	    for msg in msgs:
                 irc.queueMsg(msg)

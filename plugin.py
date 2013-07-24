@@ -48,7 +48,11 @@ def plural(number, s, p):
     return s
     
 def colorAction(action):
-    """Get an action string (e.g. opened, edited) and get a nice IRC colouring"""
+    """Get an action string (e.g. created, edited) and get a nice IRC colouring"""
+    if action == "created":
+        return ircutils.bold(ircutils.mircColor(action, "green"))
+    if action == "deleted":
+        return ircutils.bold(ircutils.mircColor(action, "red"))
     return action
     
 def registryValue(plugin, name, channel=None, value=True):
@@ -87,7 +91,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         s.wfile.write('</body></html>')
         s.wfile.write(vars(s))
-       #print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+        print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 	for irc in world.ircs:
 	    # Handle different event types
 	    
@@ -138,25 +142,26 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	    pageno = len(data['pages'])
 
-	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s modified %s wiki %s (%s/wiki):" % (
+	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s modified %s wiki %s (%s/wiki/_compare/%s):" % (
 	    ircutils.bold(data['repository']['name']),
 	    ircutils.mircColor(data['sender']['login'], "green"), 
 	    ircutils.bold(str(pageno)), 
 	    plural(pageno, "page", "pages"),
-	    data['repository']['html_url']
+	    data['repository']['html_url'],
+	    data['pages'][0]['sha']
 	    )) )
 	    
 	    for page in data['pages']:
 		# TODO: Add support for multi-line commit messages
 	    
-	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s) %s " % (
+                # Unfortunately github doesn't support edit summaries :(	    
+	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s)" % (
 		ircutils.bold(data['repository']['name']),
 		ircutils.mircColor(data['sender']['login'], "green"),
 		colorAction(page['action']),
 		ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
 		ircutils.bold(page['sha'][0:6]), 
 	        page['html_url'],
-		page['summary']
 		)) )
 	    
 	    return msgs

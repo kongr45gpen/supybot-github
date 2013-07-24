@@ -16,6 +16,8 @@ Github = conf.registerPlugin('Github')
 # This is where your configuration variables (if any) should go.  For example:
 # conf.registerGlobalValue(Github, 'someConfigVariableName',
 #     registry.Boolean(False, """Help for someConfigVariableName."""))
-
+conf.registerGlobalValue(Github, 'channel',
+        registry.String('#commits', """Determines the channel where commit
+					notifications will go by default."""))
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

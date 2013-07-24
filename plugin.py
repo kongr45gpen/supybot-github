@@ -32,18 +32,35 @@ import urlparse
 import threading
 import BaseHTTPServer
 
+import supybot.conf as conf
 import supybot.utils as utils
 import supybot.world as world
 from supybot.commands import *
 import supybot.plugins as plugins
 import supybot.ircmsgs as ircmsgs
 import supybot.ircutils as ircutils
+import supybot.registry as registry
 import supybot.callbacks as callbacks
 
 def plural(number, s, p):
     if number != 1:
         return p
     return s
+    
+def registryValue(plugin, name, channel=None, value=True):
+    group = conf.supybot.plugins.get(plugin)
+    names = registry.split(name)
+    for name in names:
+        group = group.get(name)
+    if channel is not None:
+        if ircutils.isChannel(channel):
+            group = group.get(channel)
+        else:
+            self.log.debug('registryValue got channel=%r', channel)
+    if value:
+        return group()
+    else:
+        return group
 
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,
@@ -73,7 +90,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	    commitno = len(data['commits'])
 	    branch = data['ref'].split('/',2)[2]
 	    
-	    msgs.append( ircmsgs.privmsg("#main", "%s @ %s: %s pushed %i %s (%s)" % (
+	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s pushed %i %s (%s)" % (
 	    ircutils.bold(ircutils.mircColor(branch, "blue")),
 	    ircutils.bold(data['repository']['name']),
 	    ircutils.mircColor(data['pusher']['name'], "green"), 

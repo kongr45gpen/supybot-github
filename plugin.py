@@ -124,10 +124,15 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	    )) )
 	    
 	    for commit in data['commits']:
-	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s)" % (
+	        if 'username' in commit['author']:
+                    author = commit['author']['username']
+                else:
+                    author = commit['author']['name']
+                
+                msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s)" % (
 		ircutils.bold(ircutils.mircColor(branch, "blue")),
 		ircutils.bold(data['repository']['name']),
-		ircutils.mircColor(commit['author']['username'], "green"), 
+		ircutils.mircColor(author, "green"), 
 		ircutils.bold(commit['id'][0:6]), 
 	        commit['url'],
 		)) )	

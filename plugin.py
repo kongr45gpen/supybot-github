@@ -124,16 +124,24 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	    )) )
 	    
 	    for commit in data['commits']:
-		# TODO: Add support for multi-line commit messages
-	    
-	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s) %s " % (
+	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s)" % (
 		ircutils.bold(ircutils.mircColor(branch, "blue")),
 		ircutils.bold(data['repository']['name']),
 		ircutils.mircColor(commit['author']['username'], "green"), 
 		ircutils.bold(commit['id'][0:6]), 
 	        commit['url'],
-		commit['message'],
-		)) )
+		)) )	
+	        commitlines = commit['message'].splitlines()
+	        for rawline in commitlines:
+		    if len(rawline) > 400:
+		        line = "%s..." % (rawline[0:397])
+		    else :
+		        line = rawline
+	            msgs.append(ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s" % (
+		    ircutils.bold(ircutils.mircColor(branch, "blue")),
+	            ircutils.bold(data['repository']['name']),
+	            line,
+		    )) )
 	    
 	    return msgs
 		
@@ -152,8 +160,6 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	    )) )
 	    
 	    for page in data['pages']:
-		# TODO: Add support for multi-line commit messages
-	    
                 # Unfortunately github doesn't support edit summaries :(	    
 	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s)" % (
 		ircutils.bold(data['repository']['name']),
@@ -165,6 +171,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		)) )
 	    
 	    return msgs
+
 
 class Github(callbacks.Plugin):
 

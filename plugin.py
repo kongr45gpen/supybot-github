@@ -72,7 +72,7 @@ def registryValue(plugin, name, channel=None, value=True):
         return group
 
 def getShortURL(longurl):
-    if registryValue("Github","shortURLs") is False:
+    if registryValue("Github","shortURL") is False:
         return longurl
     data = 'url=%s' % (longurl)
     req = urllib2.Request("http://git.io", data)

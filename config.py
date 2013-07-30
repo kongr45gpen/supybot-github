@@ -20,4 +20,7 @@ conf.registerGlobalValue(Github, 'channel',
         registry.String('#commits', """Determines the channel where commit
 					notifications will go by default."""))
 
+conf.registerGlobalValue(Github, 'shortURLs',
+        registry.Boolean(True, """Use git.io to produce shorter URLs"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

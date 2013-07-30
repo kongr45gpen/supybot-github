@@ -28,6 +28,7 @@
 import random
 import json
 import time
+import urllib2
 import urlparse
 import threading
 import BaseHTTPServer
@@ -70,6 +71,14 @@ def registryValue(plugin, name, channel=None, value=True):
     else:
         return group
 
+def getShortURL(longurl):
+    if registryValue("Github","shortURLs") is False:
+        return longurl
+    data = 'url=%s' % (longurl)
+    req = urllib2.Request("http://git.io", data)
+    response = urllib2.urlopen(req)
+    return response.info().getheader('Location')
+
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,
 # orange, yellow, teal, pink, light/dark gray/grey
@@ -92,90 +101,91 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write('</body></html>')
         s.wfile.write(vars(s))
         print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
-	for irc in world.ircs:
-	    # Handle different event types
+        for irc in world.ircs:
+            # Handle different event types
 
-	    msgs = []
+            msgs = []
 
-	    if 'pages' in data:
-	        msgs = s.handle_wiki(irc, data)
-	    elif 'commits' in data:
-	        msgs = s.handle_push(irc, data)
-	    else:
-		msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "Something happened"))
+            if 'pages' in data:
+                msgs = s.handle_wiki(irc, data)
+            elif 'commits' in data:
+                msgs = s.handle_push(irc, data)
+            else:
+                msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "Something happened"))
 
-	    #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
-	    for msg in msgs:
-                irc.queueMsg(msg)
+            #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
+            for msg in msgs:
+                    irc.queueMsg(msg)
 
     def handle_push(s, irc, data):
-	    msgs = []
+        msgs = []
 
-	    commitno = len(data['commits'])
-	    branch = data['ref'].split('/',2)[2]
+        commitno = len(data['commits'])
+        branch = data['ref'].split('/',2)[2]
 
-	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s pushed %s %s (%s):" % (
-	    ircutils.bold(ircutils.mircColor(branch, "blue")),
-	    ircutils.bold(data['repository']['name']),
-	    ircutils.mircColor(data['pusher']['name'], "green"),
-	    ircutils.bold(str(commitno)),
-	    plural(commitno, "commit", "commits"),
-	    data['compare']
-	    )) )
+        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s pushed %s %s (%s):" % (
+        ircutils.bold(ircutils.mircColor(branch, "blue")),
+        ircutils.bold(data['repository']['name']),
+        ircutils.mircColor(data['pusher']['name'], "green"),
+        ircutils.bold(str(commitno)),
+        plural(commitno, "commit", "commits"),
+        getShortURL(data['compare'])
+        )) )
 
-	    for commit in data['commits']:
-	        if 'username' in commit['author']:
-                    author = commit['author']['username']
-                else:
-                    author = commit['author']['name']
+        for commit in data['commits']:
+            if 'username' in commit['author']:
+                author = commit['author']['username']
+            else:
+                author = commit['author']['name']
 
-                msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s)" % (
-		ircutils.bold(ircutils.mircColor(branch, "blue")),
-		ircutils.bold(data['repository']['name']),
-		ircutils.mircColor(author, "green"),
-		ircutils.bold(commit['id'][0:6]),
-	        commit['url'],
-		)) )
-	        commitlines = commit['message'].splitlines()
-	        for rawline in commitlines:
-		    if len(rawline) > 400:
-		        line = "%s..." % (rawline[0:397])
-		    else :
-		        line = rawline
-	            msgs.append(ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s" % (
-		    ircutils.bold(ircutils.mircColor(branch, "blue")),
-	            ircutils.bold(data['repository']['name']),
-	            line,
-		    )) )
+            msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s)" % (
+                ircutils.bold(ircutils.mircColor(branch, "blue")),
+                ircutils.bold(data['repository']['name']),
+                ircutils.mircColor(author, "green"),
+                ircutils.bold(commit['id'][0:6]),
+                getShortURL(commit['url']),
+            )) )
+            commitlines = commit['message'].splitlines()
+            for rawline in commitlines:
+                if len(rawline) > 400:
+                    line = "%s..." % (rawline[0:397])
+                else :
+                    line = rawline
+                    msgs.append(ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s" % (
+                        ircutils.bold(ircutils.mircColor(branch, "blue")),
+                        ircutils.bold(data['repository']['name']),
+                        line,
+                    )) )
 
-	    return msgs
+        return msgs
 
     def handle_wiki(s, irc, data):
-	    msgs = []
+        msgs = []
 
-	    pageno = len(data['pages'])
+        pageno = len(data['pages'])
 
-	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s modified %s wiki %s (%s/wiki/_compare/%s):" % (
-	    ircutils.bold(data['repository']['name']),
-	    ircutils.mircColor(data['sender']['login'], "green"),
-	    ircutils.bold(str(pageno)),
-	    plural(pageno, "page", "pages"),
-	    data['repository']['html_url'],
-	    data['pages'][0]['sha']
-	    )) )
+        url = getShortURL("%s/wiki/_compare/%s" % ( data['repository']['html_url'], data['pages'][0]['sha'] ))
 
-	    for page in data['pages']:
+        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s modified %s wiki %s (%s):" % (
+        ircutils.bold(data['repository']['name']),
+        ircutils.mircColor(data['sender']['login'], "green"),
+        ircutils.bold(str(pageno)),
+        plural(pageno, "page", "pages"),
+        url
+        )) )
+
+        for page in data['pages']:
                 # Unfortunately github doesn't support edit summaries :(
-	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s)" % (
-		ircutils.bold(data['repository']['name']),
-		ircutils.mircColor(data['sender']['login'], "green"),
-		colorAction(page['action']),
-		ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
-		ircutils.bold(page['sha'][0:6]),
-	        page['html_url'],
-		)) )
+            msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s)" % (
+        ircutils.bold(data['repository']['name']),
+        ircutils.mircColor(data['sender']['login'], "green"),
+        colorAction(page['action']),
+        ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
+        ircutils.bold(page['sha'][0:6]),
+            page['html_url'],
+        )) )
 
-	    return msgs
+        return msgs
 
 
 class Github(callbacks.Plugin):
@@ -200,7 +210,7 @@ class Github(callbacks.Plugin):
         self.rng.seed()  # automatically seeds with current time
         server_class = BaseHTTPServer.HTTPServer
         self.httpd = server_class(('', 8093), GithubHandler)
-	t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
+        t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
         t.daemon = False
         t.start()
 

@@ -23,4 +23,7 @@ conf.registerGlobalValue(Github, 'channel',
 conf.registerGlobalValue(Github, 'shortURL',
         registry.Boolean(True, """Use git.io to produce shorter URLs"""))
 
+conf.registerGlobalValue(Github, 'hidePush',
+        registry.Boolean(False, """Whether to hide 'user pushed ... commits' message"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

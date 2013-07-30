@@ -71,8 +71,11 @@ def registryValue(plugin, name, channel=None, value=True):
     else:
         return group
 
+def configValue(name, channel=None, repo=None, type=None, module=None):
+    return registryValue("Github", name, channel)
+
 def getShortURL(longurl):
-    if registryValue("Github","shortURL") is False:
+    if configValue("shortURL") is False:
         return longurl
     data = 'url=%s' % (longurl)
     req = urllib2.Request("http://git.io", data)
@@ -111,7 +114,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             elif 'commits' in data:
                 msgs = s.handle_push(irc, data)
             else:
-                msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "Something happened"))
+                msgs.append( ircmsgs.privmsg(configValue('channel'), "Something happened"))
 
             #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
             for msg in msgs:
@@ -123,7 +126,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         commitno = len(data['commits'])
         branch = data['ref'].split('/',2)[2]
 
-        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s pushed %s %s (%s):" % (
+        msgs.append( ircmsgs.privmsg(configValue('channel'), "%s @ %s: %s pushed %s %s (%s):" % (
         ircutils.bold(ircutils.mircColor(branch, "blue")),
         ircutils.bold(data['repository']['name']),
         ircutils.mircColor(data['pusher']['name'], "green"),
@@ -138,7 +141,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             else:
                 author = commit['author']['name']
 
-            msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s * %s (%s)" % (
+            msgs.append( ircmsgs.privmsg(configValue('channel'), "%s @ %s: %s * %s (%s)" % (
                 ircutils.bold(ircutils.mircColor(branch, "blue")),
                 ircutils.bold(data['repository']['name']),
                 ircutils.mircColor(author, "green"),
@@ -151,7 +154,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     line = "%s..." % (rawline[0:397])
                 else :
                     line = rawline
-                    msgs.append(ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s" % (
+                    msgs.append(ircmsgs.privmsg(configValue('channel'), "%s @ %s: %s" % (
                         ircutils.bold(ircutils.mircColor(branch, "blue")),
                         ircutils.bold(data['repository']['name']),
                         line,
@@ -166,7 +169,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         url = getShortURL("%s/wiki/_compare/%s" % ( data['repository']['html_url'], data['pages'][0]['sha'] ))
 
-        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s modified %s wiki %s (%s):" % (
+        msgs.append( ircmsgs.privmsg(configValue('channel'), "%s: %s modified %s wiki %s (%s):" % (
         ircutils.bold(data['repository']['name']),
         ircutils.mircColor(data['sender']['login'], "green"),
         ircutils.bold(str(pageno)),
@@ -175,15 +178,15 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         )) )
 
         for page in data['pages']:
-                # Unfortunately github doesn't support edit summaries :(
-            msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s)" % (
-        ircutils.bold(data['repository']['name']),
-        ircutils.mircColor(data['sender']['login'], "green"),
-        colorAction(page['action']),
-        ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
-        ircutils.bold(page['sha'][0:6]),
-            page['html_url'],
-        )) )
+            # Unfortunately github doesn't support edit summaries :(
+            msgs.append( ircmsgs.privmsg(configValue('channel'), "%s: %s %s %s * %s (%s)" % (
+                ircutils.bold(data['repository']['name']),
+                ircutils.mircColor(data['sender']['login'], "green"),
+                colorAction(page['action']),
+                ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
+                ircutils.bold(page['sha'][0:6]),
+                page['html_url'],
+            )) )
 
         return msgs
 

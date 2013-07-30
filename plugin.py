@@ -46,7 +46,7 @@ def plural(number, s, p):
     if number != 1:
         return p
     return s
-    
+
 def colorAction(action):
     """Get an action string (e.g. created, edited) and get a nice IRC colouring"""
     if action == "created":
@@ -54,7 +54,7 @@ def colorAction(action):
     if action == "deleted":
         return ircutils.bold(ircutils.mircColor(action, "red"))
     return action
-    
+
 def registryValue(plugin, name, channel=None, value=True):
     group = conf.supybot.plugins.get(plugin)
     names = registry.split(name)
@@ -94,7 +94,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 	for irc in world.ircs:
 	    # Handle different event types
-	    
+
 	    msgs = []
 
 	    if 'pages' in data:
@@ -103,26 +103,26 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	        msgs = s.handle_push(irc, data)
 	    else:
 		msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "Something happened"))
-	    
+
 	    #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
 	    for msg in msgs:
                 irc.queueMsg(msg)
-		
+
     def handle_push(s, irc, data):
 	    msgs = []
 
 	    commitno = len(data['commits'])
 	    branch = data['ref'].split('/',2)[2]
-	    
+
 	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s @ %s: %s pushed %s %s (%s):" % (
 	    ircutils.bold(ircutils.mircColor(branch, "blue")),
 	    ircutils.bold(data['repository']['name']),
-	    ircutils.mircColor(data['pusher']['name'], "green"), 
-	    ircutils.bold(str(commitno)), 
+	    ircutils.mircColor(data['pusher']['name'], "green"),
+	    ircutils.bold(str(commitno)),
 	    plural(commitno, "commit", "commits"),
 	    data['compare']
 	    )) )
-	    
+
 	    for commit in data['commits']:
 	        if 'username' in commit['author']:
                     author = commit['author']['username']
@@ -133,9 +133,9 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		ircutils.bold(ircutils.mircColor(branch, "blue")),
 		ircutils.bold(data['repository']['name']),
 		ircutils.mircColor(author, "green"),
-		ircutils.bold(commit['id'][0:6]), 
+		ircutils.bold(commit['id'][0:6]),
 	        commit['url'],
-		)) )	
+		)) )
 	        commitlines = commit['message'].splitlines()
 	        for rawline in commitlines:
 		    if len(rawline) > 400:
@@ -147,9 +147,9 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	            ircutils.bold(data['repository']['name']),
 	            line,
 		    )) )
-	    
+
 	    return msgs
-		
+
     def handle_wiki(s, irc, data):
 	    msgs = []
 
@@ -157,24 +157,24 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	    msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s modified %s wiki %s (%s/wiki/_compare/%s):" % (
 	    ircutils.bold(data['repository']['name']),
-	    ircutils.mircColor(data['sender']['login'], "green"), 
-	    ircutils.bold(str(pageno)), 
+	    ircutils.mircColor(data['sender']['login'], "green"),
+	    ircutils.bold(str(pageno)),
 	    plural(pageno, "page", "pages"),
 	    data['repository']['html_url'],
 	    data['pages'][0]['sha']
 	    )) )
-	    
+
 	    for page in data['pages']:
-                # Unfortunately github doesn't support edit summaries :(	    
+                # Unfortunately github doesn't support edit summaries :(
 	        msgs.append( ircmsgs.privmsg(registryValue("Github",'channel'), "%s: %s %s %s * %s (%s)" % (
 		ircutils.bold(data['repository']['name']),
 		ircutils.mircColor(data['sender']['login'], "green"),
 		colorAction(page['action']),
 		ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
-		ircutils.bold(page['sha'][0:6]), 
+		ircutils.bold(page['sha'][0:6]),
 	        page['html_url'],
 		)) )
-	    
+
 	    return msgs
 
 

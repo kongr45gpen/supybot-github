@@ -13,5 +13,5 @@ Getting started
 *Installation instructions to be put here...*
 
 Todo
-====
-* Add a list of things to do on the issue tracker
+----
+Check out [the Github issue tracker](https://github.com/kongr45gpen/supybot-github/issues?state=open).

@@ -98,12 +98,32 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.send_response(200)
         s.send_header('Content-type', 'text/html')
         s.end_headers()
-        s.wfile.write('<html><head><title>Hello</title></head>')
-        s.wfile.write("<body><p>Thanks, you're great.</p>")
+        s.wfile.write('<!DOCTYPE html><html><head><title>Hello</title></head>')
+        s.wfile.write("<body><p>Thanks, you're awesome.</p>")
 
-        s.wfile.write('</body></html>')
-        s.wfile.write(vars(s))
-        print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+        s.wfile.write('</body></html>\n')
+        s.wfile.write(s.path.split('/'))
+        #print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+
+        path = s.path.split('/')
+        channel = configValue('channel')
+        receivedcode = ''
+        requireCode = configValue('passcode').strip() \
+            and configValue('passcode').strip().lower() != 'false' \
+            and configValue('passcode').strip().lower() != 'null' \
+            and configValue('passcode').strip().lower() != 'no'
+
+        i = 0
+        for part in path:
+            if i == 1 and requireCode:
+                receivedcode = part
+            i+=1
+
+        if requireCode and receivedcode != configValue('passcode'):
+            # The password is wrong
+            s.wfile.write("The password is wrong")
+            return
+
         for irc in world.ircs:
             # Handle different event types
 

@@ -26,4 +26,7 @@ conf.registerGlobalValue(Github, 'shortURL',
 conf.registerGlobalValue(Github, 'hidePush',
         registry.Boolean(False, """Whether to hide 'user pushed ... commits' message"""))
 
+conf.registerGlobalValue(Github, 'passcode',
+        registry.String('', """Password which should be included into the URL"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

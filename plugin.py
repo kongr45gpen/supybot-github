@@ -28,6 +28,7 @@
 import random
 import json
 import time
+import urllib
 import urllib2
 import urlparse
 import threading
@@ -113,11 +114,26 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             and configValue('passcode').strip().lower() != 'null' \
             and configValue('passcode').strip().lower() != 'no'
 
+        # Analyse the URL
         i = 0
         for part in path:
+            part = urllib.unquote(part)
             if i == 1 and requireCode:
                 receivedcode = part
+
+            part = part.replace('+','#');
+            part = part.replace('~','#');
+            part = part.replace('-','#');
+            part = part.replace('&','#');
+            part = part.replace('^','#');
+
+            if part.startswith("#") and not configValue('disallowChannelOverride'):
+                channel = part
+
             i+=1
+
+
+
 
         if requireCode and receivedcode != configValue('passcode'):
             # The password is wrong
@@ -130,24 +146,24 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             msgs = []
 
             if 'pages' in data:
-                msgs = s.handle_wiki(irc, data)
+                msgs = s.handle_wiki(irc, data, channel)
             elif 'commits' in data:
-                msgs = s.handle_push(irc, data)
+                msgs = s.handle_push(irc, data, channel)
             else:
-                msgs.append( ircmsgs.privmsg(configValue('channel'), "Something happened"))
+                msgs.append( ircmsgs.privmsg(channel, "Something happened"))
 
             #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
             for msg in msgs:
                     irc.queueMsg(msg)
 
-    def handle_push(s, irc, data):
+    def handle_push(s, irc, data, channel):
         msgs = []
 
         commitno = len(data['commits'])
         branch = data['ref'].split('/',2)[2]
 
         if configValue("hidePush",None) is False:
-            msgs.append( ircmsgs.privmsg(configValue('channel'), "%s @ %s: %s pushed %s %s (%s):" % (
+            msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s pushed %s %s (%s):" % (
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['pusher']['name'], "green"),
@@ -162,7 +178,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             else:
                 author = commit['author']['name']
 
-            msgs.append( ircmsgs.privmsg(configValue('channel'), "%s @ %s: %s * %s (%s)" % (
+            msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s * %s (%s)" % (
                 ircutils.bold(ircutils.mircColor(branch, "blue")),
                 ircutils.bold(data['repository']['name']),
                 ircutils.mircColor(author, "green"),
@@ -176,7 +192,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     line = "%s..." % (rawline[0:397])
                 else :
                     line = rawline
-                    msgs.append(ircmsgs.privmsg(configValue('channel'), "%s @ %s: %s" % (
+                    msgs.append(ircmsgs.privmsg(channel, "%s @ %s: %s" % (
                         ircutils.bold(ircutils.mircColor(branch, "blue")),
                         ircutils.bold(data['repository']['name']),
                         line,
@@ -184,7 +200,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         return msgs
 
-    def handle_wiki(s, irc, data):
+    def handle_wiki(s, irc, data, channel):
         msgs = []
 
         pageno = len(data['pages'])
@@ -192,7 +208,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         url = getShortURL("%s/wiki/_compare/%s" % ( data['repository']['html_url'], data['pages'][0]['sha'] ))
 
         if configValue("hidePush",None) is False:
-            msgs.append( ircmsgs.privmsg(configValue('channel'), "%s: %s modified %s wiki %s (%s):" % (
+            msgs.append( ircmsgs.privmsg(channel, "%s: %s modified %s wiki %s (%s):" % (
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['sender']['login'], "green"),
             ircutils.bold(str(pageno)),
@@ -212,7 +228,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 pageurl = "(%s)" % (page['html_url'],)
 
             # Unfortunately github doesn't support edit summaries :(
-            msgs.append( ircmsgs.privmsg(configValue('channel'), "%s: %s %s %s * %s %s" % (
+            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s %s * %s %s" % (
                 ircutils.bold(data['repository']['name']),
                 ircutils.mircColor(data['sender']['login'], "green"),
                 colorAction(page['action']),

@@ -59,6 +59,8 @@ def colorAction(action):
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
     if action == "reopened":
         return ircutils.bold(ircutils.mircColor(action, "blue"))
+    if action == "forced the creation of" or action == "forced the deletion of":
+        return ircutils.bold(ircutils.mircColor(action,"brown"))
     return action
 
 def registryValue(plugin, name, channel=None, value=True):
@@ -168,13 +170,39 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         commitno = len(data['commits'])
         branch = data['ref'].split('/',2)[2]
 
-        if configValue("hidePush",None) is False:
+        branched = data['created'] or data['deleted']
+        branchFrom = ''
+        if branched:
+            if 'base_ref' in data:
+                branchFrom = ' by %s' % (data['base_ref'].split('/',2)[2],)
+            if data['created'] and not data['forced']:
+                action = "created"
+            elif data['deleted'] and not data['forced']:
+                action = "deleted"
+            elif data['created']:
+                action = "created"
+            elif data['deleted']:
+                action = "deleted"
+            else:
+                action = "did something with"
+
+
+        if configValue("hidePush",None) == False and not branched:
             msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s pushed %s %s (%s):" % (
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['pusher']['name'], "green"),
             ircutils.bold(str(commitno)),
             plural(commitno, "commit", "commits"),
+            getShortURL(data['compare'])
+            )) )
+        elif branched:
+            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s (%s):" % (
+            ircutils.bold(data['repository']['name']),
+            ircutils.mircColor(data['pusher']['name'], "green"),
+            colorAction(action),
+            ircutils.bold(ircutils.mircColor(branch, "blue")),
+            branchFrom,
             getShortURL(data['compare'])
             )) )
 

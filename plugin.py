@@ -51,10 +51,14 @@ def plural(number, s, p):
 
 def colorAction(action):
     """Get an action string (e.g. created, edited) and get a nice IRC colouring"""
-    if action == "created":
+    if action == "created" or action == "opened":
         return ircutils.bold(ircutils.mircColor(action, "green"))
-    if action == "deleted":
+    if action == "deleted" or action == "closed":
         return ircutils.bold(ircutils.mircColor(action, "red"))
+    if action == "merged":
+        return ircutils.bold(ircutils.mircColor(action, "light blue"))
+    if action == "reopened":
+        return ircutils.bold(ircutils.mircColor(action, "blue"))
     return action
 
 def registryValue(plugin, name, channel=None, value=True):
@@ -104,7 +108,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         s.wfile.write('</body></html>\n')
         s.wfile.write(s.path.split('/'))
-        #print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+        print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 
         path = s.path.split('/')
         channel = configValue('channel')
@@ -149,6 +153,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 msgs = s.handle_wiki(irc, data, channel)
             elif 'commits' in data:
                 msgs = s.handle_push(irc, data, channel)
+            elif 'issue' in data:
+                msgs = s.handle_issue(irc, data, channel)
             else:
                 msgs.append( ircmsgs.privmsg(channel, "Something happened"))
 
@@ -239,6 +245,45 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         return msgs
 
+    def handle_issue(s, irc, data, channel):
+        msgs = []
+
+        url = data['issue']['url']
+
+        if data['issue']['assignee'] and data['sender']['login'] == data['issue']['assignee']['login']:
+            senderColor = "green"
+        else:
+            senderColor = "dark grey"
+
+        creator = ''
+        if data['sender']['login'] != data['issue']['user']['login']:
+            creator = " by %s" % (ircutils.mircColor(data['issue']['user']['login'],"green"),)
+
+        milestone = ''
+        if data['issue']['milestone']:
+            milestone = ircutils.mircColor(" (%s" % (data['issue']['milestone']['title']),"brown")
+
+        if milestone:
+            oparen = '- '
+        else:
+            oparen = '('
+
+        msgs.append( ircmsgs.privmsg(channel, "%s: %s %s issue %s \"%s\"%s%s %s%s)" % (
+        ircutils.bold(data['repository']['name']),
+        ircutils.mircColor(data['sender']['login'], senderColor),
+        colorAction(data['action']),
+        ''.join(["#",str(data['issue']['number'])]),
+        ircutils.bold(data['issue']['title']),
+        creator,
+        milestone,
+        oparen, url
+        )) )
+
+
+
+
+
+        return msgs
 
 class Github(callbacks.Plugin):
 

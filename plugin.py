@@ -300,7 +300,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             creator = " by %s" % (ircutils.mircColor(data['issue']['user']['login'],"green"),)
 
         milestone = ''
-        if data['issue']['milestone']:
+        if data['issue']['milestone'] and configValue("showMilestone"):
             milestone = ircutils.mircColor(" (%s" % (data['issue']['milestone']['title']),"brown")
 
         if milestone:
@@ -332,7 +332,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             creator = " by %s" % (ircutils.mircColor(data['issue']['user']['login'],"green"),)
 
         milestone = ''
-        if data['issue']['milestone']:
+        if data['issue']['milestone'] and configValue("showMilestone"):
             milestone = ircutils.mircColor(" (%s" % (data['issue']['milestone']['title']),"brown")
 
         if milestone:
@@ -342,8 +342,10 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         lines = data['comment']['body'].splitlines()
         line = lines[0]
-        if len(line) > 100:
-                line = "%s..." % (line[0:97])
+        if len(line) > 70:
+                line = "%s..." % (line[0:67])
+        elif len(lines) > 1:
+                line += "..."
 
         msgs.append( ircmsgs.privmsg(channel, "%s: %s commented on issue %s \"%s\"%s%s %s%s): %s" % (
         ircutils.bold(data['repository']['name']),

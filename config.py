@@ -34,4 +34,8 @@ conf.registerGlobalValue(Github, 'disallowChannelOverride',
         registry.Boolean(False,
         """Don't let the user select the channel where the messages will be sent to on the URL"""))
 
+conf.registerGlobalValue(Github, 'showMilestone',
+        registry.Boolean(True,
+        """Show the name of the milestone when reporting issues or issue comments"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

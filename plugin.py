@@ -156,7 +156,10 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             elif 'commits' in data:
                 msgs = s.handle_push(irc, data, channel)
             elif 'issue' in data:
-                msgs = s.handle_issue(irc, data, channel)
+                if 'comment' in data:
+                    msgs = s.handle_issue_comment(irc, data, channel)
+                else:
+                    msgs = s.handle_issue(irc, data, channel)
             else:
                 msgs.append( ircmsgs.privmsg(channel, "Something happened"))
 
@@ -170,40 +173,49 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         commitno = len(data['commits'])
         branch = data['ref'].split('/',2)[2]
 
+        colon = ''
+        if data['commits']:
+            colon = ':'
+
         branched = data['created'] or data['deleted']
         branchFrom = ''
         if branched:
+            urls = ' (%s)' % (getShortURL(data['compare']),)
             if 'base_ref' in data:
                 branchFrom = ' by %s' % (data['base_ref'].split('/',2)[2],)
             if data['created'] and not data['forced']:
                 action = "created"
             elif data['deleted'] and not data['forced']:
                 action = "deleted"
+                urls = ''
             elif data['created']:
                 action = "created"
             elif data['deleted']:
                 action = "deleted"
+                urls = ''
             else:
                 action = "did something with"
 
 
         if configValue("hidePush",None) == False and not branched:
-            msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s pushed %s %s (%s):" % (
+            msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s pushed %s %s (%s)%s" % (
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['pusher']['name'], "green"),
             ircutils.bold(str(commitno)),
             plural(commitno, "commit", "commits"),
-            getShortURL(data['compare'])
+            getShortURL(data['compare']),
+            colon
             )) )
         elif branched:
-            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s (%s):" % (
+            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s%s%s" % (
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['pusher']['name'], "green"),
             colorAction(action),
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             branchFrom,
-            getShortURL(data['compare'])
+            urls,
+            colon
             )) )
 
         for commit in data['commits']:
@@ -224,13 +236,13 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             for rawline in commitlines:
                 if len(rawline) > 400:
                     line = "%s..." % (rawline[0:397])
-                else :
+                else:
                     line = rawline
-                    msgs.append(ircmsgs.privmsg(channel, "%s @ %s: %s" % (
-                        ircutils.bold(ircutils.mircColor(branch, "blue")),
-                        ircutils.bold(data['repository']['name']),
-                        line,
-                    )) )
+                msgs.append(ircmsgs.privmsg(channel, "%s @ %s: %s" % (
+                    ircutils.bold(ircutils.mircColor(branch, "blue")),
+                    ircutils.bold(data['repository']['name']),
+                    line,
+                )) )
 
         return msgs
 
@@ -307,9 +319,42 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         oparen, url
         )) )
 
+        return msgs
+
+    def handle_issue_comment(s, irc, data, channel):
+        msgs = []
+
+        url = getShortURL(data['comment']['url'])
 
 
+        creator = ''
+        if data['sender']['login'] != data['issue']['user']['login']:
+            creator = " by %s" % (ircutils.mircColor(data['issue']['user']['login'],"green"),)
 
+        milestone = ''
+        if data['issue']['milestone']:
+            milestone = ircutils.mircColor(" (%s" % (data['issue']['milestone']['title']),"brown")
+
+        if milestone:
+            oparen = '- '
+        else:
+            oparen = '('
+
+        lines = data['comment']['body'].splitlines()
+        line = lines[0]
+        if len(line) > 100:
+                line = "%s..." % (line[0:97])
+
+        msgs.append( ircmsgs.privmsg(channel, "%s: %s commented on issue %s \"%s\"%s%s %s%s): %s" % (
+        ircutils.bold(data['repository']['name']),
+        ircutils.mircColor(data['comment']['user']['login'], "green"),
+        ''.join(["#",str(data['issue']['number'])]),
+        ircutils.bold(data['issue']['title']),
+        creator,
+        milestone,
+        oparen, url,
+        line
+        )) )
 
         return msgs
 

@@ -29,7 +29,6 @@ conf.registerGlobalValue(Github, 'hidePush',
 conf.registerGlobalValue(Github, 'passcode',
         registry.String('', """Password which should be included into the URL"""))
 
-
 conf.registerGlobalValue(Github, 'disallowChannelOverride',
         registry.Boolean(False,
         """Don't let the user select the channel where the messages will be sent to on the URL"""))

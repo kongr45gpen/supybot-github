@@ -182,7 +182,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if branched:
             urls = ' (%s)' % (getShortURL(data['compare']),)
             if 'base_ref' in data:
-                branchFrom = ' by %s' % (data['base_ref'].split('/',2)[2],)
+                branchFrom = ' from %s' % (data['base_ref'].split('/',2)[2],)
             if data['created'] and not data['forced']:
                 action = "created"
             elif data['deleted'] and not data['forced']:

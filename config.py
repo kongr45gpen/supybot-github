@@ -37,4 +37,8 @@ conf.registerGlobalValue(Github, 'showMilestone',
         registry.Boolean(True,
         """Show the name of the milestone when reporting issues or issue comments"""))
 
+conf.registerGlobalValue(Github, 'tagShowCommitMsg',
+        registry.Boolean(True,
+        """Show the commit message of the commit a new tag points to"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

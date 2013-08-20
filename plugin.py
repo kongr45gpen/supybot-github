@@ -49,11 +49,19 @@ def plural(number, s, p):
         return p
     return s
 
+def maxLen(msg, maxn=400):
+    """Cut down a string if its longer than `maxn` chars"""
+    if len(msg) > maxn:
+        ret = "%s..." % (msg[0:(maxn-3)])
+    else:
+        ret = msg
+    return ret
+
 def colorAction(action):
     """Get an action string (e.g. created, edited) and get a nice IRC colouring"""
-    if action == "created" or action == "opened":
+    if action == "created" or action == "opened" or action == "tagged":
         return ircutils.bold(ircutils.mircColor(action, "green"))
-    if action == "deleted" or action == "closed":
+    if action == "deleted" or action == "closed" or action == "re-tagged" or action == "deleted tag":
         return ircutils.bold(ircutils.mircColor(action, "red"))
     if action == "merged":
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
@@ -83,11 +91,13 @@ def configValue(name, channel=None, repo=None, type=None, module=None):
 
 def getShortURL(longurl):
     if configValue("shortURL") is False:
-        return longurl
-    data = 'url=%s' % (longurl)
-    req = urllib2.Request("http://git.io", data)
-    response = urllib2.urlopen(req)
-    return response.info().getheader('Location')
+        url = longurl
+    else:
+        data = 'url=%s' % (longurl)
+        req = urllib2.Request("http://git.io", data)
+        response = urllib2.urlopen(req)
+        url = response.info().getheader('Location')
+    return ircutils.mircColor(url, "purple")
 
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,
@@ -171,28 +181,60 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         msgs = []
 
         commitno = len(data['commits'])
-        branch = data['ref'].split('/',2)[2]
+        ref = data['ref'].split('/',2)
+        branch = ref[2]
 
         colon = ''
         if data['commits']:
             colon = ':'
 
-        branched = data['created'] or data['deleted']
+        isTag = False
+
+        branched = data['created'] or data['deleted'] or ref[1] == "tags"
         branchFrom = ''
+        tagFrom = ''
+
+        onlyDeleted = data['deleted'] and not data['created']
+
         if branched:
+            print branch
+            if ref[1] == 'tags':
+                isTag = True
+
             urls = ' (%s)' % (getShortURL(data['compare']),)
             if 'base_ref' in data:
-                baseRef = data['base_ref'].split('/',2)
-                branchFrom = ' from %s' % (baseRef[2],)
-            if data['created'] and not data['forced']:
-                action = "created"
+                base_ref = data['base_ref'].split('/',2)
+                if isTag:
+                    branchFrom = '%s %s ' % (base_ref[2], ircutils.bold('*'))
+                else:
+                    branchFrom = ' from %s' % (base_ref[2],)
+
+            if data['created'] and data['deleted'] or (not data['created'] and not data['deleted'] and data['forced']):
+                if isTag:
+                    action = "re-tagged"
+                else:
+                    action = "re-created"
+            elif data['created'] and not data['forced']:
+                if isTag:
+                    action = "tagged"
+                else:
+                    action = "created"
             elif data['deleted'] and not data['forced']:
-                action = "deleted"
+                if isTag:
+                    action = "deleted tag"
+                else:
+                    action = "deleted"
                 urls = ''
             elif data['created']:
-                action = "created"
+                if isTag:
+                    action = "tagged"
+                else:
+                    action = "created"
             elif data['deleted']:
-                action = "deleted"
+                if isTag:
+                    action = "deleted tag"
+                else:
+                    action = "deleted"
                 urls = ''
             else:
                 action = "did something with"
@@ -209,15 +251,32 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             colon
             )) )
         elif branched:
-            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s%s%s" % (
-            ircutils.bold(data['repository']['name']),
-            ircutils.mircColor(data['pusher']['name'], "green"),
-            colorAction(action),
-            ircutils.bold(ircutils.mircColor(branch, "blue")),
-            branchFrom,
-            urls,
-            colon
-            )) )
+            if isTag:
+                if onlyDeleted:
+                    commitInfo = ""
+                else:
+                    commitMsg = ""
+                    if configValue("tagShowCommitMsg"):
+                        commitMsg = ircutils.mircColor(" (%s)" % (maxLen(data['head_commit']['message'].splitlines()[0],75)),"brown")
+                    commitInfo = " %s %s%s as" % (branchFrom, ircutils.bold(data['head_commit']['id'][0:6]), commitMsg)
+                msgs.append( ircmsgs.privmsg(channel, "%s: %s %s%s %s%s" % (
+                ircutils.bold(data['repository']['name']),
+                ircutils.mircColor(data['pusher']['name'], "green"),
+                colorAction(action),
+                commitInfo,
+                ircutils.bold(ircutils.mircColor(branch, "blue")),
+                urls,
+                )) )
+            else:
+                msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s%s%s" % (
+                ircutils.bold(data['repository']['name']),
+                ircutils.mircColor(data['pusher']['name'], "green"),
+                colorAction(action),
+                ircutils.bold(ircutils.mircColor(branch, "blue")),
+                branchFrom,
+                urls,
+                colon
+                )) )
 
         for commit in data['commits']:
             if 'username' in commit['author']:
@@ -235,10 +294,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
             commitlines = commit['message'].splitlines()
             for rawline in commitlines:
-                if len(rawline) > 400:
-                    line = "%s..." % (rawline[0:397])
-                else:
-                    line = rawline
+                maxLen(rawline, 400)
                 msgs.append(ircmsgs.privmsg(channel, "%s @ %s: %s" % (
                     ircutils.bold(ircutils.mircColor(branch, "blue")),
                     ircutils.bold(data['repository']['name']),

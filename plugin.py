@@ -58,7 +58,7 @@ def maxLen(msg, maxn=400):
     return ret
 
 def colorAction(action):
-    """Get an action string (e.g. created, edited) and get a nice IRC colouring"""
+    """Give an action string (e.g. created, edited) and get a nice IRC colouring"""
     if action == "created" or action == "opened" or action == "tagged":
         return ircutils.bold(ircutils.mircColor(action, "green"))
     if action == "deleted" or action == "closed" or action == "re-tagged" or action == "deleted tag":

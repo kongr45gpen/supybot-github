@@ -25,9 +25,10 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 
-import random
+import re
 import json
 import time
+import random
 import urllib
 import urllib2
 import urlparse
@@ -61,7 +62,8 @@ def colorAction(action):
     """Give an action string (e.g. created, edited) and get a nice IRC colouring"""
     if action == "created" or action == "opened" or action == "tagged":
         return ircutils.bold(ircutils.mircColor(action, "green"))
-    if action == "deleted" or action == "closed" or action == "re-tagged" or action == "deleted tag":
+    if action == "deleted" or action == "closed" or action == "re-tagged" or \
+       action == "deleted tag" or action == "failed" or action == "still failing":
         return ircutils.bold(ircutils.mircColor(action, "red"))
     if action == "merged":
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
@@ -422,6 +424,9 @@ class Github(callbacks.Plugin):
     """Add the help for \"@plugin help Github\" here
     This should describe how to use this plugin."""
 
+    travisCount = 0
+    travisShown = False
+
     threaded = True
     pass
 
@@ -449,6 +454,30 @@ class Github(callbacks.Plugin):
     def die(self):
         self.httpd.server_close()
         self.__parent.die()
+
+    def doPrivmsg(self, irc, msg):
+        channel = "#main"
+
+        if not msg.args[1].startswith("[travis-ci]"):
+            return
+
+        message = msg.args[1]
+        message = message.replace("failed", colorAction("failed"))
+        message = message.replace("still failing", colorAction("still failing"))
+        message = message.replace("fixed", colorAction("fixed"))
+        message = message.replace("[travis-ci]", ircutils.mircColor("[travis-ci]", "light grey"))
+        message = re.sub(r'\(([a-zA-Z]+)+ - ([a-zA-Z0-9]+) : ([a-zA-Z0-9]+)\)', \
+        "".join(["(", r'\1', " * ", ircutils.bold(r'\2') , " by ", ircutils.mircColor(r'\3', "blue") , ")"]), message)
+
+        if self.travisCount == 0 and msg.args[1].find("passed") == -1:
+            irc.queueMsg(ircmsgs.privmsg(channel, message));
+            self.travisShown = True
+        elif self.travisCount == 2 and self.travisShown == True:
+            irc.queueMsg(ircmsgs.privmsg(channel, message));
+            self.travisShown = False
+
+
+        self.travisCount = (self.travisCount+1) % 3;
 
     def toast(self, irc, msg, args, seed, items):
         """<seed> <item1> [<item2> ...]

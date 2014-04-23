@@ -455,29 +455,6 @@ class Github(callbacks.Plugin):
         self.httpd.server_close()
         self.__parent.die()
 
-    def doPrivmsg(self, irc, msg):
-        channel = "#main"
-
-        if not msg.args[1].startswith("[travis-ci]"):
-            return
-
-        message = msg.args[1]
-        message = message.replace("failed", colorAction("failed"))
-        message = message.replace("still failing", colorAction("still failing"))
-        message = message.replace("fixed", colorAction("fixed"))
-        message = message.replace("[travis-ci]", ircutils.mircColor("[travis-ci]", "light grey"))
-        message = re.sub(r'\(([a-zA-Z]+)+ - ([a-zA-Z0-9]+) : ([a-zA-Z0-9]+)\)', \
-        "".join(["(", r'\1', " * ", ircutils.bold(r'\2') , " by ", ircutils.mircColor(r'\3', "blue") , ")"]), message)
-
-        if self.travisCount == 0 and msg.args[1].find("passed") == -1:
-            irc.queueMsg(ircmsgs.privmsg(channel, message));
-            self.travisShown = True
-        elif self.travisCount == 2 and self.travisShown == True:
-            irc.queueMsg(ircmsgs.privmsg(channel, message));
-            self.travisShown = False
-
-
-        self.travisCount = (self.travisCount+1) % 3;
 
     def toast(self, irc, msg, args, seed, items):
         """<seed> <item1> [<item2> ...]

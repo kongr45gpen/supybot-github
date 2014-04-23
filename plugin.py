@@ -453,8 +453,12 @@ class Github(callbacks.Plugin):
 
     def die(self):
         self.httpd.server_close()
+        self.httpd.shutdown()
         self.__parent.die()
 
+    def create_dummy_request(self):
+        server = xmlrpclib.Server('http://localhost:%s' % (8093))
+        server.ping()
 
     def toast(self, irc, msg, args, seed, items):
         """<seed> <item1> [<item2> ...]

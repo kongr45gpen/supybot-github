@@ -44,6 +44,7 @@ import supybot.registry as registry
 import supybot.callbacks as callbacks
 
 RequestHandler = utils.python.universalImport('handler.GithubHandler', 'local.handler.GithubHandler')
+Utility        = utils.python.universalImport('local.utility')
 
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,
@@ -80,6 +81,7 @@ class Github(callbacks.Plugin):
         self.httpd.shutdown()
         self.__parent.die()
         reload(RequestHandler)
+        reload(Utility)
 
 
 Class = Github

@@ -23,6 +23,7 @@ from ..utility import *
 import PushHandler
 import WikiHandler
 import IssueHandler
+import StatusHandler
 import IssueCommentHandler
 
 class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -84,6 +85,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
             if 'pages' in data:
                 msgs = WikiHandler.handle(irc, data, channel)
+            elif 'state' in data:
+                msgs = StatusHandler.handle(irc, data, channel)
             elif 'commits' in data:
                 msgs = PushHandler.handle(irc, data, channel)
             elif 'issue' in data:

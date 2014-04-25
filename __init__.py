@@ -29,13 +29,18 @@ reload(plugin) # In case we're being reloaded.
 # reloaded when this plugin is reloaded.  Don't forget to import them as well!
 import local.handler.GithubHandler as RequestHandler
 import local.handler.PushHandler
+import local.handler.WikiHandler
+import local.handler.IssueHandler
+import local.handler.StatusHandler
+import local.handler.IssueCommentHandler
 import local.utility
 reload(RequestHandler)
 reload(local.handler.PushHandler)
+reload(local.handler.WikiHandler)
+reload(local.handler.IssueHandler)
+reload(local.handler.StatusHandler)
+reload(local.handler.IssueCommentHandler)
 reload(local.utility)
-
-print "PushHandler reloaded"
-
 
 if world.testing:
     import test

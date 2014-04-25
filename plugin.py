@@ -28,7 +28,6 @@
 import re
 import json
 import time
-import random
 import urllib
 import urlparse
 import threading
@@ -67,8 +66,6 @@ class Github(callbacks.Plugin):
     def __init__(self, irc):
         self.__parent = super(Github, self)
         self.__parent.__init__(irc)
-        self.rng = random.Random()  # create our rng
-        self.rng.seed()  # automatically seeds with current time
         server_class = BaseHTTPServer.HTTPServer
         self.httpd = server_class(('', 8093), RequestHandler.GithubHandler)
         t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
@@ -83,18 +80,6 @@ class Github(callbacks.Plugin):
         self.httpd.shutdown()
         self.__parent.die()
         reload(RequestHandler)
-
-    def toast(self, irc, msg, args, seed, items):
-        """<seed> <item1> [<item2> ...]
-
-        Returns the next random number from the random number generator.
-        """
-        if seed < len(items):
-            irc.error('<number of items> must be less than the number of arguments.')
-            return
-        irc.reply('%s %s %s' % (str(seed), str(self.rng.random()), utils.str.commaAndify(items)))
-
-    toast = wrap(toast, ['float', many('anything')])
 
 
 Class = Github

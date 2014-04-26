@@ -5,8 +5,7 @@ from ..utility import *
 def handle(irc, data, channel):
     msgs = []
 
-    url = getShortURL(data['comment']['url'])
-
+    url = getShortURL(data['comment']['html_url'])
 
     creator = ''
     if data['sender']['login'] != data['issue']['user']['login']:
@@ -28,15 +27,16 @@ def handle(irc, data, channel):
     elif len(lines) > 1:
             line += "..."
 
-    msgs.append( ircmsgs.privmsg(channel, "%s: %s commented on issue %s \"%s\"%s%s %s%s): %s" % (
-    ircutils.bold(data['repository']['name']),
-    ircutils.mircColor(data['comment']['user']['login'], "green"),
-    ''.join(["#",str(data['issue']['number'])]),
-    ircutils.bold(data['issue']['title']),
-    creator,
-    milestone,
-    oparen, url,
-    line
+    msgs.append( ircmsgs.privmsg(
+                 channel, "%s: %s commented on issue %s \"%s\"%s%s %s%s): %s" % (
+                 ircutils.bold(data['repository']['name']),
+                 ircutils.mircColor(data['comment']['user']['login'], "green"),
+                 ''.join(["#",str(data['issue']['number'])]),
+                 ircutils.bold(data['issue']['title']),
+                 creator,
+                 milestone,
+                 oparen, url,
+                 line
     )) )
 
     return msgs

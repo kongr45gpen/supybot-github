@@ -7,6 +7,7 @@ import urllib2
 import urlparse
 import threading
 import BaseHTTPServer
+from time import strftime
 
 import supybot.conf as conf
 import supybot.utils as utils
@@ -42,7 +43,15 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         s.wfile.write('</body></html>\n')
         s.wfile.write(s.path.split('/'))
-        #print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+
+        if 'X-GitHub-Event' in s.headers:
+            eventType = s.headers['X-GitHub-Event']
+        else:
+            eventType = ''
+
+        f = open('requests/' + eventType + strftime("%Y-%m-%d %H:%M:%S") + '.json', 'w')
+        f.write(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
+        f.close()
 
         path = s.path.split('/')
         channel = configValue('channel')
@@ -69,9 +78,6 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 channel = part
 
             i+=1
-
-
-
 
         if requireCode and receivedcode != configValue('passcode'):
             # The password is wrong

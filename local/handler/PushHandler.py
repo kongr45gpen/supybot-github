@@ -14,27 +14,28 @@ def handle(irc, data, channel):
         colon = ':'
 
     isTag = False
+    isMerge = False
 
-    branched = data['created'] or data['deleted'] or ref[1] == "tags"
+    branched = data['created'] or data['deleted'] or ref[1] == "tags" or 'base_ref' in data
     branchFrom = ''
     tagFrom = ''
 
     onlyDeleted = data['deleted'] and not data['created']
 
     if branched:
-        print branch
         if ref[1] == 'tags':
             isTag = True
 
         urls = ' (%s)' % (getShortURL(data['compare']),)
         if 'base_ref' in data:
             base_ref = data['base_ref'].split('/',2)
+            baseBranch = base_ref[2]
             if isTag:
-                branchFrom = '%s %s ' % (base_ref[2], ircutils.bold('*'))
+                branchFrom = '%s %s ' % (baseBranch, ircutils.bold('*'))
             else:
-                branchFrom = ' from %s' % (base_ref[2],)
+                branchFrom = ' from %s' % (ircutils.bold(ircutils.mircColor(baseBranch, "blue")), )
 
-        if data['created'] and data['deleted'] or (not data['created'] and not data['deleted'] and data['forced']):
+        if (data['created'] and data['deleted']) or (not data['created'] and not data['deleted'] and data['forced']):
             if isTag:
                 action = "re-tagged"
             else:
@@ -62,7 +63,10 @@ def handle(irc, data, channel):
                 action = "deleted"
             urls = ''
         else:
-            action = "did something with"
+            action = "merged"
+            mergedCommitCount = sum(not commit['distinct'] for commit in data['commits'])
+            regularCommitCount = len(data['commits']) - mergedCommitCount
+            isMerge = True
 
 
     if configValue("hidePush",None) == False and not branched:
@@ -92,6 +96,22 @@ def handle(irc, data, channel):
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             urls,
             )) )
+        elif isMerge:
+            distinctMessage = ""
+            if configValue("hidePush",None) == False and regularCommitCount > 0:
+                distinctMessage = " and %s %s %s" % ( colorAction("pushed"), regularCommitCount, plural(regularCommitCount, 'commit', 'commits'))
+
+            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s %s %s%s%s into %s%s" % (
+                ircutils.bold(data['repository']['name']),
+                ircutils.mircColor(data['pusher']['name'], "green"),
+                colorAction(action),
+                mergedCommitCount,
+                plural(mergedCommitCount, 'commit', 'commits'),
+                branchFrom,
+                distinctMessage,
+                ircutils.bold(ircutils.mircColor(branch, "blue")),
+                urls
+            )) )
         else:
             msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s%s%s" % (
             ircutils.bold(data['repository']['name']),
@@ -109,8 +129,16 @@ def handle(irc, data, channel):
         else:
             author = commit['author']['name']
 
+        commitBranch = branch
+
+        if not commit['distinct'] and not configValue('showMergedCommits'):
+            continue
+
+        if isMerge and not commit['distinct']:
+            commitBranch = "%s -> %s" % ( baseBranch, branch )
+
         msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s * %s (%s)" % (
-            ircutils.bold(ircutils.mircColor(branch, "blue")),
+            ircutils.bold(ircutils.mircColor(commitBranch, "blue")),
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(author, "green"),
             ircutils.bold(commit['id'][0:6]),
@@ -121,7 +149,7 @@ def handle(irc, data, channel):
         for rawline in commitlines:
             line = maxLen(rawline, 400)
             msgs.append(ircmsgs.privmsg(channel, "%s @ %s: %s" % (
-                ircutils.bold(ircutils.mircColor(branch, "blue")),
+                ircutils.bold(ircutils.mircColor(commitBranch, "blue")),
                 ircutils.bold(data['repository']['name']),
                 line,
             )) )

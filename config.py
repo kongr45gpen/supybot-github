@@ -41,4 +41,8 @@ conf.registerGlobalValue(Github, 'tagShowCommitMsg',
         registry.Boolean(True,
         """Show the commit message of the commit a new tag points to"""))
 
+conf.registerGlobalValue(Github, 'showMergedCommits',
+        registry.Boolean(False,
+        """Show merged commits when a branch is merged into another"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

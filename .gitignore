@@ -34,3 +34,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Supybot test files
+conf
+logs
+test-conf
+test-logs

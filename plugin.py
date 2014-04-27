@@ -55,9 +55,9 @@ class Github(callbacks.Plugin):
     port     = Utility.configValue('port')
     pass
 
-    def ServerStart(self, httpd, port):
+    def ServerStart(self, httpd):
         try:
-            log.info('Server Starts - %s:%s' % ('', port))
+            log.info('Server Starts - %s:%s' % ('', self.port))
             httpd.serve_forever()
         except:
             return
@@ -67,7 +67,7 @@ class Github(callbacks.Plugin):
         self.__parent.__init__(irc)
         server_class = BaseHTTPServer.HTTPServer
         self.httpd = server_class(('', self.port), RequestHandler.GithubHandler)
-        t = threading.Thread(target=self.ServerStart, args=(self.httpd, self.port))
+        t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
         t.daemon = False
         t.start()
 

@@ -61,3 +61,7 @@ def getShortURL(longurl):
         response = urllib2.urlopen(req)
         url = response.info().getheader('Location')
     return ircutils.mircColor(url, "purple")
+
+# Possible colours:
+# white, black, (light/dark) blue, (light) green, red, brown, purple,
+# orange, yellow, teal, pink, light/dark gray/grey

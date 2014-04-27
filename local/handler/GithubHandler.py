@@ -9,6 +9,7 @@ import threading
 import BaseHTTPServer
 from time import strftime
 
+import supybot.log as log
 import supybot.conf as conf
 import supybot.utils as utils
 import supybot.world as world
@@ -40,7 +41,6 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.end_headers()
         s.wfile.write('<!DOCTYPE html><html><head><title>Hello</title></head>')
         s.wfile.write("<body><p>Thanks, you're awesome.</p>")
-
         s.wfile.write('</body></html>\n')
         s.wfile.write(s.path.split('/'))
 
@@ -106,3 +106,6 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
             for msg in msgs:
                 irc.queueMsg(msg)
+
+    def log_message(self, format, *args):
+        log.info(format % args)

@@ -22,6 +22,7 @@ __contributors__ = {}
 # This is a url where the most recent plugin package can be downloaded.
 __url__ = 'https://github.com/kongr45gpen/supybot-github'
 
+
 import config
 import plugin
 reload(plugin) # In case we're being reloaded.

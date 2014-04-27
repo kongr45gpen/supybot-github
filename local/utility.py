@@ -1,8 +1,11 @@
 import urllib2
 
 import supybot.conf as conf
+import supybot.world as world
 import supybot.ircutils as ircutils
 import supybot.registry as registry
+
+import globals
 
 def registryValue(plugin, name, channel=None, value=True):
     group = conf.supybot.plugins.get(plugin)
@@ -61,6 +64,12 @@ def getShortURL(longurl):
         response = urllib2.urlopen(req)
         url = response.info().getheader('Location')
     return ircutils.mircColor(url, "purple")
+
+def saveMessages(msgs):
+    """ Saves the last messages so that the plugin can be easily tested """
+    if world.testing:
+        return
+    globals.messageList = msgs
 
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,

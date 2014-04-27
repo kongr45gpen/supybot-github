@@ -107,5 +107,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             for msg in msgs:
                 irc.queueMsg(ircmsgs.privmsg(channel, msg))
 
+            saveMessages(msgs)
+
     def log_message(self, format, *args):
         log.info(format % args)

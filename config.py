@@ -45,4 +45,8 @@ conf.registerGlobalValue(Github, 'showMergedCommits',
         registry.Boolean(False,
         """Show merged commits when a branch is merged into another"""))
 
+conf.registerGlobalValue(Github, 'port',
+        registry.Integer(8093,
+        """The port where Github will send HTTP requests"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

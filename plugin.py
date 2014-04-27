@@ -33,6 +33,7 @@ import urlparse
 import threading
 import BaseHTTPServer
 
+import supybot.log as log
 import supybot.conf as conf
 import supybot.utils as utils
 import supybot.world as world
@@ -46,20 +47,17 @@ import supybot.callbacks as callbacks
 RequestHandler = utils.python.universalImport('handler.GithubHandler', 'local.handler.GithubHandler')
 Utility        = utils.python.universalImport('local.utility')
 
-# Possible colours:
-# white, black, (light/dark) blue, (light) green, red, brown, purple,
-# orange, yellow, teal, pink, light/dark gray/grey
-
 class Github(callbacks.Plugin):
     """Add the help for \"@plugin help Github\" here
     This should describe how to use this plugin."""
 
     threaded = True
+    port     = Utility.configValue('port')
     pass
 
-    def ServerStart(self, httpd):
+    def ServerStart(self, httpd, port):
         try:
-            print time.asctime(), 'Server Starts - %s:%s' % ('', 8093)
+            log.info('Server Starts - %s:%s' % ('', port))
             httpd.serve_forever()
         except:
             return
@@ -68,8 +66,8 @@ class Github(callbacks.Plugin):
         self.__parent = super(Github, self)
         self.__parent.__init__(irc)
         server_class = BaseHTTPServer.HTTPServer
-        self.httpd = server_class(('', 8093), RequestHandler.GithubHandler)
-        t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
+        self.httpd = server_class(('', self.port), RequestHandler.GithubHandler)
+        t = threading.Thread(target=self.ServerStart, args=(self.httpd, self.port))
         t.daemon = False
         t.start()
 

@@ -48,9 +48,10 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         else:
             eventType = ''
 
-        f = open('requests/' + eventType + strftime("%Y-%m-%d %H:%M:%S") + '.json', 'w')
-        f.write(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
-        f.close()
+        if not world.testing:
+            f = open('requests/' + eventType + strftime("%Y-%m-%d %H:%M:%S") + '.json', 'w')
+            f.write(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
+            f.close()
 
         path = s.path.split('/')
         channel = configValue('channel')

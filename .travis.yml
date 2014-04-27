@@ -1,0 +1,18 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+
+install:
+  - mkdir void
+  - mkdir void/Github
+  - cp -R * void/Github/ || true
+  - git clone git://git.code.sf.net/p/supybot/code supybot
+  - pip install coverage
+  - cd supybot
+  - python setup.py install
+  - cd ../void/Github
+
+script:
+  - coverage run --source plugin.py,local --omit '*init*' ../../supybot/scripts/supybot-test --plugins-dir=.. Github
+  - coverage report -m

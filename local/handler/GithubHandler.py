@@ -31,7 +31,6 @@ import IssueCommentHandler
 class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_POST(s):
         """Respond to a POST request."""
-
         length = int(s.headers['Content-Length'])
         post_data = urlparse.parse_qs(s.rfile.read(length).decode('utf-8'))
         data = json.loads(post_data['payload'][0])
@@ -84,30 +83,33 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             s.wfile.write("The password is wrong")
             return
 
-        for irc in world.ircs:
-            # Handle different event types
+        irc = {}
+        # Handle different event types
 
-            msgs = []
+        msgs = []
 
-            if 'pages' in data:
-                msgs = WikiHandler.handle(irc, data)
-            elif 'state' in data:
-                msgs = StatusHandler.handle(irc, data)
-            elif 'commits' in data:
-                msgs = PushHandler.handle(irc, data)
-            elif 'issue' in data:
-                if 'comment' in data:
-                    msgs = IssueCommentHandler.handle(irc, data)
-                else:
-                    msgs = IssueHandler.handle(irc, data)
+        if 'pages' in data:
+            msgs = WikiHandler.handle(irc, data)
+        elif 'state' in data:
+            msgs = StatusHandler.handle(irc, data)
+        elif 'commits' in data:
+            msgs = PushHandler.handle(irc, data)
+        elif 'issue' in data:
+            if 'comment' in data:
+                msgs = IssueCommentHandler.handle(irc, data)
             else:
-                msgs.append( ircmsgs.privmsg(channel, "Something happened"))
+                msgs = IssueHandler.handle(irc, data)
+        else:
+            msgs.append( ircmsgs.privmsg(channel, "Something happened"))
 
-            #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
+
+        saveMessages(msgs)
+
+        #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
+        if not world.testing:
             for msg in msgs:
-                irc.queueMsg(ircmsgs.privmsg(channel, msg))
-
-            saveMessages(msgs)
+                for irc in world.ircs:
+                    irc.queueMsg(ircmsgs.privmsg(channel, msg))
 
     def log_message(self, format, *args):
         log.info(format % args)

@@ -66,7 +66,6 @@ def handle(irc, data):
             regularCommitCount = len(data['commits']) - mergedCommitCount
             isMerge = True
 
-
     if configValue("hidePush",None) == False and not branched:
         msgs.append( "%s @ %s: %s pushed %s %s (%s)%s" % (
         ircutils.bold(ircutils.mircColor(branch, "blue")),

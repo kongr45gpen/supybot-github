@@ -52,6 +52,8 @@ import local.globals as globals
 import local.handler.GithubHandler as RequestHandler
 import local.utility as Utility
 
+globals.init()
+
 class Github(callbacks.Plugin):
     """Add the help for \"@plugin help Github\" here
     This should describe how to use this plugin."""
@@ -109,8 +111,10 @@ class Github(callbacks.Plugin):
         if order == 'last' or type == 'last':
             requestedNum = len(globals.messageList) - requestedNum + 1
 
-        print globals.messageList
-        irc.reply(globals.messageList[requestedNum-1])
+        try:
+            irc.reply(globals.messageList[requestedNum-1])
+        except IndexError:
+            irc.error('No such message')
 
     # Debug function
     get = wrap(get, ['lowered', optional('lowered'), optional('text')]) if world.testing else False

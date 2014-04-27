@@ -67,7 +67,7 @@ def getShortURL(longurl):
 
 def saveMessages(msgs):
     """ Saves the last messages so that the plugin can be easily tested """
-    if world.testing:
+    if not world.testing:
         return
     globals.messageList = msgs
 

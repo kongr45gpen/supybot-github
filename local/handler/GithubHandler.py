@@ -90,22 +90,22 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             msgs = []
 
             if 'pages' in data:
-                msgs = WikiHandler.handle(irc, data, channel)
+                msgs = WikiHandler.handle(irc, data)
             elif 'state' in data:
-                msgs = StatusHandler.handle(irc, data, channel)
+                msgs = StatusHandler.handle(irc, data)
             elif 'commits' in data:
-                msgs = PushHandler.handle(irc, data, channel)
+                msgs = PushHandler.handle(irc, data)
             elif 'issue' in data:
                 if 'comment' in data:
-                    msgs = IssueCommentHandler.handle(irc, data, channel)
+                    msgs = IssueCommentHandler.handle(irc, data)
                 else:
-                    msgs = IssueHandler.handle(irc, data, channel)
+                    msgs = IssueHandler.handle(irc, data)
             else:
                 msgs.append( ircmsgs.privmsg(channel, "Something happened"))
 
             #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
             for msg in msgs:
-                irc.queueMsg(msg)
+                irc.queueMsg(ircmsgs.privmsg(channel, msg))
 
     def log_message(self, format, *args):
         log.info(format % args)

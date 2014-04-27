@@ -1,8 +1,6 @@
-import supybot.ircmsgs as ircmsgs
-
 from ..utility import *
 
-def handle(irc, data, channel):
+def handle(irc, data):
     msgs = []
 
     url = data['issue']['url']
@@ -25,7 +23,7 @@ def handle(irc, data, channel):
     else:
         oparen = '('
 
-    msgs.append( ircmsgs.privmsg(channel, "%s: %s %s issue %s \"%s\"%s%s %s%s)" % (
+    msgs.append( "%s: %s %s issue %s \"%s\"%s%s %s%s)" % (
     ircutils.bold(data['repository']['name']),
     ircutils.mircColor(data['sender']['login'], senderColor),
     colorAction(data['action']),
@@ -34,6 +32,6 @@ def handle(irc, data, channel):
     creator,
     milestone,
     oparen, url
-    )) )
+    ))
 
     return msgs

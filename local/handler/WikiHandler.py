@@ -1,8 +1,6 @@
-import supybot.ircmsgs as ircmsgs
-
 from ..utility import *
 
-def handle(irc, data, channel):
+def handle(irc, data):
     msgs = []
 
     pageno = len(data['pages'])
@@ -30,13 +28,13 @@ def handle(irc, data, channel):
             pageurl = "(%s)" % (page['html_url'],)
 
         # Unfortunately github doesn't support edit summaries :(
-        msgs.append( ircmsgs.privmsg(channel, "%s: %s %s %s * %s %s" % (
+        msgs.append( "%s: %s %s %s * %s %s" % (
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['sender']['login'], "green"),
             colorAction(page['action']),
             ircutils.bold(ircutils.mircColor(page['page_name'], "blue")),
             ircutils.bold(page['sha'][0:6]),
             pageurl,
-        )) )
+        ))
 
     return msgs

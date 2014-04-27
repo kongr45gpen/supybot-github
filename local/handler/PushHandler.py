@@ -1,8 +1,6 @@
-import supybot.ircmsgs as ircmsgs
-
 from ..utility import *
 
-def handle(irc, data, channel):
+def handle(irc, data):
     msgs = []
 
     commitno = len(data['commits'])
@@ -70,7 +68,7 @@ def handle(irc, data, channel):
 
 
     if configValue("hidePush",None) == False and not branched:
-        msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s pushed %s %s (%s)%s" % (
+        msgs.append( "%s @ %s: %s pushed %s %s (%s)%s" % (
         ircutils.bold(ircutils.mircColor(branch, "blue")),
         ircutils.bold(data['repository']['name']),
         ircutils.mircColor(data['pusher']['name'], "green"),
@@ -78,7 +76,7 @@ def handle(irc, data, channel):
         plural(commitno, "commit", "commits"),
         getShortURL(data['compare']),
         colon
-        )) )
+        ))
     elif branched:
         if isTag:
             if onlyDeleted:
@@ -101,7 +99,7 @@ def handle(irc, data, channel):
             if configValue("hidePush",None) == False and regularCommitCount > 0:
                 distinctMessage = " and %s %s %s" % ( colorAction("pushed"), regularCommitCount, plural(regularCommitCount, 'commit', 'commits'))
 
-            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s %s %s%s%s into %s%s" % (
+            msgs.append( "%s: %s %s %s %s%s%s into %s%s" % (
                 ircutils.bold(data['repository']['name']),
                 ircutils.mircColor(data['pusher']['name'], "green"),
                 colorAction(action),
@@ -111,7 +109,7 @@ def handle(irc, data, channel):
                 distinctMessage,
                 ircutils.bold(ircutils.mircColor(branch, "blue")),
                 urls
-            )) )
+            ))
         else:
             msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s%s%s" % (
             ircutils.bold(data['repository']['name']),
@@ -137,21 +135,21 @@ def handle(irc, data, channel):
         if isMerge and not commit['distinct']:
             commitBranch = "%s -> %s" % ( baseBranch, branch )
 
-        msgs.append( ircmsgs.privmsg(channel, "%s @ %s: %s * %s (%s)" % (
+        msgs.append("%s @ %s: %s * %s (%s)" % (
             ircutils.bold(ircutils.mircColor(commitBranch, "blue")),
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(author, "green"),
             ircutils.bold(commit['id'][0:6]),
             getShortURL(commit['url']),
-        )) )
+        ))
 
         commitlines = commit['message'].splitlines()
         for rawline in commitlines:
             line = maxLen(rawline, 400)
-            msgs.append(ircmsgs.privmsg(channel, "%s @ %s: %s" % (
+            msgs.append( "%s @ %s: %s" % (
                 ircutils.bold(ircutils.mircColor(commitBranch, "blue")),
                 ircutils.bold(data['repository']['name']),
                 line,
-            )) )
+            ))
 
     return msgs

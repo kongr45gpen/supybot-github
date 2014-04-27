@@ -1,8 +1,6 @@
-import supybot.ircmsgs as ircmsgs
-
 from ..utility import *
 
-def handle(irc, data, channel):
+def handle(irc, data):
     msgs = []
 
     url = getShortURL(data['comment']['html_url'])
@@ -27,8 +25,7 @@ def handle(irc, data, channel):
     elif len(lines) > 1:
             line += "..."
 
-    msgs.append( ircmsgs.privmsg(
-                 channel, "%s: %s commented on issue %s \"%s\"%s%s %s%s): %s" % (
+    msgs.append( "%s: %s commented on issue %s \"%s\"%s%s %s%s): %s" % (
                  ircutils.bold(data['repository']['name']),
                  ircutils.mircColor(data['comment']['user']['login'], "green"),
                  ''.join(["#",str(data['issue']['number'])]),
@@ -37,6 +34,6 @@ def handle(irc, data, channel):
                  milestone,
                  oparen, url,
                  line
-    )) )
+    ))
 
     return msgs

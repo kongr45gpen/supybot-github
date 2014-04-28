@@ -1,6 +1,6 @@
 from ..utility import *
 
-def handle(irc, data):
+def handle(data):
     msgs = []
 
     msgs.append( "%s: %s - %s (%s)" % (

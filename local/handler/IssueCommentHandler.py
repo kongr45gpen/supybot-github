@@ -1,6 +1,6 @@
 from ..utility import *
 
-def handle(irc, data):
+def handle(data):
     msgs = []
 
     url = getShortURL(data['comment']['html_url'])

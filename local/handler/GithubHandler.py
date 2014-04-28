@@ -90,16 +90,16 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         msgs = []
 
         if 'pages' in data:
-            msgs = WikiHandler.handle(irc, data)
+            msgs = WikiHandler.handle(data)
         elif 'state' in data:
-            msgs = StatusHandler.handle(irc, data)
+            msgs = StatusHandler.handle(data)
         elif 'commits' in data:
-            msgs = PushHandler.handle(irc, data)
+            msgs = PushHandler.handle(data)
         elif 'issue' in data:
             if 'comment' in data:
-                msgs = IssueCommentHandler.handle(irc, data)
+                msgs = IssueCommentHandler.handle(data)
             else:
-                msgs = IssueHandler.handle(irc, data)
+                msgs = IssueHandler.handle(data)
         else:
             msgs.append( ircmsgs.privmsg(channel, "Something happened"))
 

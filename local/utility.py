@@ -1,3 +1,4 @@
+import re
 import urllib2
 
 import supybot.conf as conf
@@ -70,6 +71,11 @@ def saveMessages(msgs):
     if not world.testing:
         return
     globals.messageList = msgs
+
+def clean(string):
+        """Strips IRC control characters from a string"""
+        regex = re.compile("((\x02)|(\x03))(?:\d{1,2}(?:,\d{1,2})?)?", re.UNICODE)
+        return regex.sub('', string)
 
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,

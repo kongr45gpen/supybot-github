@@ -1,6 +1,6 @@
 from ..utility import *
 
-def handle(irc, data):
+def handle(data):
     msgs = []
 
     commitno = len(data['commits'])

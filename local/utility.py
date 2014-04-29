@@ -23,7 +23,6 @@ def registryValue(plugin, name, channel=None, value=True):
     else:
         return group
 
-
 def configValue(name, channel=None, repo=None, type=None, module=None):
     return registryValue("Github", name, channel)
 
@@ -45,7 +44,8 @@ def colorAction(action):
     if action == "created" or action == "opened" or action == "tagged" or action == "success":
         return ircutils.bold(ircutils.mircColor(action, "green"))
     if action == "deleted" or action == "closed" or action == "re-tagged" or \
-       action == "deleted tag" or action == "failed" or action == "still failing":
+       action == "deleted tag" or action == "failed" or action == "errored" or \
+       action == "failure" or action == "still failing":
         return ircutils.bold(ircutils.mircColor(action, "red"))
     if action == "merged":
         return ircutils.bold(ircutils.mircColor(action, "light blue"))

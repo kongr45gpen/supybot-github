@@ -45,14 +45,12 @@ import supybot.ircutils as ircutils
 import supybot.registry as registry
 import supybot.callbacks as callbacks
 
-#RequestHandler = utils.python.universalImport('handler.GithubHandler', 'local.handler.GithubHandler')
-#Utility        = utils.python.universalImport('local.utility')
-
 import local.globals as globals
 import local.handler.GithubHandler as RequestHandler
 import local.utility as Utility
 
 globals.init()
+
 
 class Github(callbacks.Plugin):
     """Add the help for \"@plugin help Github\" here
@@ -101,7 +99,7 @@ class Github(callbacks.Plugin):
                    'second': 2,
                    'third': 3,
                    'fourth': 4
-                  }
+                 }
 
         if _digits.search(order):
             requestedNum = int(re.sub("[^0-9]", "", order))
@@ -116,7 +114,7 @@ class Github(callbacks.Plugin):
         except IndexError:
             irc.error('No such message')
 
-    # Debug function
+    # Debug command
     get = wrap(get, ['lowered', optional('lowered'), optional('text')]) if world.testing else False
 
 

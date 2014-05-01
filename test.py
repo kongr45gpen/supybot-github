@@ -35,4 +35,17 @@ class GithubTestCase(ExpectationPluginTestCase):
         # By default, merged commits should not be shown
         self.assertError('get 5th message')
 
+    def testNewWikiPage(self):
+        self.sendRequest('wiki-new-page')
+
+        self.describe('first message',
+            it().should.contain('modified 1 wiki page'),
+            it().should.contain('https://github.com/kongr45gpen/supybot-github/wiki/_compare/9941c1a1bb1b2db99ad9aabf10c8f946d808e634')
+        )
+
+        self.describe('second message',
+            it().should.contain('created Home'),
+            it().should.contain('https://github.com/kongr45gpen/supybot-github/wiki/Home')
+        )
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

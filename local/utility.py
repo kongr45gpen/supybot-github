@@ -74,7 +74,7 @@ def saveMessages(msgs):
 
 def clean(string):
         """Strips IRC control characters from a string"""
-        regex = re.compile("((\x02)|(\x03))(?:\d{1,2}(?:,\d{1,2})?)?", re.UNICODE)
+        regex = re.compile("(([\x02\x1f\x16\x0f])|(\x03(?:\d{1,2}(?:,\d{1,2})?)?))", re.UNICODE)
         return regex.sub('', string)
 
 # Possible colours:

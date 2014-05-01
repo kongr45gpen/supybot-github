@@ -8,13 +8,13 @@ def handle(data):
     url = getShortURL("%s/wiki/_compare/%s" % ( data['repository']['html_url'], data['pages'][0]['sha'] ))
 
     if configValue("hidePush",None) is False:
-        msgs.append( ircmsgs.privmsg(channel, "%s: %s modified %s wiki %s (%s):" % (
+        msgs.append( "%s: %s modified %s wiki %s (%s):" % (
         ircutils.bold(data['repository']['name']),
         ircutils.mircColor(data['sender']['login'], "green"),
         ircutils.bold(str(pageno)),
         plural(pageno, "page", "pages"),
         url
-        )) )
+        ))
 
     urlShown = False;
 

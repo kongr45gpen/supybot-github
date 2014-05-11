@@ -62,6 +62,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             and configValue('passcode').strip().lower() != 'null' \
             and configValue('passcode').strip().lower() != 'no'
 
+        resetConfigOverrides()
+
         # Analyse the URL
         i = 0
         for part in path:
@@ -77,6 +79,10 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
             if part.startswith("#") and not configValue('disallowChannelOverride'):
                 channel = part
+            elif '=' in part and not configValue('disallowConfigOverride'):
+                explosion = part.split('=', 1)
+                addConfigOverride(explosion[0], explosion[1])
+
 
             i+=1
 

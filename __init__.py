@@ -36,6 +36,7 @@ import local.handler.StatusHandler
 import local.handler.TravisHandler
 import local.handler.IssueCommentHandler
 import local.utility
+import local.globals
 reload(RequestHandler)
 reload(local.handler.PushHandler)
 reload(local.handler.WikiHandler)
@@ -44,6 +45,9 @@ reload(local.handler.StatusHandler)
 reload(local.handler.TravisHandler)
 reload(local.handler.IssueCommentHandler)
 reload(local.utility)
+reload(local.globals)
+
+local.globals.init()
 
 if world.testing:
     import test

@@ -33,6 +33,10 @@ conf.registerGlobalValue(Github, 'disallowChannelOverride',
         registry.Boolean(False,
         """Don't let the user select the channel where the messages will be sent to on the URL"""))
 
+conf.registerGlobalValue(Github, 'disallowConfigOverride',
+        registry.Boolean(True,
+        """Don't let the user change config values from the URL"""))
+
 conf.registerGlobalValue(Github, 'showMilestone',
         registry.Boolean(True,
         """Show the name of the milestone when reporting issues or issue comments"""))

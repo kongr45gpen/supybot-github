@@ -85,14 +85,14 @@ def handle(data):
                 if configValue("tagShowCommitMsg"):
                     commitMsg = ircutils.mircColor(" (%s)" % (maxLen(data['head_commit']['message'].splitlines()[0],75)),"brown")
                 commitInfo = " %s %s%s as" % (branchFrom, ircutils.bold(data['head_commit']['id'][0:6]), commitMsg)
-            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s%s %s%s" % (
+            msgs.append("%s: %s %s%s %s%s" % (
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['pusher']['name'], "green"),
             colorAction(action),
             commitInfo,
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             urls,
-            )) )
+            ))
         elif isMerge:
             distinctMessage = ""
             if configValue("hidePush",None) == False and regularCommitCount > 0:
@@ -110,7 +110,7 @@ def handle(data):
                 urls
             ))
         else:
-            msgs.append( ircmsgs.privmsg(channel, "%s: %s %s branch %s%s%s%s" % (
+            msgs.append( "%s: %s %s branch %s%s%s%s" % (
             ircutils.bold(data['repository']['name']),
             ircutils.mircColor(data['pusher']['name'], "green"),
             colorAction(action),
@@ -118,7 +118,7 @@ def handle(data):
             branchFrom,
             urls,
             colon
-            )) )
+            ))
 
     for commit in data['commits']:
         if 'username' in commit['author']:

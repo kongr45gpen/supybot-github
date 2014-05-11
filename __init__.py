@@ -33,6 +33,7 @@ import local.handler.PushHandler
 import local.handler.WikiHandler
 import local.handler.IssueHandler
 import local.handler.StatusHandler
+import local.handler.TravisHandler
 import local.handler.IssueCommentHandler
 import local.utility
 reload(RequestHandler)
@@ -40,6 +41,7 @@ reload(local.handler.PushHandler)
 reload(local.handler.WikiHandler)
 reload(local.handler.IssueHandler)
 reload(local.handler.StatusHandler)
+reload(local.handler.TravisHandler)
 reload(local.handler.IssueCommentHandler)
 reload(local.utility)
 

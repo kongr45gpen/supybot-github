@@ -48,4 +48,19 @@ class GithubTestCase(ExpectationPluginTestCase):
             it().should.contain('https://github.com/kongr45gpen/supybot-github/wiki/Home')
         )
 
+    def testTravisNotification(self):
+        self.sendRequest('travis-notification')
+
+        self.describe('first message',
+            it().should.contain('minimal'),
+            it().should.contain('passed'),
+            it().should.contain('62aae'),
+            it().should.contain('Sven Fuchs'),
+            it().should.contain('this is a long commit message'),
+            it().should_not.contain('this is a long commit message, because we must learn how to lead ever-present lives in the face of turbulence. It is a sign of things to come. The vector of aspiration is now happening'),
+            it().should.contain('https://travis-ci.org/svenfuchs/minimal/builds/1')
+        )
+
+        self.assertError('get second message')
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

@@ -14,7 +14,7 @@ install:
   - cd ../void/Github
 
 script:
-  - ../../supybot/scripts/supybot-test --plugins-dir=.. Github
+  - python ../../supybot/scripts/supybot-test --plugins-dir=.. Github
 
 after_success:
   - coverage run --branch --source plugin.py,local --omit '*init*' ../../supybot/scripts/supybot-test --plugins-dir=.. Github

@@ -41,7 +41,8 @@ def maxLen(msg, maxn=400):
 
 def colorAction(action):
     """Give an action string (e.g. created, edited) and get a nice IRC colouring"""
-    if action == "created" or action == "opened" or action == "tagged" or action == "success":
+    if action == "created" or action == "opened" or action == "tagged" or \
+       action == "success" or action == "passed":
         return ircutils.bold(ircutils.mircColor(action, "green"))
     if action == "deleted" or action == "closed" or action == "re-tagged" or \
        action == "deleted tag" or action == "failed" or action == "errored" or \
@@ -73,9 +74,9 @@ def saveMessages(msgs):
     globals.messageList = msgs
 
 def clean(string):
-        """Strips IRC control characters from a string"""
-        regex = re.compile("(([\x02\x1f\x16\x0f])|(\x03(?:\d{1,2}(?:,\d{1,2})?)?))", re.UNICODE)
-        return regex.sub('', string)
+    """Strips IRC control characters from a string"""
+    regex = re.compile("(([\x02\x1f\x16\x0f])|(\x03(?:\d{1,2}(?:,\d{1,2})?)?))", re.UNICODE)
+    return regex.sub('', string)
 
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,

@@ -2,6 +2,8 @@
 from supybot.log import info
 from supybot.test import *
 
+from copy import deepcopy
+
 from sys import stdout
 from time import sleep
 
@@ -40,7 +42,7 @@ class ExpectationPluginTestCase(PluginTestCase):
             for error in errors:
                 print "- Failed to assert that %s" % (error,)
             print tcolors.ENDC
-            self.fail()
+            self.fail("%i assertions failed while describing %s" % (len(errors), query))
 
     def sendRequest(self, file):
         """ Opens the `samples` folder and sends a file as a request
@@ -87,11 +89,22 @@ def it():
 class Expectation:
     def __init__(self):
         self.error = ''
+        self.negation = False
+
         self.should = self
         self.to     = self
+        self.should_not = self.negate()
 
     def evaluate(self):
-        return self.assertion()
+        if self.negation is True:
+            return not self.assertion()
+        else:
+            return self.assertion()
+
+    def negate(self):
+        other = deepcopy(self)
+        other.negation = not other.negation
+        return other
 
     def cleanReply(self):
         return clean(self.reply)
@@ -105,7 +118,11 @@ class Expectation:
     def contain(self, what):
         self.assertion = self.contains
         self.assertionParameter = what
-        self.summary = "'%s' contains '%s'"
+        if self.negation:
+            verb = "does not contain"
+        else:
+            verb = "contains"
+        self.summary = "'%s' " +verb+ " '%s'"
         return self
 
     def contains(self, flags=re.I):

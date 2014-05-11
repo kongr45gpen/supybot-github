@@ -26,6 +26,7 @@ import PushHandler
 import WikiHandler
 import IssueHandler
 import StatusHandler
+import TravisHandler
 import IssueCommentHandler
 
 class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -89,7 +90,9 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         msgs = []
 
-        if 'pages' in data:
+        if 'matrix' in data:
+            msgs = TravisHandler.handle(data)
+        elif 'pages' in data:
             msgs = WikiHandler.handle(data)
         elif 'state' in data:
             msgs = StatusHandler.handle(data)
@@ -101,7 +104,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             else:
                 msgs = IssueHandler.handle(data)
         else:
-            msgs.append( ircmsgs.privmsg(channel, "Something happened"))
+            msgs.append("Something happened")
 
 
         saveMessages(msgs)

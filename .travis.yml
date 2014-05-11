@@ -19,3 +19,7 @@ script:
 after_success:
   - coverage run --branch --source plugin.py,local --omit '*init*' ../../supybot/scripts/supybot-test --plugins-dir=.. Github
   - coverage report -m
+
+notifications:
+  webhooks:
+    - http://helit.org:8093/++alezakos

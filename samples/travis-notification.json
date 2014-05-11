@@ -36,8 +36,8 @@
         "started_at": null,
         "finished_at": null,
         "config": {
-        "notifications": {
-            "webhooks": ["http://evome.fr/notifications", "http://example.com/"]
+            "notifications": {
+                "webhooks": ["http://evome.fr/notifications", "http://example.com/"]
             }
         },
         "status": null,

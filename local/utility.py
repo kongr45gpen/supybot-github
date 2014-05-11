@@ -87,6 +87,34 @@ def clean(string):
     regex = re.compile("(([\x02\x1f\x16\x0f])|(\x03(?:\d{1,2}(?:,\d{1,2})?)?))", re.UNICODE)
     return regex.sub('', string)
 
+def isYes(string):
+    """Returns True if the string represents a yes, False, if it represents
+    no, and another string if it represents something else"""
+    value = string.strip().lower()
+
+    if value in ['yes', 'always', 'on', 'true']:
+        return True
+    if value in ['no', 'never', 'off', 'false', 'null']:
+        return False
+    if value in ['changed', 'change', 'on_change', 'diff']:
+        return 'change'
+
+def isStatusVisible(repo, status):
+    """Returns whether the build status message should be shown"""
+    config = isYes(configValue('showSuccessfulBuildMessages'))
+
+    changed = False
+    if status != "passed":
+        changed = True
+    elif type(config) is bool:
+        changed = config
+    elif repo not in globals.travisStatuses or status != globals.travisStatuses[repo]:
+        # Config is 'on_change'
+        changed = True
+
+    globals.travisStatuses[repo] = status
+    return changed
+
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,
 # orange, yellow, teal, pink, light/dark gray/grey

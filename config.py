@@ -49,6 +49,10 @@ conf.registerGlobalValue(Github, 'showMergedCommits',
         registry.Boolean(False,
         """Show merged commits when a branch is merged into another"""))
 
+conf.registerGlobalValue(Github, 'showSuccessfulBuildMessages',
+        registry.String('change',
+        """Whether to show successful build messages - can be never, change or always"""))
+
 conf.registerGlobalValue(Github, 'port',
         registry.Integer(8093,
         """The port where Github will send HTTP requests"""))

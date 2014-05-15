@@ -6,7 +6,7 @@ def handle(data):
     status = data['status_message'].lower()
 
     if isStatusVisible(data['repository']['url'], status):
-        msgs.append( "%s: The build %s * %s by %s (%s - %s)" % (
+        msgs.append( "%s: Build status: %s * %s by %s (%s - %s)" % (
             ircutils.bold(data['repository']['name']),
             colorAction(status),
             ircutils.bold(data['commit'][0:6]),

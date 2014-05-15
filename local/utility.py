@@ -53,7 +53,8 @@ def colorAction(action):
     if action in [ "created", "opened", "tagged", "success", "passed", "fixed" ]:
         return ircutils.bold(ircutils.mircColor(action, "green"))
     if action in [ "deleted" ,"closed", "re-tagged", "deleted tag",
-                   "failed", "errored", "failure", "still failing" ]:
+                   "failed", "errored", "failure", "still failing",
+                   "broken" ]:
         return ircutils.bold(ircutils.mircColor(action, "red"))
     if action in [ "merged" ]:
         return ircutils.bold(ircutils.mircColor(action, "light blue"))

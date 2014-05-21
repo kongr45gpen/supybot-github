@@ -39,6 +39,7 @@ class GithubTestCase(ExpectationPluginTestCase):
         self.sendRequest('wiki-new-page')
 
         self.describe('first message',
+            it().should.contain('kongr45gpen'),
             it().should.contain('modified 1 wiki page'),
             it().should.contain('https://github.com/kongr45gpen/supybot-github/wiki/_compare/9941c1a1bb1b2db99ad9aabf10c8f946d808e634')
         )

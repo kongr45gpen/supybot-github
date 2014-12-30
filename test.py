@@ -35,6 +35,26 @@ class GithubTestCase(ExpectationPluginTestCase):
         # By default, merged commits should not be shown
         self.assertError('get 5th message')
 
+    def testV3Push(self):
+        self.sendRequest('push-v3')
+
+        self.describe('first message',
+            it().should.contain('gh-pages'),
+            it().should.contain('baxterthehacker'),
+            it().should.contain('pushed 1 commit'),
+            it().should.contain('https://github.com/baxterthehacker/public-repo/compare/4d2ab4e76d0d...7700ca29dd05')
+        )
+
+        self.describe('second message',
+            it().should.contain('7700ca'),
+            it().should.contain('kdaigle'),
+            it().should.contain('https://github.com/baxterthehacker/public-repo/commit/7700ca29dd050d9adacc0803f866d9b539513535')
+        )
+
+        self.describe('third message',
+            it().should.contain('Trigger pages build')
+        )
+
     def testNewWikiPage(self):
         self.sendRequest('wiki-new-page')
 

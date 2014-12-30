@@ -14,7 +14,7 @@ def handle(data):
     isTag = False
     isMerge = False
 
-    branched = data['created'] or data['deleted'] or ref[1] == "tags" or 'base_ref' in data
+    branched = data['created'] or data['deleted'] or ref[1] == "tags" or ('base_ref' in data and data['base_ref'])
     branchFrom = ''
     tagFrom = ''
 

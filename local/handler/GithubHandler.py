@@ -73,7 +73,6 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
             part = part.replace('+','#');
             part = part.replace('~','#');
-            part = part.replace('-','#');
             part = part.replace('&','#');
             part = part.replace('^','#');
 

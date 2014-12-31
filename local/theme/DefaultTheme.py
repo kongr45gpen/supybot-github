@@ -86,6 +86,8 @@ class DefaultTheme(Theme):
         extra = ''
         if action == 'assigned':
             extra = " to %s" % ircutils.bold(ircutils.mircColor(assignee, "green"))
+        elif action == 'unassigned':
+            extra = " from %s" % ircutils.mircColor(assignee, "green")
         elif action == 'labeled' or action == 'unlabeled':
             extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 

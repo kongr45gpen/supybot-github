@@ -137,7 +137,7 @@ def hexToMirc(hash):
         'yellow': (255, 255, 0),
         'light green': (0, 252, 0),
         'teal': (0, 147, 147),
-        'light blue': (0, 255, 255),
+        'light blue': (180, 67, 100),
         'dark blue': (0, 0, 252),
         'pink': (255, 0, 255),
         'dark grey': (127, 127, 127),

@@ -29,6 +29,8 @@ import StatusHandler
 import TravisHandler
 import IssueCommentHandler
 
+from .. import theme as themes
+
 class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_POST(s):
         """Respond to a POST request."""
@@ -90,31 +92,47 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             s.wfile.write("The password is wrong")
             return
 
-        irc = {}
-        # Handle different event types
+        themeName = configValue('theme')
 
+        alphanumericPattern = re.compile('[\W_]+')
+        themeClass = ''.join([alphanumericPattern.sub('', themeName).title(), 'Theme'])
+
+        try:
+            mod   = getattr(themes, themeClass)
+            klass = getattr(mod, themeClass)
+        except AttributeError:
+            # The theme was not found
+            log.error("The '%s' theme was not found" % themeName)
+            klass = themes.DefaultTheme.DefaultTheme
+
+        theme = klass()
+
+        #
+        # Handle different event types
+        #
         msgs = []
+        theme.msgs = msgs
 
         if 'matrix' in data:
-            msgs = TravisHandler.handle(data)
+            TravisHandler.handle(data, theme)
         elif 'pages' in data:
-            msgs = WikiHandler.handle(data)
+            WikiHandler.handle(data, theme)
         elif 'state' in data:
-            msgs = StatusHandler.handle(data)
+            StatusHandler.handle(data, theme)
         elif 'commits' in data:
-            msgs = PushHandler.handle(data)
+            PushHandler.handle(data, theme)
         elif 'issue' in data:
             if 'comment' in data:
-                msgs = IssueCommentHandler.handle(data)
+                IssueCommentHandler.handle(data, theme)
             else:
-                msgs = IssueHandler.handle(data)
+                IssueHandler.handle(data, theme)
         else:
             msgs.append("Something happened")
 
+        theme.finalize()
 
         saveMessages(msgs)
 
-        #msgs.append( ircmsgs.privmsg("#main", "%s" % ()) )
         if not world.testing:
             for msg in msgs:
                 for irc in world.ircs:

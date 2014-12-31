@@ -1,13 +1,9 @@
 from ..utility import *
 
-def handle(data):
-    msgs = []
-
-    msgs.append( "%s: %s - %s (%s)" % (
-        ircutils.bold(data['repository']['name']),
-        colorAction(data['state']),
-        data['description'],
-        data['target_url']
-    ))
-
-    return msgs
+def handle(data, theme):
+    theme.status(
+        repo = data['repository']['name'],
+        status = data['state'],
+        description = data['description'],
+        url = data['target_url']
+    )

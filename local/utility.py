@@ -40,10 +40,19 @@ def plural(number, s, p):
         return p
     return s
 
-def maxLen(msg, maxn=400):
+def maxLen(msg, maxn=400, splitLines=True):
     """Cut down a string if its longer than `maxn` chars"""
-    if len(msg) > maxn:
-        ret = "%s..." % (msg[0:(maxn-3)])
+
+    if splitLines is True:
+        lines = msg.splitlines()
+        line = lines[0]
+    else:
+        line = msg
+
+    if len(line) > maxn:
+        ret = "%s..." % (line[0:(maxn-3)])
+    elif splitLines is True and len(lines) > 1:
+        ret = "%s..." % (line)
     else:
         ret = msg
     return ret
@@ -56,7 +65,7 @@ def colorAction(action):
                    "failed", "errored", "failure", "still failing",
                    "broken" ]:
         return ircutils.bold(ircutils.mircColor(action, "red"))
-    if action in [ "merged" ]:
+    if action in [ "assigned", "merged" ]:
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
     if action in [ "reopened", "pending" ]:
         return ircutils.bold(ircutils.mircColor(action, "blue"))

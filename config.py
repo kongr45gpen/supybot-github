@@ -57,4 +57,7 @@ conf.registerGlobalValue(Github, 'port',
         registry.Integer(8093,
         """The port where Github will send HTTP requests"""))
 
+conf.registerGlobalValue(Github, 'theme',
+        registry.String('default', """The name of the theme that will be used to style messages"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

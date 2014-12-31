@@ -1,39 +1,23 @@
 from ..utility import *
 
-def handle(data):
-    msgs = []
-
-    url = getShortURL(data['comment']['html_url'])
-
-    creator = ''
-    if data['sender']['login'] != data['issue']['user']['login']:
-        creator = " by %s" % (ircutils.mircColor(data['issue']['user']['login'],"green"),)
-
+def handle(data, theme):
     milestone = ''
-    if data['issue']['milestone'] and configValue("showMilestone"):
-        milestone = ircutils.mircColor(" (%s" % (data['issue']['milestone']['title']),"brown")
+    if configValue("showMilestone") and 'milestone' in data['issue'] and data['issue']['milestone']:
+        milestone = data['issue']['milestone']['title']
 
-    if milestone:
-        oparen = '- '
-    else:
-        oparen = '('
+    assignee = ''
+    if 'assignee' in data['issue'] and data['issue']['assignee']:
+        assignee = data['issue']['assignee']['login']
 
-    lines = data['comment']['body'].splitlines()
-    line = lines[0]
-    if len(line) > 70:
-            line = "%s..." % (line[0:67])
-    elif len(lines) > 1:
-            line += "..."
-
-    msgs.append( "%s: %s commented on issue %s \"%s\"%s%s %s%s): %s" % (
-                 ircutils.bold(data['repository']['name']),
-                 ircutils.mircColor(data['comment']['user']['login'], "green"),
-                 ''.join(["#",str(data['issue']['number'])]),
-                 ircutils.bold(data['issue']['title']),
-                 creator,
-                 milestone,
-                 oparen, url,
-                 line
-    ))
-
-    return msgs
+    theme.issue(
+        repo = data['repository']['name'],
+        actor = data['comment']['user']['login'],
+        action = 'commented on',
+        comment = data['comment']['body'],
+        issueNo = data['issue']['number'],
+        issueTitle = data['issue']['title'],
+        creator = data['issue']['user']['login'],
+        milestone = milestone,
+        url = getShortURL(data['comment']['html_url']),
+        assignee = assignee
+    )

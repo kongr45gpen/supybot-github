@@ -84,7 +84,6 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 explosion = part.split('=', 1)
                 addConfigOverride(explosion[0], explosion[1])
 
-
             i+=1
 
         if requireCode and receivedcode != configValue('passcode'):

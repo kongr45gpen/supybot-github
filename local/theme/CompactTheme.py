@@ -9,6 +9,6 @@ class CompactTheme(DefaultTheme):
             ircutils.bold(repo),
             ircutils.mircColor(author, "green"),
             ircutils.mircColor(id[0:6], "dark grey"),
-            maxLen(message, 300),
+            maxLen(message.splitlines()[0], 300),
             url
         ))

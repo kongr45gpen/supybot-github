@@ -6,7 +6,7 @@ def handle(data, theme):
         milestone = data['issue']['milestone']['title']
 
     assignee = ''
-    if 'assigne' in data and data['assignee']:
+    if 'assignee' in data and data['assignee']:
         assignee = data['assignee']['login']
     elif 'assignee' in data['issue'] and data['issue']['assignee']:
         assignee = data['issue']['assignee']['login']

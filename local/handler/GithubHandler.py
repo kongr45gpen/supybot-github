@@ -1,3 +1,4 @@
+import os
 import re
 import json
 import time
@@ -52,6 +53,9 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             eventType = ''
 
         if not world.testing:
+	    if not os.path.exists('requests/'):
+		os.makedirs('requests')
+
             f = open('requests/' + eventType + strftime("%Y-%m-%d %H:%M:%S") + '.json', 'w')
             f.write(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
             f.close()

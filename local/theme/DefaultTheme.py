@@ -77,11 +77,17 @@ class DefaultTheme(Theme):
             ' (%s)' % url if url else ''
         ))
 
-    def issue(self, repo, actor, action, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None):
+    def issue(self, repo, actor, action, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None, labelName = None, labelColor = None):
         formattedActor = ircutils.mircColor(actor, "green")
 
         if actor == assignee:
             formattedActor = ircutils.bold(formattedActor)
+
+        extra = ''
+        if action == 'assigned':
+            extra = " to %s" % ircutils.bold(ircutils.mircColor(assignee, "green"))
+        elif action == 'labeled':
+            extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 
         self.msgs.append( "%s: %s %s issue #%s \"%s\"%s%s%s %s%s)%s" % (
             ircutils.bold(repo),
@@ -90,7 +96,7 @@ class DefaultTheme(Theme):
             issueNo,
             ircutils.bold(issueTitle),
             " by %s" % ircutils.mircColor(creator,"green") if creator != actor else '',
-            " to %s" % ircutils.bold(ircutils.mircColor(assignee, "green")) if action == 'assigned' else '',
+            extra,
             " (%s" % ircutils.mircColor(milestone, "brown") if milestone else '',
             '- ' if milestone else '(',
             url,

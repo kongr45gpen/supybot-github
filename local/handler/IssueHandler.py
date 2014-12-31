@@ -9,6 +9,12 @@ def handle(data, theme):
     if 'assignee' in data['issue'] and data['issue']['assignee']:
         assignee = data['issue']['assignee']['login']
 
+    labelName = None
+    labelColor = None
+    if 'label' in data and data['label']:
+        labelName = data['label']['name']
+        labelColor = data['label']['color']
+
     theme.issue(
         repo = data['repository']['name'],
         actor = data['sender']['login'],
@@ -18,5 +24,7 @@ def handle(data, theme):
         creator = data['issue']['user']['login'],
         milestone = milestone,
         url = getShortURL(data['issue']['url']),
-        assignee = assignee
+        assignee = assignee,
+        labelName = labelName,
+        labelColor = labelColor
     )

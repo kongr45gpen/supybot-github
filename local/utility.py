@@ -1,4 +1,5 @@
 import re
+import math
 import urllib2
 
 import supybot.conf as conf
@@ -123,6 +124,42 @@ def isStatusVisible(repo, status):
     globals.travisStatuses[repo] = status
     return changed
 
+def hexToMirc(hash):
+    colors = {
+        'white': (255, 255, 255),
+        'black': (0, 0, 0),
+        'blue': (0, 0, 127),
+        'green': (0, 147, 0),
+        'red': (255,0 ,0),
+        'brown': (127, 0, 0),
+        'purple': (156, 0, 156),
+        'orange': (252, 127, 0),
+        'yellow': (255, 255, 0),
+        'light green': (0, 252, 0),
+        'teal': (0, 147, 147),
+        'light blue': (0, 255, 255),
+        'dark blue': (0, 0, 252),
+        'pink': (255, 0, 255),
+        'dark grey': (127, 127, 127),
+        'light grey': (210, 210, 210)
+    }
+
+    rgb = _hex_to_rgb(hash)
+
+    return min(colors, key = lambda x:_colourDistance(colors[x], rgb))
+
+def _hex_to_rgb(value):
+    value = value.lstrip('#')
+    lv = len(value)
+    return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+
+def _colourDistance(a, b):
+    rmean = (a[0] + b[0]) /2
+    r = a[0] - b[0]
+    g = a[1] - b[1]
+    b = a[2] - b[2]
+
+    return math.sqrt((((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8))
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,
 # orange, yellow, teal, pink, light/dark gray/grey

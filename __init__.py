@@ -34,6 +34,7 @@ import local.handler.WikiHandler
 import local.handler.IssueHandler
 import local.handler.StatusHandler
 import local.handler.TravisHandler
+import local.handler.CreateDeleteHandler
 import local.handler.IssueCommentHandler
 import local.theme
 import local.utility
@@ -44,6 +45,7 @@ reload(local.handler.WikiHandler)
 reload(local.handler.IssueHandler)
 reload(local.handler.StatusHandler)
 reload(local.handler.TravisHandler)
+reload(local.handler.CreateDeleteHandler)
 reload(local.handler.IssueCommentHandler)
 reload(local.theme.CompactTheme)
 reload(local.theme.DefaultTheme)

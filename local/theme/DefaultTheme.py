@@ -48,18 +48,18 @@ class DefaultTheme(Theme):
             ' (%s)' % url if url else ''
         ))
 
-    def branch(self, repo, actor, action, count, base, to, url):
-        self.msgs.append( "%s: %s %s branch %s from %s%s%s" % (
+    def branch(self, repo, actor, action, count, to, url, base = None):
+        self.msgs.append( "%s: %s %s branch %s%s%s%s" % (
             ircutils.bold(repo),
             ircutils.mircColor(actor, "green"),
             colorAction(action),
             ircutils.bold(ircutils.mircColor(to, "blue")),
-            ircutils.bold(ircutils.mircColor(base, "blue")),
+            ' from %s' % ircutils.bold(ircutils.mircColor(base, "blue")) if base else '',
             ' (%s)' % url if url else '',
             ':' if count else ''
         ))
 
-    def tag(self, repo, actor, action, base, to, onlyDeleted, headMsg, headId, url):
+    def tag(self, repo, actor, action, to, onlyDeleted, base = None, headMsg = None, headId = None, url = None):
         if onlyDeleted:
             commitInfo = ""
         else:

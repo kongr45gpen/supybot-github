@@ -28,6 +28,7 @@ import WikiHandler
 import IssueHandler
 import StatusHandler
 import TravisHandler
+import CreateDeleteHandler
 import IssueCommentHandler
 
 from .. import theme as themes
@@ -129,6 +130,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 IssueCommentHandler.handle(data, theme)
             else:
                 IssueHandler.handle(data, theme)
+        elif 'ref_type' in data:
+            CreateDeleteHandler.handle(data, theme)
         else:
             msgs.append("Something happened")
 

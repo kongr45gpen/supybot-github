@@ -84,4 +84,48 @@ class GithubTestCase(ExpectationPluginTestCase):
 
         self.assertError('get second message')
 
+    def testCreateTag(self):
+        self.sendRequest('create-tag')
+
+        self.describe('first message',
+            it().should.contain('public-repo'),
+            it().should.contain('baxterthehacker'),
+            it().should.contain('tagged'),
+            it().should.contain('0.0.1'),
+            it().should.contain('https://github.com/baxterthehacker/public-repo/releases/tag/0.0.1')
+        )
+
+    def testDeleteTag(self):
+        self.sendRequest('delete-tag')
+
+        self.describe('first message',
+            it().should.contain('public-repo'),
+            it().should.contain('baxterthehacker'),
+            it().should.contain('deleted tag'),
+            it().should.contain('simple-tag'),
+            it().should.contain('https://github.com/baxterthehacker/public-repo/tags')
+        )
+
+    def testCreateBranch(self):
+        self.sendRequest('create-branch')
+
+        self.describe('first message',
+            it().should.contain('public-repo'),
+            it().should.contain('baxterthehacker'),
+            it().should.contain('created branch'),
+            it().should.contain('develop'),
+            it().should.contain('https://github.com/baxterthehacker/public-repo/tree/develop')
+        )
+
+    def testDeleteBranch(self):
+        self.sendRequest('delete-branch')
+
+        self.describe('first message',
+            it().should.contain('public-repo'),
+            it().should.contain('baxterthehacker'),
+            it().should.contain('deleted branch'),
+            it().should.contain('blue-lights'),
+            it().should.contain('https://github.com/baxterthehacker/public-repo/branches')
+        )
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

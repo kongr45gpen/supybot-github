@@ -130,18 +130,18 @@ def hexToMirc(hash):
         'black': (0, 0, 0),
         'blue': (0, 0, 127),
         'green': (0, 147, 0),
-        'red': (255,0 ,0),
+        'red': (255, 0, 0),
         'brown': (127, 0, 0),
         'purple': (156, 0, 156),
         'orange': (252, 127, 0),
         'yellow': (255, 255, 0),
         'light green': (0, 252, 0),
         'teal': (0, 147, 147),
-        'light blue': (180, 67, 100),
-        'dark blue': (0, 0, 252),
+        'light blue': (84, 255, 255),
+        'dark blue': (84, 84, 255),
         'pink': (255, 0, 255),
         'dark grey': (127, 127, 127),
-        'light grey': (210, 210, 210)
+        'light grey': (230, 230, 230)
     }
 
     rgb = _hex_to_rgb(hash)

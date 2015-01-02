@@ -155,11 +155,11 @@ def _hex_to_rgb(value):
 
 def _colourDistance(a, b):
     rmean = (a[0] + b[0]) /2
-    r = a[0] - b[0]
-    g = a[1] - b[1]
-    b = a[2] - b[2]
+    red = a[0] - b[0]
+    green = a[1] - b[1]
+    blue = a[2] - b[2]
 
-    return math.sqrt((((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8))
+    return math.sqrt((((512+rmean)*red*red)>>8) + 4*green*green + (((767-rmean)*blue*blue)>>8))
 # Possible colours:
 # white, black, (light/dark) blue, (light) green, red, brown, purple,
 # orange, yellow, teal, pink, light/dark gray/grey

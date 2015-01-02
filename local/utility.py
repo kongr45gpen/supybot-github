@@ -91,11 +91,6 @@ def saveMessages(msgs):
         return
     globals.messageList = msgs
 
-def clean(string):
-    """Strips IRC control characters from a string"""
-    regex = re.compile("(([\x02\x1f\x16\x0f])|(\x03(?:\d{1,2}(?:,\d{1,2})?)?))", re.UNICODE)
-    return regex.sub('', string)
-
 def isYes(string):
     """Returns True if the string represents a yes, False, if it represents
     no, and another string if it represents something else"""

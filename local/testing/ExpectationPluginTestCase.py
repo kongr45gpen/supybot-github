@@ -1,4 +1,5 @@
 ###
+from supybot.ircutils import stripFormatting
 from supybot.log import info
 from supybot.test import *
 
@@ -9,8 +10,6 @@ from time import sleep
 
 import re
 import urllib
-
-from ..utility import clean
 
 class ExpectationPluginTestCase(PluginTestCase):
     plugins       = {}
@@ -86,7 +85,7 @@ def expect(query):
 def it():
     return Expectation()
 
-class Expectation:
+class Expectation(object):
     def __init__(self):
         self.error = ''
         self.negation = False
@@ -107,7 +106,7 @@ class Expectation:
         return other
 
     def cleanReply(self):
-        return clean(self.reply)
+        return ircutils.stripFormatting(self.reply)
 
     def getSummary(self):
         if self.assertionParameter:

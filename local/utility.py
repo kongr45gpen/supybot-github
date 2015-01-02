@@ -149,6 +149,7 @@ def _hex_to_rgb(value):
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
 def _colourDistance(a, b):
+    # Source: http://www.compuphase.com/cmetric.htm
     rmean = (a[0] + b[0]) /2
     red = a[0] - b[0]
     green = a[1] - b[1]

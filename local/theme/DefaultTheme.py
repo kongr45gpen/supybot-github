@@ -135,8 +135,9 @@ class DefaultTheme(Theme):
                 pageurl,
             ))
 
-    def travis(self, repo, status, commitId, commitMessage, commitAuthor, buildUrl):
-        self.msgs.append( "%s: Build status: %s * %s by %s (%s - %s)" % (
+    def travis(self, branch, repo, status, commitId, commitMessage, commitAuthor, buildUrl):
+        self.msgs.append( "%s @ %s: Build status: %s * %s by %s (%s - %s)" % (
+            ircutils.bold(ircutils.mircColor(branch, "blue")),
             ircutils.bold(repo),
             colorAction(status.lower()),
             ircutils.bold(commitId[0:6]),

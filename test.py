@@ -73,7 +73,7 @@ class GithubTestCase(ExpectationPluginTestCase):
         self.sendRequest('travis-notification')
 
         self.describe('first message',
-            it().should.contain('minimal'),
+            it().should.contain('master @ minimal'),
             it().should.contain('passed'),
             it().should.contain('62aae'),
             it().should.contain('Sven Fuchs'),

@@ -80,7 +80,7 @@ def getShortURL(longurl):
         url = longurl
     else:
         data = 'url=%s' % (longurl)
-        req = urllib2.Request("http://git.io", data)
+        req = urllib2.Request("https://git.io/", data)
         response = urllib2.urlopen(req)
         url = response.info().getheader('Location')
     return ircutils.mircColor(url, "purple")

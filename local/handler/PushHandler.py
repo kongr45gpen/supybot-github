@@ -19,7 +19,7 @@ def handle(data, theme):
             isTag = True
 
         urls = getShortURL(data['compare'])
-        if 'base_ref' in data:
+        if 'base_ref' in data and data['base_ref'] is not None:
             base_ref = data['base_ref'].split('/',2)
             baseBranch = base_ref[2]
             branchFrom = baseBranch

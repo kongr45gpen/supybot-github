@@ -37,15 +37,16 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_POST(s):
         """Respond to a POST request."""
         length = int(s.headers['Content-Length'])
-        post_data = urlparse.parse_qs(s.rfile.read(length).decode('utf-8'))
-        data = json.loads(post_data['payload'][0])
+        if 'content-type' not in s.headers or s.headers['content-type'] == 'application/x-www-form-urlencoded':
+            post_data = urlparse.parse_qs(s.rfile.read(length).decode('utf-8'))
+            data = json.loads(post_data['payload'][0])
+        else:
+            data = json.loads(s.rfile.read(length).decode('utf-8'))
 
         s.send_response(200)
         s.send_header('Content-type', 'text/html')
         s.end_headers()
-        s.wfile.write('<!DOCTYPE html><html><head><title>Hello</title></head>')
-        s.wfile.write("<body><p>Thanks, you're awesome.</p>")
-        s.wfile.write('</body></html>\n')
+        s.wfile.write("Thanks, you're awesome.\n")
         s.wfile.write(s.path.split('/'))
 
         if 'X-GitHub-Event' in s.headers:

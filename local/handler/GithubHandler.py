@@ -68,6 +68,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             and configValue('passcode').strip().lower() != 'false' \
             and configValue('passcode').strip().lower() != 'null' \
             and configValue('passcode').strip().lower() != 'no'
+        brackets = parseBrackets(configValue('brackets'))
 
         resetConfigOverrides()
 
@@ -109,7 +110,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             log.error("The '%s' theme was not found" % themeName)
             klass = themes.DefaultTheme.DefaultTheme
 
-        theme = klass()
+        theme = klass(brackets)
 
         #
         # Handle different event types

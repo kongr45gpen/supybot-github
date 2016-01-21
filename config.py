@@ -60,4 +60,7 @@ conf.registerGlobalValue(Github, 'port',
 conf.registerGlobalValue(Github, 'theme',
         registry.String('default', """The name of the theme that will be used to style messages"""))
 
+conf.registerGlobalValue(Github, 'brackets',
+        registry.String('( )', """The brackets to use to enclose URLs (space-separated)"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

@@ -4,23 +4,23 @@ from ..utility import *
 
 class DefaultTheme(Theme):
     def push(self, branch, repo, actor, count, url):
-        self.msgs.append( "%s @ %s: %s pushed %s %s (%s)%s" % (
+        self.msgs.append( "%s @ %s: %s pushed %s %s %s%s" % (
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             ircutils.bold(repo),
             ircutils.mircColor(actor, "green"),
             ircutils.bold(str(count)),
             plural(count, "commit", "commits"),
-            url,
+            self.enclose(url),
             ':' if count else ''
         ))
 
     def commit(self, branch, repo, author, message, id, url):
-        self.msgs.append("%s @ %s: %s * %s (%s)" % (
+        self.msgs.append("%s @ %s: %s * %s %s" % (
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             ircutils.bold(repo),
             ircutils.mircColor(author, "green"),
             ircutils.bold(id[0:6]),
-            url
+            self.enclose(url)
         ))
 
         commitlines = message.splitlines()
@@ -45,7 +45,7 @@ class DefaultTheme(Theme):
             ircutils.bold(ircutils.mircColor(base, "blue")),
             distinctMessage,
             ircutils.bold(ircutils.mircColor(to, "blue")),
-            ' (%s)' % url if url else ''
+            ' %s' % self.enclose(url) if url else ''
         ))
 
     def branch(self, repo, actor, action, count, to, url, base = None):
@@ -55,7 +55,7 @@ class DefaultTheme(Theme):
             colorAction(action),
             ircutils.bold(ircutils.mircColor(to, "blue")),
             ' from %s' % ircutils.bold(ircutils.mircColor(base, "blue")) if base else '',
-            ' (%s)' % url if url else '',
+            ' %s' % self.enclose(url) if url else '',
             ':' if count else ''
         ))
 
@@ -74,7 +74,7 @@ class DefaultTheme(Theme):
             colorAction(action),
             commitInfo,
             ircutils.bold(ircutils.mircColor(to, "blue")),
-            ' (%s)' % url if url else ''
+            ' %s' % self.enclose(url) if url else ''
         ))
 
     def issue(self, repo, actor, action, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None, labelName = None, labelColor = None):
@@ -91,7 +91,7 @@ class DefaultTheme(Theme):
         elif action == 'labeled' or action == 'unlabeled':
             extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 
-        self.msgs.append( "%s: %s %s issue #%s \"%s\"%s%s%s %s%s)%s" % (
+        self.msgs.append( "%s: %s %s issue #%s \"%s\"%s%s %s %s" % (
             ircutils.bold(repo),
             formattedActor,
             colorAction(action),
@@ -99,19 +99,20 @@ class DefaultTheme(Theme):
             ircutils.bold(issueTitle),
             " by %s" % ircutils.mircColor(creator,"green") if creator != actor else '',
             extra,
-            " (%s" % ircutils.mircColor(milestone, "brown") if milestone else '',
-            '- ' if milestone else '(',
-            url,
+            self.enclose("%s%s" % (
+                ircutils.mircColor(milestone, "brown") + '- ' if milestone else '',
+                url
+            )),
             ": %s" % maxLen(comment, 70) if comment else ''
         ))
 
     def wikiPush(self, repo, actor, count, url):
-        self.msgs.append( "%s: %s modified %s wiki %s (%s):" % (
+        self.msgs.append( "%s: %s modified %s wiki %s %s:" % (
             ircutils.bold(repo),
             ircutils.mircColor(actor, "green"),
             ircutils.bold(str(count)),
             plural(count, "page", "pages"),
-            url
+            self.enclose(url)
         ))
 
     def wikiPages(self, repo, actor, pages, url):
@@ -119,12 +120,12 @@ class DefaultTheme(Theme):
 
         for page in pages:
             if configValue("hidePush") and urlShown is False:
-                pageurl = "(%s)" % (url,)
+                pageurl = self.enclose(url)
                 urlShown = True
             elif configValue("hidePush"):
                 pageurl = ""
             else:
-                pageurl = "(%s)" % (page['url'],)
+                pageurl = self.enclose(page['url'])
 
             self.msgs.append( "%s: %s %s %s * %s %s" % (
                 ircutils.bold(repo),
@@ -136,20 +137,22 @@ class DefaultTheme(Theme):
             ))
 
     def travis(self, branch, repo, status, commitId, commitMessage, commitAuthor, buildUrl):
-        self.msgs.append( "%s @ %s: Build status: %s * %s by %s (%s - %s)" % (
+        self.msgs.append( "%s @ %s: Build status: %s * %s by %s %s" % (
             ircutils.bold(ircutils.mircColor(branch, "blue")),
             ircutils.bold(repo),
             colorAction(status.lower()),
             ircutils.bold(commitId[0:6]),
             ircutils.mircColor(commitAuthor, "green"),
-            ircutils.mircColor(maxLen(commitMessage, 50), "dark gray"),
-            buildUrl
+            self.enclose("%s - %s" % (
+                ircutils.mircColor(maxLen(commitMessage, 50), "dark gray"),
+                buildUrl
+            ))
         ))
 
     def status(self, repo, status, description, url):
-        self.msgs.append( "%s: %s - %s (%s)" % (
+        self.msgs.append( "%s: %s - %s %s" % (
             ircutils.bold(repo),
             colorAction(status),
             description,
-            url
+            self.enclose(url)
         ))

@@ -36,7 +36,9 @@ import local.handler.StatusHandler
 import local.handler.TravisHandler
 import local.handler.CreateDeleteHandler
 import local.handler.IssueCommentHandler
-import local.theme
+import local.theme.Theme
+import local.theme.DefaultTheme
+import local.theme.CompactTheme
 import local.utility
 import local.globals
 reload(RequestHandler)
@@ -47,9 +49,9 @@ reload(local.handler.StatusHandler)
 reload(local.handler.TravisHandler)
 reload(local.handler.CreateDeleteHandler)
 reload(local.handler.IssueCommentHandler)
-reload(local.theme.CompactTheme)
-reload(local.theme.DefaultTheme)
 reload(local.theme.Theme)
+reload(local.theme.DefaultTheme)
+reload(local.theme.CompactTheme)
 reload(local.utility)
 reload(local.globals)
 

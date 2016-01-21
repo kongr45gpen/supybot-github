@@ -59,7 +59,6 @@ def handle(data, theme):
 
     if configValue("hidePush",None) == False and not branched:
         theme.push(
-            repo = data['repository']['name'],
             branch = branch,
             actor = data['pusher']['name'],
             url = getShortURL(data['compare']),
@@ -68,7 +67,6 @@ def handle(data, theme):
     elif branched:
         if isTag:
             theme.tag(
-                repo = data['repository']['name'],
                 actor = data['pusher']['name'],
                 action = action,
                 base = branchFrom,
@@ -80,7 +78,6 @@ def handle(data, theme):
             )
         elif isMerge:
             theme.merge(
-                repo = data['repository']['name'],
                 actor = data['pusher']['name'],
                 action = action,
                 mergeCount = mergedCommitCount,
@@ -91,7 +88,6 @@ def handle(data, theme):
             )
         else:
             theme.branch(
-                repo = data['repository']['name'],
                 actor = data['pusher']['name'],
                 action = action,
                 count = commitno,
@@ -116,7 +112,6 @@ def handle(data, theme):
 
         theme.commit(
             branch = commitBranch,
-            repo = data['repository']['name'],
             author = author,
             id = commit['id'],
             message = commit['message'],

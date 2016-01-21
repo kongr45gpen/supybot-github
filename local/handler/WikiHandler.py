@@ -7,7 +7,6 @@ def handle(data, theme):
 
     if configValue("hidePush",None) is False:
         theme.wikiPush(
-            repo = data['repository']['name'],
             actor = data['sender']['login'],
             count = pageno,
             url = url
@@ -24,7 +23,6 @@ def handle(data, theme):
 
     # Unfortunately github doesn't support edit summaries :(
     theme.wikiPages(
-        repo = data['repository']['name'],
         actor = data['sender']['login'],
         pages = pages,
         url = url

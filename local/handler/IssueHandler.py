@@ -18,7 +18,6 @@ def handle(data, theme):
         labelColor = data['label']['color']
 
     theme.issue(
-        repo = data['repository']['name'],
         actor = data['sender']['login'],
         action = data['action'],
         issueNo = data['issue']['number'],

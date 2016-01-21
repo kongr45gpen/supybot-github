@@ -5,7 +5,6 @@ def handle(data, theme):
 
     if data['ref_type'] == 'tag':
         theme.tag(
-            repo = data['repository']['name'],
             actor = data['sender']['login'],
             action = "tagged" if created else "deleted tag",
             to = data['ref'],
@@ -14,7 +13,6 @@ def handle(data, theme):
         )
     else:
         theme.branch(
-            repo = data['repository']['name'],
             actor = data['sender']['login'],
             action = "created" if created else "deleted",
             count = 0,

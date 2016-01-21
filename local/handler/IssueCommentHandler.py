@@ -10,7 +10,6 @@ def handle(data, theme):
         assignee = data['issue']['assignee']['login']
 
     theme.issue(
-        repo = data['repository']['name'],
         actor = data['comment']['user']['login'],
         action = 'commented on',
         comment = data['comment']['body'],

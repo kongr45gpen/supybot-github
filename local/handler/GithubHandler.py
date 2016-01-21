@@ -69,7 +69,6 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             and configValue('passcode').strip().lower() != 'false' \
             and configValue('passcode').strip().lower() != 'null' \
             and configValue('passcode').strip().lower() != 'no'
-        brackets = parseBrackets(configValue('brackets'))
 
         resetConfigOverrides()
 
@@ -98,11 +97,13 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             s.wfile.write("The password is wrong")
             return
 
+        brackets = parseBrackets(configValue('brackets'))
         themeName = configValue('theme')
 
         alphanumericPattern = re.compile('[\W_]+')
         themeClass = ''.join([alphanumericPattern.sub('', themeName).title(), 'Theme'])
 
+        # Find the theme's class
         try:
             mod   = getattr(themes, themeClass)
             klass = getattr(mod, themeClass)
@@ -111,7 +112,12 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             log.error("The '%s' theme was not found" % themeName)
             klass = themes.DefaultTheme.DefaultTheme
 
-        theme = klass(brackets)
+        repo = {}
+
+        repo['name']  = data.get('repository').get('name')
+        repo['owner'] = data.get('repository').get('owner',{}).get('login')
+        repo['fork']  = data.get('repository').get('fork', False)
+        theme = klass(repo, brackets)
 
         #
         # Handle different event types

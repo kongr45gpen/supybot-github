@@ -35,7 +35,7 @@
     "private": false,
     "html_url": "https://github.com/kongr45gpen/supybot-github",
     "description": "Highly configurable, still under construction supybot/gribble plugin that uses an HTTP post-commit hook to report commits and other updates from Github repositories",
-    "fork": false,
+    "fork": true,
     "url": "https://api.github.com/repos/kongr45gpen/supybot-github",
     "forks_url": "https://api.github.com/repos/kongr45gpen/supybot-github/forks",
     "keys_url": "https://api.github.com/repos/kongr45gpen/supybot-github/keys{/key_id}",

@@ -3,10 +3,9 @@ from Theme import Theme
 from ..utility import *
 
 class DefaultTheme(Theme):
-    def push(self, branch, repo, actor, count, url):
-        self.msgs.append( "%s @ %s: %s pushed %s %s %s%s" % (
-            ircutils.bold(ircutils.mircColor(branch, "blue")),
-            ircutils.bold(repo),
+    def push(self, branch, actor, count, url):
+        self.msgs.append( "%s: %s pushed %s %s %s%s" % (
+            self.repo(branch),
             ircutils.mircColor(actor, "green"),
             ircutils.bold(str(count)),
             plural(count, "commit", "commits"),
@@ -14,10 +13,9 @@ class DefaultTheme(Theme):
             ':' if count else ''
         ))
 
-    def commit(self, branch, repo, author, message, id, url):
-        self.msgs.append("%s @ %s: %s * %s %s" % (
-            ircutils.bold(ircutils.mircColor(branch, "blue")),
-            ircutils.bold(repo),
+    def commit(self, branch, author, message, id, url):
+        self.msgs.append("%s: %s * %s %s" % (
+            self.repo(branch),
             ircutils.mircColor(author, "green"),
             ircutils.bold(id[0:6]),
             self.enclose(url)
@@ -25,19 +23,18 @@ class DefaultTheme(Theme):
 
         commitlines = message.splitlines()
         for line in commitlines:
-            self.msgs.append( "%s @ %s: %s" % (
-                ircutils.bold(ircutils.mircColor(branch, "blue")),
-                ircutils.bold(repo),
-                maxLen(line, 400),
+            self.msgs.append( "%s: %s" % (
+                self.repo(branch),
+                maxLen(line, 400)
             ))
 
-    def merge(self, repo, actor, action, mergeCount, regularCount, base, to, url):
+    def merge(self, actor, action, mergeCount, regularCount, base, to, url):
         distinctMessage = ""
         if configValue("hidePush",None) == False and regularCount > 0:
             distinctMessage = " and %s %s %s" % ( colorAction("pushed"), regularCount, plural(regularCount, 'commit', 'commits'))
 
         self.msgs.append( "%s: %s %s %s %s from %s%s into %s%s" % (
-            ircutils.bold(repo),
+            self.repo(),
             ircutils.mircColor(actor, "green"),
             colorAction(action),
             mergeCount,
@@ -48,9 +45,9 @@ class DefaultTheme(Theme):
             ' %s' % self.enclose(url) if url else ''
         ))
 
-    def branch(self, repo, actor, action, count, to, url, base = None):
+    def branch(self, actor, action, count, to, url, base = None):
         self.msgs.append( "%s: %s %s branch %s%s%s%s" % (
-            ircutils.bold(repo),
+            self.repo(),
             ircutils.mircColor(actor, "green"),
             colorAction(action),
             ircutils.bold(ircutils.mircColor(to, "blue")),
@@ -59,7 +56,7 @@ class DefaultTheme(Theme):
             ':' if count else ''
         ))
 
-    def tag(self, repo, actor, action, to, onlyDeleted, base = None, headMsg = None, headId = None, url = None):
+    def tag(self, actor, action, to, onlyDeleted, base = None, headMsg = None, headId = None, url = None):
         if onlyDeleted:
             commitInfo = ""
         else:
@@ -69,7 +66,7 @@ class DefaultTheme(Theme):
             commitInfo = " %s %s %s%s as" % (base, ircutils.bold('*'), ircutils.bold(headId[0:6]), commitMsg)
 
         self.msgs.append("%s: %s %s%s %s%s" % (
-            ircutils.bold(repo),
+            self.repo(),
             ircutils.mircColor(actor, "green"),
             colorAction(action),
             commitInfo,
@@ -77,7 +74,7 @@ class DefaultTheme(Theme):
             ' %s' % self.enclose(url) if url else ''
         ))
 
-    def issue(self, repo, actor, action, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None, labelName = None, labelColor = None):
+    def issue(self, actor, action, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None, labelName = None, labelColor = None):
         formattedActor = ircutils.mircColor(actor, "green")
 
         if actor == assignee:
@@ -92,7 +89,7 @@ class DefaultTheme(Theme):
             extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 
         self.msgs.append( "%s: %s %s issue #%s \"%s\"%s%s %s %s" % (
-            ircutils.bold(repo),
+            self.repo(),
             formattedActor,
             colorAction(action),
             issueNo,
@@ -106,16 +103,16 @@ class DefaultTheme(Theme):
             ": %s" % maxLen(comment, 70) if comment else ''
         ))
 
-    def wikiPush(self, repo, actor, count, url):
+    def wikiPush(self, actor, count, url):
         self.msgs.append( "%s: %s modified %s wiki %s %s:" % (
-            ircutils.bold(repo),
+            self.repo(),
             ircutils.mircColor(actor, "green"),
             ircutils.bold(str(count)),
             plural(count, "page", "pages"),
             self.enclose(url)
         ))
 
-    def wikiPages(self, repo, actor, pages, url):
+    def wikiPages(self, actor, pages, url):
         urlShown = False;
 
         for page in pages:
@@ -128,7 +125,7 @@ class DefaultTheme(Theme):
                 pageurl = self.enclose(page['url'])
 
             self.msgs.append( "%s: %s %s %s * %s %s" % (
-                ircutils.bold(repo),
+                self.repo(),
                 ircutils.mircColor(actor, "green"),
                 colorAction(page['action']),
                 ircutils.bold(ircutils.mircColor(page['name'], "blue")),
@@ -149,10 +146,26 @@ class DefaultTheme(Theme):
             ))
         ))
 
-    def status(self, repo, status, description, url):
+    def status(self, status, description, url):
         self.msgs.append( "%s: %s - %s %s" % (
-            ircutils.bold(repo),
+            self.repo(),
             colorAction(status),
             description,
             self.enclose(url)
         ))
+
+    def repo(self, branch = None):
+        name = ircutils.bold(self.repoInfo['name'])
+
+        if self.repoInfo['fork'] and self.repoInfo['owner']:
+            repo = "%s/%s" % (self.repoInfo['owner'], name)
+        else:
+            repo = name
+
+        if branch is not None:
+            return "%s @ %s" % (
+                ircutils.bold(ircutils.mircColor(branch, "blue")),
+                repo
+            )
+        else:
+            return repo

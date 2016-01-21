@@ -30,6 +30,11 @@ def configValue(name, channel=None, repo=None, type=None, module=None):
     return registryValue("Github", name, channel)
 
 def addConfigOverride(name, value):
+    if value.lower() == 'false':
+        value = False;
+    elif value.lower() == 'true':
+        value = True;
+
     if not 'override' in name.lower():
         globals.configOverrides[name] = value
 

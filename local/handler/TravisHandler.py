@@ -9,5 +9,5 @@ def handle(data, theme):
             commitId = data['commit'],
             commitMessage = data['message'],
             commitAuthor = data['author_name'],
-            buildUrl = data['build_url']
+            buildUrl = getShortURL(data['build_url'])
         )

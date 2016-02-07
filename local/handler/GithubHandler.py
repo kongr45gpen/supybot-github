@@ -141,7 +141,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         elif 'ref_type' in data:
             CreateDeleteHandler.handle(data, theme)
         else:
-            msgs.append("Something happened")
+            theme.unknown(eventType)
 
         theme.finalize()
 

@@ -154,6 +154,12 @@ class DefaultTheme(Theme):
             self.enclose(url)
         ))
 
+    def unknown(self, eventType):
+        self.msgs.append( "%s: %s happened" % (
+            self.repo(),
+            "A %s" % (ircutils.bold(eventType)) if eventType else "Something"
+        ))
+
     def repo(self, branch = None):
         name = ircutils.bold(self.repoInfo['name'])
 

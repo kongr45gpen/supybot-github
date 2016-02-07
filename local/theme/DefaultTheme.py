@@ -88,7 +88,7 @@ class DefaultTheme(Theme):
         elif action == 'labeled' or action == 'unlabeled':
             extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 
-        self.msgs.append( "%s: %s %s issue #%s \"%s\"%s%s %s %s" % (
+        self.msgs.append( "%s: %s %s issue #%s \"%s\"%s%s %s%s" % (
             self.repo(),
             formattedActor,
             colorAction(action),

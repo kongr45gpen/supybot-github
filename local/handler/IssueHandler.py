@@ -24,7 +24,7 @@ def handle(data, theme):
         issueTitle = data['issue']['title'],
         creator = data['issue']['user']['login'],
         milestone = milestone,
-        url = getShortURL(data['issue']['url']),
+        url = getShortURL(data['issue']['html_url']),
         assignee = assignee,
         labelName = labelName,
         labelColor = labelColor

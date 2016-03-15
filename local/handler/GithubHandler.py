@@ -1,10 +1,12 @@
 import os
 import re
+import hmac
 import json
 import time
 import random
 import urllib
 import urllib2
+import hashlib
 import urlparse
 import threading
 import BaseHTTPServer
@@ -37,17 +39,12 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_POST(s):
         """Respond to a POST request."""
         length = int(s.headers['Content-Length'])
+        payload = s.rfile.read(length).decode('utf-8')
         if 'content-type' not in s.headers or s.headers['content-type'] == 'application/x-www-form-urlencoded':
-            post_data = urlparse.parse_qs(s.rfile.read(length).decode('utf-8'))
+            post_data = urlparse.parse_qs(payload)
             data = json.loads(post_data['payload'][0])
         else:
-            data = json.loads(s.rfile.read(length).decode('utf-8'))
-
-        s.send_response(200)
-        s.send_header('Content-type', 'text/html')
-        s.end_headers()
-        s.wfile.write("Thanks, you're awesome.\n")
-        s.wfile.write(s.path.split('/'))
+            data = json.loads(payload)
 
         if 'X-GitHub-Event' in s.headers:
             eventType = s.headers['X-GitHub-Event']
@@ -58,7 +55,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             if not os.path.exists('requests/'):
                 os.makedirs('requests')
 
-            f = open('requests/' + eventType + strftime("%Y-%m-%d %H:%M:%S") + '.json', 'w')
+            f = open('requests/' + eventType.replace('/','_') + strftime("%Y-%m-%d %H:%M:%S") + '.json', 'w')
             f.write(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
             f.close()
 
@@ -92,10 +89,32 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
             i+=1
 
+        s.send_response(200)
+        s.send_header('Content-type', 'text/html')
+        s.end_headers()
+        s.wfile.write("Thanks, you're awesome.\n")
+        s.wfile.write(s.path.split('/'))
+
         if requireCode and receivedcode != configValue('passcode'):
             # The password is wrong
             s.wfile.write("The password is wrong")
             return
+
+        secret = getChannelSecret(channel)
+        if secret is not None:
+            if not 'X-Hub-Signature' in s.headers:
+                s.wfile.write("This channel requires a secret")
+                return
+
+            digest = "sha1=%s" % (hmac.new(secret, payload, hashlib.sha1).hexdigest(),)
+            log.debug("expected digest: %s", digest)
+
+            provided = s.headers['X-Hub-Signature']
+            log.debug("provided digest: %s", provided)
+
+            if not secureCompare(digest, provided):
+                s.wfile.write("Invalid secret key")
+                return
 
         brackets = parseBrackets(configValue('brackets'))
         themeName = configValue('theme')

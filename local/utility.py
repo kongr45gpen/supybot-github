@@ -1,5 +1,7 @@
 import re
 import math
+import random
+import string
 import urllib2
 
 import supybot.conf as conf
@@ -133,6 +135,26 @@ def isStatusVisible(repo, status):
 
     globals.travisStatuses[repo] = status
     return changed
+
+def randomString(length):
+    """Returns a securely generated random string of a specific length"""
+    return ''.join(random.SystemRandom().choice(
+        string.ascii_uppercase + string.ascii_lowercase + string.digits
+    ) for _ in range(length))
+
+def secureCompare(s1, s2):
+    """Securely compare two strings"""
+    return sum(i != j for i, j in zip(s1, s2)) is 0
+
+def getChannelSecret(channel):
+    """Returns a secret for a channel, or None if that channel has no secret"""
+    if globals.secretDB is None:
+        return None
+    try:
+        record = globals.secretDB.get(channel, 1)
+        return record.secret
+    except KeyError:
+        return None
 
 def hexToMirc(hash):
     colors = {

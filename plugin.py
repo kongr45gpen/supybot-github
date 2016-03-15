@@ -34,6 +34,7 @@ import urlparse
 import threading
 import BaseHTTPServer
 
+import supybot.dbi as dbi
 import supybot.log as log
 import supybot.conf as conf
 import supybot.utils as utils
@@ -61,12 +62,18 @@ class Github(callbacks.Plugin):
     messages = []
     pass
 
+    add = None
+    search = None
+    stats = None
+    change = None
+
     def ServerStart(self, httpd):
         try:
             log.info('Server Starts - %s:%s' % ('', self.port))
             httpd.serve_forever()
         except:
             return
+
 
     def __init__(self, irc):
         self.__parent = super(Github, self)
@@ -117,6 +124,63 @@ class Github(callbacks.Plugin):
     # Debug command
     get = wrap(get, ['lowered', optional('lowered'), optional('text')]) if world.testing else False
 
+    def abs_val(self,irc,msg,args):
+        pass
+    abs_val = wrap(abs_val,[])
+
+    class secret(callbacks.Commands):
+        class DB(plugins.DbiChannelDB):
+            class DB(dbi.DB):
+                class Record(dbi.Record):
+                    __fields__ = [
+                        'secret'
+                    ]
+                def add(self, secret, **kwargs):
+                    record = self.Record(secret = secret, **kwargs)
+                    return super(self.__class__, self).add(record)
+                def set(self, id, secret, **kwargs):
+                    record = self.Record(secret = secret, **kwargs)
+                    return super(self.__class__, self).set(id, record)
+
+        def __init__(self, irc):
+            # self.db = self.DB(("%s-secret") % (self.name(),))
+            print(conf.supybot.databases())
+            super(Github.secret, self).__init__(irc)
+            self.db = plugins.DB(("github-secret"), {'flat': self.DB})()
+            globals.secretDB = self.db
+
+        def set(self, irc, msg, args, channel, secret):
+            """[<channel>] secret
+
+            Sets a Github secret for a channel to a specific value.
+            <channel> is only necessary if the message isn't sent in the channel itself.
+            """
+            self.db.set(channel, 1, secret)
+            # record = Github.secret.DB.DB.Record(secret = sec)
+            # self.db.set(channel, 1, secret)
+            irc.replySuccess()
+        set = wrap(set, ['channel', 'text'])
+
+        def reset(self, irc, msg, args, channel):
+            """[<channel>]
+
+            Removes a Github secret for a channel.
+            <channel> is only necessary if the message isn't sent in the channel itself.
+            """
+            self.db.remove(channel, 1)
+            irc.reply("Channel %s no longer has a secret." % channel)
+        reset = wrap(reset, ['channel'])
+
+        def generate(self, irc, msg, args, channel):
+            """<channel>
+
+            Generates a Github secret for a channel.
+            <channel> is only necessary if the message isn't sent in the channel itself.
+            """
+            secret = Utility.randomString(40)
+            irc.reply("Setting secret for %s to: %s" % (channel, secret))
+            self.db.set(channel, 1, secret)
+        generate = wrap(generate, ['channel'])
 
 Class = Github
 

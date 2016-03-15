@@ -159,7 +159,7 @@ class Github(callbacks.Plugin):
             # record = Github.secret.DB.DB.Record(secret = sec)
             # self.db.set(channel, 1, secret)
             irc.replySuccess()
-        set = wrap(set, ['channel', 'text'])
+        set = wrap(set, ['op', 'text'])
 
         def reset(self, irc, msg, args, channel):
             """[<channel>]
@@ -169,7 +169,7 @@ class Github(callbacks.Plugin):
             """
             self.db.remove(channel, 1)
             irc.reply("Channel %s no longer has a secret." % channel)
-        reset = wrap(reset, ['channel'])
+        reset = wrap(reset, ['op'])
 
         def generate(self, irc, msg, args, channel):
             """<channel>
@@ -180,7 +180,7 @@ class Github(callbacks.Plugin):
             secret = Utility.randomString(40)
             irc.reply("Setting secret for %s to: %s" % (channel, secret))
             self.db.set(channel, 1, secret)
-        generate = wrap(generate, ['channel'])
+        generate = wrap(generate, ['op'])
 
 Class = Github
 

@@ -63,4 +63,8 @@ conf.registerGlobalValue(Github, 'theme',
 conf.registerGlobalValue(Github, 'brackets',
         registry.String('( )', """The brackets to use to enclose URLs (space-separated)"""))
 
+conf.registerGlobalValue(Github, 'allowArbitraryMessages',
+        registry.Boolean(False,
+        """Whether to allow parsing and showing arbitrary messages sent by a client"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

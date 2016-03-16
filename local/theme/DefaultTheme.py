@@ -154,6 +154,15 @@ class DefaultTheme(Theme):
             self.enclose(url)
         ))
 
+    def message(self, message):
+        if self.repoInfo['unknown']:
+            self.msgs.append(message)
+        else:
+            self.msgs.append( "%s: %s" % (
+                self.repo(),
+                message
+            ))
+
     def unknown(self, eventType):
         self.msgs.append( "%s: %s happened" % (
             self.repo(),

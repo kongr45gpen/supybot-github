@@ -30,6 +30,7 @@ import WikiHandler
 import IssueHandler
 import StatusHandler
 import TravisHandler
+import MessageHandler
 import CreateDeleteHandler
 import IssueCommentHandler
 
@@ -133,9 +134,10 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         repo = {}
 
-        repo['name']  = data.get('repository',{}).get('name')
-        repo['owner'] = data.get('repository',{}).get('owner',{}).get('login')
-        repo['fork']  = data.get('repository',{}).get('fork', False)
+        repo['unknown'] = 'repository' not in data
+        repo['name']    = data.get('repository',{}).get('name')
+        repo['owner']   = data.get('repository',{}).get('owner',{}).get('login')
+        repo['fork']    = data.get('repository',{}).get('fork', False)
         theme = klass(repo, brackets)
 
         #
@@ -159,6 +161,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 IssueHandler.handle(data, theme)
         elif 'ref_type' in data:
             CreateDeleteHandler.handle(data, theme)
+        elif 'message' in data:
+            MessageHandler.handle(data, theme)
         else:
             theme.unknown(eventType)
 

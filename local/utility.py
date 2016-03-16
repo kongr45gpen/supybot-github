@@ -39,7 +39,7 @@ def addConfigOverride(name, value):
 
     name = name.strip().lower()
 
-    if name in [ 'passcode', 'disallowConfigOverride' ]:
+    if name in [ 'passcode', 'disallowConfigOverride', 'allowArbitraryMessages' ]:
         return
 
     globals.configOverrides[name] = value

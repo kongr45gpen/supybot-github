@@ -27,8 +27,8 @@ def registryValue(plugin, name, channel=None, value=True):
         return group
 
 def configValue(name, channel=None, repo=None, type=None, module=None):
-    if globals.configOverrides and name in globals.configOverrides:
-        return globals.configOverrides[name]
+    if globals.configOverrides and name.lower() in globals.configOverrides:
+        return globals.configOverrides[name.lower()]
     return registryValue("Github", name, channel)
 
 def addConfigOverride(name, value):
@@ -37,8 +37,12 @@ def addConfigOverride(name, value):
     elif value.lower() == 'true':
         value = True;
 
-    if not 'override' in name.lower():
-        globals.configOverrides[name] = value
+    name = name.strip().lower()
+
+    if name in [ 'passcode', 'disallowConfigOverride' ]:
+        return
+
+    globals.configOverrides[name] = value
 
 def resetConfigOverrides():
     globals.configOverrides = {}

@@ -128,4 +128,25 @@ class GithubTestCase(ExpectationPluginTestCase):
             it().should.contain('https://github.com/baxterthehacker/public-repo/branches')
         )
 
+    def testPing(self):
+        self.conf('allowArbitraryMessages', False)
+        self.sendRequest('ping')
+
+        self.describe('first message',
+            it().should.contain('Mind your words, they are important.'),
+            it().should.contain('test'),
+            it().should.contain('zen')
+        )
+
+        self.conf('allowArbitraryMessages', True)
+        self.sendRequest('ping')
+
+        self.describe('first message',
+            it().should.contain('Mind your words, they are important.'),
+            it().should.contain('test'),
+            it().should_not.contain('zen')
+        )
+
+
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

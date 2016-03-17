@@ -26,6 +26,7 @@ import supybot.callbacks as callbacks
 
 from ..utility import *
 
+import PingHandler
 import PushHandler
 import WikiHandler
 import IssueHandler
@@ -165,6 +166,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 IssueHandler.handle(data, theme)
         elif 'ref_type' in data:
             CreateDeleteHandler.handle(data, theme)
+        elif 'zen' in data:
+            PingHandler.handle(data, theme)
         elif 'message' in data:
             MessageHandler.handle(data, theme)
         else:

@@ -163,6 +163,12 @@ class DefaultTheme(Theme):
                 message
             ))
 
+    def ping(self, message, zen):
+        self.msgs.append( "%s: %s" % (
+            self.repo("zen" if zen else None),
+            ircutils.mircColor(message, "light blue")
+        ))
+
     def unknown(self, eventType):
         self.msgs.append( "%s: %s happened" % (
             self.repo(),

@@ -143,8 +143,6 @@ class Github(callbacks.Plugin):
                     return super(self.__class__, self).set(id, record)
 
         def __init__(self, irc):
-            # self.db = self.DB(("%s-secret") % (self.name(),))
-            print(conf.supybot.databases())
             super(Github.secret, self).__init__(irc)
             self.db = plugins.DB(("github-secret"), {'flat': self.DB})()
             globals.secretDB = self.db

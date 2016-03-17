@@ -124,10 +124,6 @@ class Github(callbacks.Plugin):
     # Debug command
     get = wrap(get, ['lowered', optional('lowered'), optional('text')]) if world.testing else False
 
-    def abs_val(self,irc,msg,args):
-        pass
-    abs_val = wrap(abs_val,[])
-
     class secret(callbacks.Commands):
         class DB(plugins.DbiChannelDB):
             class DB(dbi.DB):

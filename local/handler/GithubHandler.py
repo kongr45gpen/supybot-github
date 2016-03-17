@@ -4,6 +4,7 @@ import hmac
 import json
 import time
 import random
+import socket
 import urllib
 import urllib2
 import hashlib
@@ -90,11 +91,14 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
             i+=1
 
-        s.send_response(200)
-        s.send_header('Content-type', 'text/html')
-        s.end_headers()
-        s.wfile.write("Thanks, you're awesome.\n")
-        s.wfile.write(s.path.split('/'))
+        try:
+            s.send_response(200)
+            s.send_header('Content-type', 'text/html')
+            s.end_headers()
+            s.wfile.write("Thanks, you're awesome.\n")
+            s.wfile.write(s.path.split('/'))
+        except socket.error:
+            pass
 
         if requireCode and receivedcode != configValue('passcode'):
             # The password is wrong
@@ -174,6 +178,17 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             for msg in msgs:
                 for irc in world.ircs:
                     irc.queueMsg(ircmsgs.privmsg(channel, msg))
+
+    def finish(self):
+        try:
+            if not self.wfile.closed:
+                self.wfile.flush()
+            self.wfile.close()
+            self.rfile.close()
+        except socket.error:
+            # An final socket error may have occurred here, such as a broken
+            # pipe
+            pass
 
     def log_message(self, format, *args):
         log.info(format % args)

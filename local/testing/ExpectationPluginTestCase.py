@@ -52,7 +52,11 @@ class ExpectationPluginTestCase(PluginTestCase):
             with open('samples/' + file + '.json', 'r') as content_file:
                 content = content_file.read()
             self.files[file] = content
-        res = urllib.urlopen('http://localhost:' + str(self.port), 'payload=' + content)
+        urllib.urlopen('http://localhost:' + str(self.port), 'payload=' + content)
+
+    def conf(self, name, value):
+        """Sets one of the plugin's configuration values"""
+        conf.supybot.plugins.get("Github").get(name).setValue(value)
 
     def testDocumentation(self):
         if self.__class__ == ExpectationPluginTestCase:

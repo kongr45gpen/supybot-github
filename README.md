@@ -10,7 +10,7 @@ my bad python coding style.
 
 Getting started
 ==============
-*Installation instructions to be put here...*
+See [the *Getting Started* page on Read the Docs](http://supybot-github.readthedocs.org/en/latest/getting-started.html)
 
 Todo
 ----

@@ -22,4 +22,4 @@ after_success:
 
 notifications:
   webhooks:
-    - http://helit.org:8093/++alezakos
+    - http://helit.tech:8093/++alezakos

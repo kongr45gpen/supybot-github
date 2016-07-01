@@ -27,7 +27,7 @@ conf.registerGlobalValue(Github, 'hidePush',
         registry.Boolean(False, """Whether to hide 'user pushed ... commits' message"""))
 
 conf.registerGlobalValue(Github, 'passcode',
-        registry.String('', """Password which should be included into the URL"""))
+        registry.String('', """Password which should be included into the URL (DEPRECATED AND DANGEROUS!)"""))
 
 conf.registerGlobalValue(Github, 'disallowChannelOverride',
         registry.Boolean(False,

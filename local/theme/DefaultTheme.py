@@ -97,7 +97,7 @@ class DefaultTheme(Theme):
             " by %s" % ircutils.mircColor(creator,"green") if creator != actor else '',
             extra,
             self.enclose("%s%s" % (
-                ircutils.mircColor(milestone, "brown") + '- ' if milestone else '',
+                ircutils.mircColor(milestone, "brown") + ' - ' if milestone else '',
                 url
             )),
             ": %s" % maxLen(comment, 70) if comment else ''

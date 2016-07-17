@@ -128,6 +128,19 @@ class GithubTestCase(ExpectationPluginTestCase):
             it().should.contain('https://github.com/baxterthehacker/public-repo/branches')
         )
 
+    def testRelease(self):
+        self.sendRequest('release')
+
+        self.describe('first message',
+            it().should.contain('myproject'),
+            it().should.contain('kongr45gpen'),
+            it().should.contain('prerelease'),
+            it().should_not.contain('draft'),
+            it().should.contain('Useless Release'),
+            it().should.contain('v2.6.5'),
+            it().should.contain('https://github.com/kongr45gpen/myproject/releases/tag/v2.6.5')
+        )
+
     def testPing(self):
         self.conf('allowArbitraryMessages', False)
         self.sendRequest('ping')

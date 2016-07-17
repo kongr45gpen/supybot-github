@@ -103,6 +103,18 @@ class DefaultTheme(Theme):
             ": %s" % maxLen(comment, 70) if comment else ''
         ))
 
+    def release(self, author, action, name, tag, description, commit, prerelease, url):
+        self.msgs.append( "%s: %s %s%s %s (%s): %s %s" % (
+            self.repo(),
+            ircutils.mircColor(author, "green"),
+            colorAction(action),
+            " %s" % (ircutils.mircColor('prerelease', "orange")) if prerelease else '',
+            ircutils.bold(name),
+            ircutils.mircColor(tag, "dark gray"),
+            maxLen(description, 100),
+            self.enclose(url)
+        ))
+
     def wikiPush(self, actor, count, url):
         self.msgs.append( "%s: %s modified %s wiki %s %s:" % (
             self.repo(),

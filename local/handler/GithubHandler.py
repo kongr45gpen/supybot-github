@@ -33,6 +33,7 @@ import IssueHandler
 import StatusHandler
 import TravisHandler
 import MessageHandler
+import ReleaseHandler
 import CreateDeleteHandler
 import IssueCommentHandler
 
@@ -166,6 +167,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 IssueHandler.handle(data, theme)
         elif 'ref_type' in data:
             CreateDeleteHandler.handle(data, theme)
+        elif 'release' in data:
+            ReleaseHandler.handle(data, theme)
         elif 'zen' in data:
             PingHandler.handle(data, theme)
         elif 'message' in data:

@@ -67,4 +67,8 @@ conf.registerGlobalValue(Github, 'allowArbitraryMessages',
         registry.Boolean(False,
         """Whether to allow parsing and showing arbitrary messages sent by a client"""))
 
+conf.registerGlobalValue(Github, 'hideURL',
+        registry.Boolean(False,
+        """Whether to not display the URLs of actions"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

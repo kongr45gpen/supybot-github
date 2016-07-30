@@ -8,4 +8,7 @@ class Theme(object):
 		pass
 
 	def enclose(self, text):
+		if text == None or text == '':
+			#TODO: Remove the space before the URL
+			return ""
 		return "%s%s%s" % (self.brackets[0], text, self.brackets[1])

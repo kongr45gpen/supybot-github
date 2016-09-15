@@ -12,6 +12,10 @@ Getting started
 ==============
 See [the *Getting Started* page on Read the Docs](http://supybot-github.readthedocs.org/en/latest/getting-started.html)
 
+Screenshot
+----------
+![ ](http://i.imgur.com/2SmUOU2.png)
+
 Todo
 ----
 Check out [the Github issue tracker](https://github.com/kongr45gpen/supybot-github/issues?state=open).

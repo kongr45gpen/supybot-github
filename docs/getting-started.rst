@@ -8,6 +8,9 @@ Supybot-github should contain a few sane defaults to get you started.
 Installation
 ------------
 
+0. `Install Limnoria`_ or any other supybot variant, and configure it to your
+   liking.
+
 1. Go to one of supybot's plugin folders and clone the plugin in a directory
    called `Github`::
 
@@ -33,3 +36,5 @@ Installation
 This should be enough to get you started!
 If everything was set up correctly, your bot should drop an inspiring quote on
 the channel you configured in the 3rd step.
+
+.. _`Install Limnoria`: http://doc.supybot.aperio.fr/en/latest/use/install.html

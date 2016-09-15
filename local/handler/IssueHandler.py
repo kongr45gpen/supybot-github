@@ -1,15 +1,24 @@
 from ..utility import *
 
 def handle(data, theme):
+    if 'issue' in data:
+        issue = data['issue']
+        type = 'issue'
+    elif 'pull_request' in data:
+        issue = data['pull_request']
+        type = 'pull request'
+    else:
+        type = 'something'
+
     milestone = ''
-    if data['issue']['milestone'] and configValue("showMilestone"):
-        milestone = data['issue']['milestone']['title']
+    if issue['milestone'] and configValue("showMilestone"):
+        milestone = issue['milestone']['title']
 
     assignee = ''
     if 'assignee' in data and data['assignee']:
         assignee = data['assignee']['login']
-    elif 'assignee' in data['issue'] and data['issue']['assignee']:
-        assignee = data['issue']['assignee']['login']
+    elif 'assignee' in issue and issue['assignee']:
+        assignee = issue['assignee']['login']
 
     labelName = None
     labelColor = None
@@ -20,12 +29,13 @@ def handle(data, theme):
     theme.issue(
         actor = data['sender']['login'],
         action = data['action'],
-        issueNo = data['issue']['number'],
-        issueTitle = data['issue']['title'],
-        creator = data['issue']['user']['login'],
+        issueNo = issue['number'],
+        issueTitle = issue['title'],
+        creator = issue['user']['login'],
         milestone = milestone,
-        url = getShortURL(data['issue']['html_url']),
+        url = getShortURL(issue['html_url']),
         assignee = assignee,
         labelName = labelName,
-        labelColor = labelColor
+        labelColor = labelColor,
+        type = type
     )

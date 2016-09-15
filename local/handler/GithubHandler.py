@@ -160,7 +160,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             StatusHandler.handle(data, theme)
         elif 'commits' in data:
             PushHandler.handle(data, theme)
-        elif 'issue' in data:
+        elif 'issue' in data or 'pull_request' in data:
             if 'comment' in data:
                 IssueCommentHandler.handle(data, theme)
             else:

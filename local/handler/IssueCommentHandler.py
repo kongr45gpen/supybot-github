@@ -1,6 +1,11 @@
 from ..utility import *
 
 def handle(data, theme):
+    if 'pull_request' in data['issue']:
+        type = 'pull request'
+    else:
+        type = 'issue'
+
     milestone = ''
     if configValue("showMilestone") and 'milestone' in data['issue'] and data['issue']['milestone']:
         milestone = data['issue']['milestone']['title']
@@ -18,5 +23,6 @@ def handle(data, theme):
         creator = data['issue']['user']['login'],
         milestone = milestone,
         url = getShortURL(data['comment']['html_url']),
-        assignee = assignee
+        assignee = assignee,
+        type = type
     )

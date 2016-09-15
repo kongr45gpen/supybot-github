@@ -74,7 +74,7 @@ class DefaultTheme(Theme):
             ' %s' % self.enclose(url) if url else ''
         ))
 
-    def issue(self, actor, action, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None, labelName = None, labelColor = None):
+    def issue(self, actor, action, type, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None, labelName = None, labelColor = None):
         formattedActor = ircutils.mircColor(actor, "green")
 
         if actor == assignee:
@@ -88,10 +88,11 @@ class DefaultTheme(Theme):
         elif action == 'labeled' or action == 'unlabeled':
             extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 
-        self.msgs.append( "%s: %s %s issue #%s \"%s\"%s%s %s%s" % (
+        self.msgs.append( "%s: %s %s %s #%s \"%s\"%s%s %s%s" % (
             self.repo(),
             formattedActor,
             colorAction(action),
+            type,
             issueNo,
             ircutils.bold(issueTitle),
             " by %s" % ircutils.mircColor(creator,"green") if creator != actor else '',

@@ -1,12 +1,9 @@
+[![Build Status](https://travis-ci.org/kongr45gpen/supybot-github.svg?branch=master)](https://travis-ci.org/kongr45gpen/supybot-github) [![](https://img.shields.io/github/issues-raw/kongr45gpen/supybot-github.svg?&maxAge=2592000)](https://github.com/kongr45gpen/supybot-github/issues)
+
 **supybot-github** is a plugin for the python-based IRC bot Supybot (and its forks [Limnoria](https://github.com/ProgVal/Limnoria) and Gribble).
 
 Its purpose is to announce commits and other important notifications from
 a Github repository on an IRC channel, using Github's post commit hooks.
-
-Please note that I am a complete beginner as far as Python and supybot plugins
-are concerned, which means that you should expect bad-looking code which does
-not meet any standards. I would be happy to accept any pull request to fix
-my bad python coding style.
 
 Getting started
 ==============

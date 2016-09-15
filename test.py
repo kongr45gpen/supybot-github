@@ -128,6 +128,60 @@ class GithubTestCase(ExpectationPluginTestCase):
             it().should.contain('https://github.com/baxterthehacker/public-repo/branches')
         )
 
+    def testIssueCreate(self):
+        self.sendRequest('issue-create')
+
+        self.describe('first message',
+            it().should.contain('kongr45gpen'),
+            it().should.contain('test'),
+            it().should.contain('opened'),
+            it().should.contain('Another issue'),
+            it().should.contain('#6'),
+            it().should_not.contain('pull request'),
+            it().should.contain('https://github.com/kongr45gpen/test/issues/6')
+        )
+
+    def testIssueComment(self):
+        self.sendRequest('issue-comment')
+
+        self.describe('first message',
+            it().should.contain('kongr45gpen'),
+            it().should.contain('test'),
+            it().should.contain('commented'),
+            it().should.contain('Another issue'),
+            it().should.contain('#6'),
+            it().should_not.contain('pull request'),
+            it().should.contain('https://github.com/kongr45gpen/test/issues/6#issuecomment-181134370')
+        )
+
+    def testPullRequestCreate(self):
+        self.sendRequest('pr-create')
+
+        self.describe('first message',
+            it().should.contain('baxterthehacker'),
+            it().should.contain('public-repo'),
+            it().should.contain('opened'),
+            it().should.contain('Update the README with new information'),
+            it().should.contain('#1'),
+            it().should.contain('pull request'),
+            it().should_not.contain('issue'),
+            it().should.contain('https://github.com/baxterthehacker/public-repo/pull/1')
+        )
+
+    def testPullRequestComment(self):
+        self.sendRequest('pr-comment')
+
+        self.describe('first message',
+            it().should.contain('kongr45gpen'),
+            it().should.contain('test'),
+            it().should.contain('commented'),
+            it().should.contain('Update README.md'),
+            it().should.contain('#7'),
+            it().should.contain('pull request'),
+            it().should_not.contain('commented on issue'),
+            it().should.contain('https://github.com/kongr45gpen/test/pull/7#issuecomment-247345280')
+        )
+
     def testRelease(self):
         self.sendRequest('release')
 

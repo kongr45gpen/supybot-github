@@ -7,17 +7,17 @@ install:
   - mkdir void
   - mkdir void/Github
   - cp -R * void/Github/ || true
-  - git clone git://git.code.sf.net/p/supybot/code supybot
+  - git clone https://github.com/ProgVal/Limnoria.git limnoria
   - pip install coverage
-  - cd supybot
+  - cd limnoria
   - python setup.py install
   - cd ../void/Github
 
 script:
-  - python ../../supybot/scripts/supybot-test --plugins-dir=.. Github
+  - python ../../limnoria/scripts/supybot-test --plugins-dir=.. Github
 
 after_success:
-  - coverage run --branch --source plugin.py,local --omit '*init*' ../../supybot/scripts/supybot-test --plugins-dir=.. Github
+  - coverage run --branch --source plugin.py,local --omit '*init*' ../../limnoria/scripts/supybot-test --plugins-dir=.. Github
   - coverage report -m
 
 notifications:

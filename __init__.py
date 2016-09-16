@@ -28,6 +28,8 @@ import plugin
 reload(plugin) # In case we're being reloaded.
 # Add more reloads here if you add third-party modules and want them to be
 # reloaded when this plugin is reloaded.  Don't forget to import them as well!
+import local.globals
+import local.utility
 import local.handler.GithubHandler as RequestHandler
 import local.handler.PingHandler
 import local.handler.PushHandler
@@ -42,8 +44,8 @@ import local.handler.IssueCommentHandler
 import local.theme.Theme
 import local.theme.DefaultTheme
 import local.theme.CompactTheme
-import local.utility
-import local.globals
+reload(local.globals)
+reload(local.utility)
 reload(RequestHandler)
 reload(local.handler.PingHandler)
 reload(local.handler.PushHandler)
@@ -58,8 +60,6 @@ reload(local.handler.IssueCommentHandler)
 reload(local.theme.Theme)
 reload(local.theme.DefaultTheme)
 reload(local.theme.CompactTheme)
-reload(local.utility)
-reload(local.globals)
 
 local.globals.init()
 

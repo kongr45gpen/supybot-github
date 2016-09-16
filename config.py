@@ -79,4 +79,8 @@ conf.registerGlobalValue(Github, 'showIssueEdits',
         registry.Boolean(True,
         """Whether to show a message when an issue is edited"""))
 
+conf.registerGlobalValue(Github, 'showPendingStatuses',
+        registry.Boolean(True,
+        """Whether to show a message for a pending status (e.g. a build in progress)"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

@@ -5,6 +5,7 @@ import string
 import urllib2
 from datetime import datetime, timedelta
 
+import supybot.log as log
 import supybot.conf as conf
 import supybot.world as world
 import supybot.ircutils as ircutils
@@ -18,10 +19,14 @@ def registryValue(plugin, name, channel=None, value=True):
     for name in names:
         group = group.get(name)
     if channel is not None:
-        if ircutils.isChannel(channel):
-            group = group.get(channel)
-        else:
-            self.log.debug('registryValue got channel=%r', channel)
+        try:
+            if ircutils.isChannel(channel):
+                group = group.get(channel)
+            else:
+                log.debug('registryValue got channel=%r', channel)
+        except registry.NonExistentRegistryEntry:
+            log.debug('non existent registry entry %r for channel %r', name, channel)
+            pass
     if value:
         return group()
     else:
@@ -30,6 +35,10 @@ def registryValue(plugin, name, channel=None, value=True):
 def configValue(name, channel=None, repo=None, type=None, module=None):
     if globals.configOverrides and name.lower() in globals.configOverrides:
         return globals.configOverrides[name.lower()]
+
+    if channel == None and name not in ['channel', 'passcode', 'disallowChannelOverride', 'disallowConfigOverride']:
+        channel = globals.channel
+
     return registryValue("Github", name, channel)
 
 def addConfigOverride(name, value):

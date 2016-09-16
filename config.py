@@ -16,14 +16,16 @@ Github = conf.registerPlugin('Github')
 # This is where your configuration variables (if any) should go.  For example:
 # conf.registerGlobalValue(Github, 'someConfigVariableName',
 #     registry.Boolean(False, """Help for someConfigVariableName."""))
+#
+# Global values should also be added to configValue() in utility.py
 conf.registerGlobalValue(Github, 'channel',
         registry.String('#commits', """Determines the channel where commit
 					notifications will go by default."""))
 
-conf.registerGlobalValue(Github, 'shortURL',
+conf.registerChannelValue(Github, 'shortURL',
         registry.Boolean(True, """Use git.io to produce shorter URLs"""))
 
-conf.registerGlobalValue(Github, 'hidePush',
+conf.registerChannelValue(Github, 'hidePush',
         registry.Boolean(False, """Whether to hide 'user pushed ... commits' message"""))
 
 conf.registerGlobalValue(Github, 'passcode',
@@ -37,19 +39,19 @@ conf.registerGlobalValue(Github, 'disallowConfigOverride',
         registry.Boolean(True,
         """Don't let the user change config values from the URL"""))
 
-conf.registerGlobalValue(Github, 'showMilestone',
+conf.registerChannelValue(Github, 'showMilestone',
         registry.Boolean(True,
         """Show the name of the milestone when reporting issues or issue comments"""))
 
-conf.registerGlobalValue(Github, 'tagShowCommitMsg',
+conf.registerChannelValue(Github, 'tagShowCommitMsg',
         registry.Boolean(True,
         """Show the commit message of the commit a new tag points to"""))
 
-conf.registerGlobalValue(Github, 'showMergedCommits',
+conf.registerChannelValue(Github, 'showMergedCommits',
         registry.Boolean(False,
         """Show merged commits when a branch is merged into another"""))
 
-conf.registerGlobalValue(Github, 'showSuccessfulBuildMessages',
+conf.registerChannelValue(Github, 'showSuccessfulBuildMessages',
         registry.String('change',
         """Whether to show successful build messages - can be never, change or always"""))
 
@@ -57,29 +59,29 @@ conf.registerGlobalValue(Github, 'port',
         registry.Integer(8093,
         """The port where Github will send HTTP requests"""))
 
-conf.registerGlobalValue(Github, 'theme',
+conf.registerChannelValue(Github, 'theme',
         registry.String('default', """The name of the theme that will be used to style messages"""))
 
-conf.registerGlobalValue(Github, 'brackets',
+conf.registerChannelValue(Github, 'brackets',
         registry.String('( )', """The brackets to use to enclose URLs (space-separated)"""))
 
-conf.registerGlobalValue(Github, 'allowArbitraryMessages',
+conf.registerChannelValue(Github, 'allowArbitraryMessages',
         registry.Boolean(False,
         """Whether to allow parsing and showing arbitrary messages sent by a client"""))
 
-conf.registerGlobalValue(Github, 'hideURL',
+conf.registerChannelValue(Github, 'hideURL',
         registry.Boolean(False,
         """Whether to not display the URLs of actions"""))
 
-conf.registerGlobalValue(Github, 'preventIssueNameSpam',
+conf.registerChannelValue(Github, 'preventIssueNameSpam',
         registry.Boolean(True,
         """Whether to prevent the same issue name from showing up too often"""))
 
-conf.registerGlobalValue(Github, 'showIssueEdits',
+conf.registerChannelValue(Github, 'showIssueEdits',
         registry.Boolean(True,
         """Whether to show a message when an issue is edited"""))
 
-conf.registerGlobalValue(Github, 'showPendingStatuses',
+conf.registerChannelValue(Github, 'showPendingStatuses',
         registry.Boolean(True,
         """Whether to show a message for a pending status (e.g. a build in progress)"""))
 

@@ -24,6 +24,7 @@ import supybot.ircutils as ircutils
 import supybot.registry as registry
 import supybot.callbacks as callbacks
 
+from ..globals import *
 from ..utility import *
 
 import PingHandler
@@ -92,6 +93,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 addConfigOverride(explosion[0], explosion[1])
 
             i+=1
+        globals.channel = channel
 
         try:
             s.send_response(200)

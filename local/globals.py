@@ -4,9 +4,11 @@ def init():
     global travisStatuses
     global secretDB
     global shownIssues
+    global channel
 
     messageList = []
     configOverrides = {}
     travisStatuses = {}
     secretDB = None
     shownIssues = {}
+    channel = None

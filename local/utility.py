@@ -168,6 +168,10 @@ def showIssueName(repoId, issueId):
     """Returns whether we should show the issue name for a repo issue"""
     now = datetime.now()
 
+    if not configValue("preventIssueNameSpam"):
+        globals.shownIssues.clear()
+        return True
+
     if not repoId in globals.shownIssues:
         globals.shownIssues[repoId] = {}
 

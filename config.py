@@ -71,4 +71,8 @@ conf.registerGlobalValue(Github, 'hideURL',
         registry.Boolean(False,
         """Whether to not display the URLs of actions"""))
 
+conf.registerGlobalValue(Github, 'preventIssueNameSpam',
+        registry.Boolean(True,
+        """Whether to prevent the same issue name from showing up too often"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

@@ -146,6 +146,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         repo['name']    = data.get('repository',{}).get('name')
         repo['owner']   = data.get('repository',{}).get('owner',{}).get('login')
         repo['fork']    = data.get('repository',{}).get('fork', False)
+        repo['id']      = data.get('repository',{}).get('id', "%s/%s" % (repo['owner'], repo['name']))
         theme = klass(repo, brackets)
 
         #

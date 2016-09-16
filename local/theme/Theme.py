@@ -2,6 +2,7 @@ class Theme(object):
 	def __init__(self, repository, brackets = "()"):
 		self.msgs = []
 		self.repoInfo = repository
+		self.repoId = repository['id']
 		self.brackets = brackets
 
 	def finalize(self):

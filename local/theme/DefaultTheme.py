@@ -76,6 +76,7 @@ class DefaultTheme(Theme):
 
     def issue(self, actor, action, type, issueNo, issueTitle, creator, milestone, url, assignee = None, comment = None, labelName = None, labelColor = None):
         formattedActor = ircutils.mircColor(actor, "green")
+        showName = showIssueName(self.repoId, issueNo)
 
         if actor == assignee:
             formattedActor = ircutils.bold(formattedActor)
@@ -88,18 +89,18 @@ class DefaultTheme(Theme):
         elif action == 'labeled' or action == 'unlabeled':
             extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 
-        self.msgs.append( "%s: %s %s %s #%s \"%s\"%s%s %s%s" % (
+        self.msgs.append( "%s: %s %s %s #%s%s%s%s %s%s" % (
             self.repo(),
             formattedActor,
             colorAction(action),
             type,
             issueNo,
-            ircutils.bold(issueTitle),
+            " \"%s\"" % (ircutils.bold(issueTitle)) if showName else '',
             " by %s" % ircutils.mircColor(creator,"green") if creator != actor else '',
             extra,
             self.enclose("%s%s" % (
                 ircutils.mircColor(milestone, "brown") + ' - ' if milestone else '',
-                url
+                url if (showName or comment) else ''
             )),
             ": %s" % maxLen(comment, 70) if comment else ''
         ))

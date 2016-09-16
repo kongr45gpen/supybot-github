@@ -3,6 +3,7 @@ import math
 import random
 import string
 import urllib2
+from datetime import datetime, timedelta
 
 import supybot.conf as conf
 import supybot.world as world
@@ -162,6 +163,24 @@ def getChannelSecret(channel):
         return record.secret
     except KeyError:
         return None
+
+def showIssueName(repoId, issueId):
+    """Returns whether we should show the issue name for a repo issue"""
+    now = datetime.now()
+
+    if not repoId in globals.shownIssues:
+        globals.shownIssues[repoId] = {}
+
+    # Clean up old issues
+    remove = [k for k in globals.shownIssues[repoId] if now - globals.shownIssues[repoId][k] > timedelta(seconds = 15)]
+    for k in remove: del globals.shownIssues[repoId][k]
+
+    exists = issueId in globals.shownIssues[repoId]
+
+    # Add our issue to the list
+    globals.shownIssues[repoId][issueId] = now
+
+    return not exists
 
 def hexToMirc(hash):
     colors = {

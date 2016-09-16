@@ -10,6 +10,9 @@ def handle(data, theme):
     else:
         type = 'something'
 
+    if data['action'] == 'edited' and not configValue("showIssueEdits"):
+        return
+
     milestone = ''
     if issue['milestone'] and configValue("showMilestone"):
         milestone = issue['milestone']['title']

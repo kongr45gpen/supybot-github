@@ -75,4 +75,8 @@ conf.registerGlobalValue(Github, 'preventIssueNameSpam',
         registry.Boolean(True,
         """Whether to prevent the same issue name from showing up too often"""))
 
+conf.registerGlobalValue(Github, 'showIssueEdits',
+        registry.Boolean(True,
+        """Whether to show a message when an issue is edited"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

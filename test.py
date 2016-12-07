@@ -84,6 +84,20 @@ class GithubTestCase(ExpectationPluginTestCase):
 
         self.assertError('get second message')
 
+    def testAppVeyor(self):
+        self.sendRequest('appveyor')
+
+        self.describe('first message',
+            it().should.contain('pullr1 @ test'),
+            it().should.contain('failed'),
+            it().should.contain('3be0d'),
+            it().should.contain('alezakos'),
+            it().should.contain('Update README.md'),
+            it().should.contain('https://ci.appveyor.com/project/kongr45gpen/test/build/1.0.2')
+        )
+
+        self.assertError('get second message')
+
     def testCreateTag(self):
         self.sendRequest('create-tag')
 

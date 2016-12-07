@@ -1,0 +1,51 @@
+{
+    "eventData": {
+        "branch": "pullr1",
+        "buildId": 6010485,
+        "buildNumber": 2,
+        "buildUrl": "https://ci.appveyor.com/project/kongr45gpen/test/build/1.0.2",
+        "buildVersion": "1.0.2",
+        "commitAuthor": "alezakos",
+        "commitAuthorEmail": "electrovesta@gmail.com",
+        "commitAuthorUsername": "kongr45gpen",
+        "commitDate": "10/10/2016 7:39 PM",
+        "commitId": "3be0d004b9",
+        "commitMessage": "Update README.md",
+        "commitMessageExtended": "",
+        "commitUrl": "https://github.com/kongr45gpen/test/commit/3be0d004b9",
+        "committerEmail": "noreply@github.com",
+        "committerName": "GitHub",
+        "duration": "00:00:03.7343550",
+        "failed": true,
+        "finished": "12/7/2016 5:08 PM",
+        "isPullRequest": false,
+        "jobs": [
+            {
+                "artifacts": [],
+                "compilationMessages": [],
+                "duration": "00:00:03.9843642",
+                "failed": true,
+                "finished": "12/7/2016 5:08 PM",
+                "id": "e80o7hecyuqcb89k",
+                "messages": [],
+                "messagesError": 0,
+                "messagesTotal": 0,
+                "name": "",
+                "passed": false,
+                "started": "12/7/2016 5:08 PM",
+                "status": "Failed"
+            }
+        ],
+        "messages": [],
+        "notificationSettingsUrl": "https://ci.appveyor.com/notifications",
+        "passed": false,
+        "projectId": 261821,
+        "projectName": "test",
+        "repositoryName": "kongr45gpen/test",
+        "repositoryProvider": "gitHub",
+        "repositoryScm": "git",
+        "started": "12/7/2016 5:08 PM",
+        "status": "failed"
+    },
+    "eventName": "build_failure"
+}

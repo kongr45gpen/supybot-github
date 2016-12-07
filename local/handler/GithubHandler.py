@@ -35,6 +35,7 @@ import StatusHandler
 import TravisHandler
 import MessageHandler
 import ReleaseHandler
+import AppVeyorHandler
 import CreateDeleteHandler
 import IssueCommentHandler
 
@@ -178,6 +179,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             PingHandler.handle(data, theme)
         elif 'message' in data:
             MessageHandler.handle(data, theme)
+        elif 'eventName' in data:
+            AppVeyorHandler.handle(data, theme)
         else:
             theme.unknown(eventType)
 

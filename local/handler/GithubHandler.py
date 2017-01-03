@@ -41,6 +41,7 @@ import IssueCommentHandler
 
 from .. import theme as themes
 
+#TODO: Use a better name and location for this
 class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_POST(s):
         """Respond to a POST request."""

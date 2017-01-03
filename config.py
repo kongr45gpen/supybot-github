@@ -85,4 +85,8 @@ conf.registerChannelValue(Github, 'showPendingStatuses',
         registry.Boolean(True,
         """Whether to show a message for a pending status (e.g. a build in progress)"""))
 
+conf.registerChannelValue(Github, 'alwaysShowForcedPushes',
+        registry.Boolean(True,
+        """Whether to always show force-pushes, even if hidePush is set to True"""))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

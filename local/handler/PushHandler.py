@@ -46,7 +46,9 @@ def handle(data, theme):
             regularCommitCount = len(data['commits']) - mergedCommitCount
             isMerge = True
 
-    if configValue("hidePush",None) == False and not branched:
+    visible = configValue("hidePush") == False or (configValue("alwaysShowForcedPushes") == True and data['forced'])
+
+    if visible and not branched:
         theme.push(
             branch = branch,
             actor = data['pusher']['name'],

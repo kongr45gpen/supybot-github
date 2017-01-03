@@ -3,10 +3,11 @@ from Theme import Theme
 from ..utility import *
 
 class DefaultTheme(Theme):
-    def push(self, branch, actor, count, url):
-        self.msgs.append( "%s: %s pushed %s %s %s%s" % (
+    def push(self, branch, actor, count, forced, url):
+        self.msgs.append( "%s: %s %s %s %s %s%s" % (
             self.repo(branch),
             ircutils.mircColor(actor, "green"),
+            colorAction("force pushed") if forced else "pushed",
             ircutils.bold(str(count)),
             plural(count, "commit", "commits"),
             self.enclose(url),

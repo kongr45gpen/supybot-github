@@ -76,7 +76,7 @@ def maxLen(msg, maxn=400, splitLines=True):
 
     if splitLines is True:
         lines = msg.splitlines()
-        line = lines[0]
+        line = lines[0] if lines else ""
     else:
         line = msg
 
@@ -90,6 +90,7 @@ def maxLen(msg, maxn=400, splitLines=True):
 
 def colorAction(action):
     """Give an action string (e.g. created, edited) and get a nice IRC colouring"""
+
     if action in [ "created", "opened", "tagged", "success", "passed", "fixed",
                    "published", "completed" ]:
         return ircutils.bold(ircutils.mircColor(action, "green"))
@@ -101,8 +102,8 @@ def colorAction(action):
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
     if action in [ "reopened", "pending" ]:
         return ircutils.bold(ircutils.mircColor(action, "blue"))
-    if action in [ "forced the creation of", "forced the deletion of" ]:
-        return ircutils.bold(ircutils.mircColor(action,"brown"))
+    if action[0:5] in [ "force" ]:
+        return ircutils.bold(ircutils.mircColor(action, "brown"))
     return action
 
 def getShortURL(longurl):

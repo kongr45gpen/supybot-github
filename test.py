@@ -55,6 +55,30 @@ class GithubTestCase(ExpectationPluginTestCase):
             it().should.contain('Trigger pages build')
         )
 
+    def testForcePush(self):
+        self.sendRequest('push-forced')
+
+        self.describe('first message',
+            it().should.contain('force pushed'),
+            it().should.contain('2 commits'),
+            it().should.contain('kongr45gpen'),
+            it().should.contain('pullr1'),
+            it().should.contain('test'),
+            it().should.contain('https://github.com/kongr45gpen/test/compare/3be0d004b9d9...12121ad459e0')
+        )
+
+        self.describe('second message',
+            it().should.contain('kongr45gpen'),
+            it().should.contain('726'),
+            it().should.contain('https://github.com/kongr45gpen/test/commit/726b044d600a19ce10eccf1014f7dd19b6efddf6')
+        )
+
+        self.describe('fourth message',
+            it().should.contain('Padiaten'),
+            it().should.contain('121'),
+            it().should.contain('https://github.com/kongr45gpen/test/commit/12121ad459e0ae12ec91928949aab27a84a0478f')
+        )
+
     def testNewWikiPage(self):
         self.sendRequest('wiki-new-page')
 

@@ -29,17 +29,6 @@ def handle(data, theme):
                 action = "re-tagged"
             else:
                 action = "re-created"
-        elif data['created'] and not data['forced']:
-            if isTag:
-                action = "tagged"
-            else:
-                action = "created"
-        elif data['deleted'] and not data['forced']:
-            if isTag:
-                action = "deleted tag"
-            else:
-                action = "deleted"
-            urls = ''
         elif data['created']:
             if isTag:
                 action = "tagged"
@@ -62,9 +51,12 @@ def handle(data, theme):
             branch = branch,
             actor = data['pusher']['name'],
             url = getShortURL(data['compare']),
-            count = commitno
+            count = commitno,
+            forced = data['forced']
         )
     elif branched:
+        action = "force %s" % (action,)
+
         if isTag:
             theme.tag(
                 actor = data['pusher']['name'],

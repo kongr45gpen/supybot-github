@@ -59,3 +59,4 @@ Further Reading
    :maxdepth: 2
 
    getting-started
+   configuration

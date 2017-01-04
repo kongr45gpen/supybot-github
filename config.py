@@ -82,7 +82,7 @@ conf.registerChannelValue(Github, 'showIssueEdits',
         """Whether to show a message when an issue is edited"""))
 
 conf.registerChannelValue(Github, 'showPendingStatuses',
-        registry.Boolean(True,
+        registry.Boolean(False,
         """Whether to show a message for a pending status (e.g. a build in progress)"""))
 
 conf.registerChannelValue(Github, 'alwaysShowForcedPushes',

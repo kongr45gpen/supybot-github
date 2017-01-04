@@ -88,6 +88,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             part = part.replace('&','#');
             part = part.replace('^','#');
 
+            # TODO: Throw out a warning when a URL specifies a configuration
+            # value but we don't allow that
             if part.startswith("#") and not configValue('disallowChannelOverride'):
                 channel = part
             elif '=' in part and not configValue('disallowConfigOverride'):

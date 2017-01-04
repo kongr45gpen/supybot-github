@@ -18,5 +18,5 @@ def handle(data, theme):
         eventType = data['eventType'],
         action = action,
         actor = actor,
-        url = url
+        url = getShortURL(url)
     )

@@ -153,7 +153,7 @@ Available configuration values
   =============  =================================
 
   *NOTE:* Don't forget to quote (`"`) your bracket string when setting the
-  configuration value on Supybot
+  configuration value on Supybot!
 
   :Default value: ``( )``
   :Type: String

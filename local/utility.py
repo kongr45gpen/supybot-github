@@ -118,9 +118,14 @@ def getShortURL(longurl):
         data = 'url=%s' % (longurl)
         # Temporarily disabled
         url = longurl
-        #req = urllib2.Request("https://git.io/", data)
-        #response = urllib2.urlopen(req)
-        #url = response.info().getheader('Location')
+        try:
+            req = urllib2.Request("https://git.io/", data)
+            response = urllib2.urlopen(req)
+            url = response.info().getheader('Location')
+        except IOError as e:
+            # Bad luck
+            log.warning("URL shortening failed with: %s" % (e.message,))
+            url = longurl
     return ircutils.mircColor(url, "purple")
 getShortURL.github = re.compile('^([a-z]*\:\/\/)?([^\/]+.)?github.com')
 

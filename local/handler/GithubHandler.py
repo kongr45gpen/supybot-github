@@ -83,10 +83,10 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             if i == 1 and requireCode:
                 receivedcode = part
 
-            part = part.replace('+','#');
-            part = part.replace('~','#');
-            part = part.replace('&','#');
-            part = part.replace('^','#');
+            part = part.replace('+','#')
+            part = part.replace('~','#')
+            part = part.replace('&','#')
+            part = part.replace('^','#')
 
             # TODO: Throw out a warning when a URL specifies a configuration
             # value but we don't allow that

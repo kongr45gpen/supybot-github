@@ -39,6 +39,7 @@ import local.handler.StatusHandler
 import local.handler.TravisHandler
 import local.handler.MessageHandler
 import local.handler.ReleaseHandler
+import local.handler.UnknownHandler
 import local.handler.AppVeyorHandler
 import local.handler.CreateDeleteHandler
 import local.handler.IssueCommentHandler
@@ -56,6 +57,7 @@ reload(local.handler.StatusHandler)
 reload(local.handler.TravisHandler)
 reload(local.handler.MessageHandler)
 reload(local.handler.ReleaseHandler)
+reload(local.handler.UnknownHandler)
 reload(local.handler.AppVeyorHandler)
 reload(local.handler.CreateDeleteHandler)
 reload(local.handler.IssueCommentHandler)

@@ -128,7 +128,7 @@ class DefaultTheme(Theme):
         ))
 
     def wikiPages(self, actor, pages, url):
-        urlShown = False;
+        urlShown = False
 
         for page in pages:
             if configValue("hidePush") and urlShown is False:
@@ -184,10 +184,40 @@ class DefaultTheme(Theme):
             ircutils.mircColor(message, "light blue")
         ))
 
-    def unknown(self, eventType):
-        self.msgs.append( "%s: %s happened" % (
+    def unknown(self, eventType, action, actor, url):
+        if action is not None:
+            if eventType is None:
+                event = colorAction(action)
+            else:
+                event = "%s a%s %s" % (
+                    colorAction(action),
+                    'n' if eventType[0:1] in ['a','e','i','o','u'] else '',
+                    eventType
+                )
+            if actor:
+                event = "%s %s" % (
+                    ircutils.mircColor(actor, "green"),
+                    event
+                )
+        else:
+            if eventType is None:
+                event = "Something happened"
+            else:
+                event = "A%s %s happened" % (
+                    'n' if eventType[0:1] in ['a', 'e', 'i', 'o', 'u'] else '',
+                    colorAction(eventType)
+
+                )
+            if actor:
+                event = "%s by %s" % (
+                    event,
+                    ircutils.mircColor(actor, "green")
+                )
+
+        self.msgs.append( "%s: %s %s" % (
             self.repo(),
-            "A %s" % (ircutils.bold(eventType)) if eventType else "Something"
+            event,
+            self.enclose(url)
         ))
 
     def repo(self, branch = None):

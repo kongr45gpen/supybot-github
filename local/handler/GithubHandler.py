@@ -35,6 +35,7 @@ import StatusHandler
 import TravisHandler
 import MessageHandler
 import ReleaseHandler
+import UnknownHandler
 import AppVeyorHandler
 import CreateDeleteHandler
 import IssueCommentHandler
@@ -185,7 +186,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         elif 'eventName' in data:
             AppVeyorHandler.handle(data, theme)
         else:
-            theme.unknown(eventType)
+            data['eventType'] = eventType
+            UnknownHandler.handle(data, theme)
 
         theme.finalize()
 

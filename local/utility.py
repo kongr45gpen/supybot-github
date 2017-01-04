@@ -63,13 +63,15 @@ def plural(number, s, p):
     return s
 
 def parseBrackets(bracketConfig):
-    if " " in bracketConfig:
-        return tuple(bracketConfig.split(' ', 1))
+    if "M" in bracketConfig:
+        return tuple(bracketConfig.split('M', 1))
     else:
-        # Cut the config in the middle
         mid = len(bracketConfig)/2
-        return (bracketConfig[:mid], bracketConfig[mid:])
-
+        if len(bracketConfig) % 2 == 0:
+            return (bracketConfig[:mid], bracketConfig[mid:])
+        else:
+            # Do not include the middle character
+            return (bracketConfig[:mid], bracketConfig[(mid+1):])
 
 def maxLen(msg, maxn=400, splitLines=True):
     """Cut down a string if its longer than `maxn` chars"""

@@ -1,0 +1,32 @@
+{
+    "admin_url": "https://app.netlify.com/sites/test",
+    "branch": "dev",
+    "build_id": "3f99838a89c7fd85a15f8e96",
+    "commit_ref": "4596578a226788c97e70f5b80f71e395",
+    "commit_url": "https://github.com/iisgood/test/commit/a5e3da32c4ec35fc694cc263c3d90c6f",
+    "context": "production",
+    "created_at": "2017-05-04T20:07:52Z",
+    "deploy_ssl_url": "https://3f99838a89c7fd85a15f8e97--test.netlify.com",
+    "deploy_time": null,
+    "deploy_url": "http://3f99838a89c7fd85a15f8e97.test.netlify.com",
+    "error_message": "Error running command: Build script returned non-zero exit code: 2",
+    "id": "3f99838a89c7fd85a15f8e97",
+    "locked": null,
+    "log_access_attributes": {
+        "type": "firebase",
+        "url": "https://netlify.firebaseio.com/builds/3f99838a89c7fd85a15f8e97/log"
+    },
+    "name": "error-build",
+    "published_at": null,
+    "required": [],
+    "review_id": null,
+    "review_url": null,
+    "screenshot_url": null,
+    "site_id": "11111111-1111-1111-1111-fann1ba4ba4b",
+    "skipped": null,
+    "state": "error",
+    "title": "now let's break it for real",
+    "updated_at": "2017-05-04T20:08:00Z",
+    "url": "http://test.netlify.com",
+    "user_id": "02c33801c731e3271309de53"
+}

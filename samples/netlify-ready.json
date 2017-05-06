@@ -1,0 +1,32 @@
+{
+    "admin_url": "https://app.netlify.com/sites/tremendous-marvellous-armadillo",
+    "branch": "master",
+    "build_id": "dc2ab1c18d4c0d49eeda1bd5",
+    "commit_ref": "19a67c6fdb495b757c21e5aa33a947ace64726c3",
+    "commit_url": "https://github.com/iisgood/bzflagPluginStarter2/commit/19a67c6fdb495b757c21e5aa33a947ace64726c3",
+    "context": "production",
+    "created_at": "2017-05-04T07:53:24Z",
+    "deploy_ssl_url": "https://dc2ab1c18d4c0d49eeda1bd5--bzflag-plugin-starter.netlify.com",
+    "deploy_time": 21,
+    "deploy_url": "http://dc2ab1c18d4c0d49eeda1bd5.bzflag-plugin-starter.netlify.com",
+    "error_message": null,
+    "id": "dc2ab1c18d4c0d49eeda1bd4",
+    "locked": null,
+    "log_access_attributes": {
+        "type": "firebase",
+        "url": "https://netlify.firebaseio.com/builds/dc2ab1c18d4c0d49eeda1bd5/log"
+    },
+    "name": "bzflag-plugin-starter",
+    "published_at": "2017-05-04T07:53:46Z",
+    "required": [],
+    "review_id": null,
+    "review_url": null,
+    "screenshot_url": "https://ba1f36b06d0a7e0b56f2-691d2e24b82d4b96430ea4d57eed7f0e.ssl.cf2.rackcdn.com/dc2ab1c18d4c0d49eeda1bd5/screenshot.png",
+    "site_id": "11111111-1111-1111-1111-fann1ba4ba4b",
+    "skipped": null,
+    "state": "ready",
+    "title": null,
+    "updated_at": "2017-05-04T07:54:47Z",
+    "url": "https://bz-plugin-starter.projects.iisgood.io",
+    "user_id": "02c33801c731e3271309de53"
+}

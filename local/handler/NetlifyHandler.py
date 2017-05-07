@@ -9,5 +9,5 @@ def handle(data, theme):
             commitId = data['commit_ref'],
             commitMessage = data['title'],
             commitAuthor = data['commit_url'].split('/')[3], #TODO: Make this show the proper author
-            url = getShortURL(data['url'])
+            url = getShortURL(data['deploy_url'])
         )

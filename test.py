@@ -122,6 +122,16 @@ class GithubTestCase(ExpectationPluginTestCase):
 
         self.assertError('get second message')
 
+    def testNetlify(self):
+        self.sendRequest('netlify-ready')
+
+        self.describe('first message',
+            it().should.contain('master @ bzflag-plugin-starter'),
+            it().should.contain('ready'),
+            it().should.contain('19a67'),
+            it().should.contain('iisgood')
+        )
+
     def testCreateTag(self):
         self.sendRequest('create-tag')
 

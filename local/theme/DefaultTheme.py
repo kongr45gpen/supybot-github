@@ -161,6 +161,19 @@ class DefaultTheme(Theme):
             ))
         ))
 
+    def deployment(self, branch, repo, status, commitId, commitMessage, commitAuthor, url):
+        self.msgs.append( "%s @ %s: Deployment status: %s * %s by %s %s") % (
+            ircutils.bold(ircutils.mircColor(branch, "blue")),
+            ircutils.bold(repo),
+            colorAction(status.lower()),
+            ircutils.bold(commitId[0:6]),
+            ircutils.mircColor(commitAuthor, "green"),
+            self.enclose("%s - %s" % (
+                ircutils.mircColor(maxLen(commitMessage, 50), "dark gray"),
+                url
+            ))
+        )
+
     def status(self, status, description, url):
         self.msgs.append( "%s: %s - %s %s" % (
             self.repo(),

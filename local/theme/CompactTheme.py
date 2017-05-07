@@ -24,3 +24,16 @@ class CompactTheme(DefaultTheme):
                 buildUrl
             ))
         ))
+
+    def deployment(self, branch, repo, status, commitId, commitMessage, commitAuthor, url):
+        self.msgs.append( "%s @ %s: %s %s: deploy %s %s" % (
+            ircutils.bold(ircutils.mircColor(branch, "blue")),
+            ircutils.bold(repo),
+            ircutils.mircColor(commitAuthor, "green"),
+            ircutils.mircColor(commitId[0:6], "dark grey"),
+            colorAction(status.lower()),
+            self.enclose("%s - %s" % (
+                ircutils.mircColor(maxLen(commitMessage, 50), "dark gray"),
+                url
+            ))
+        ))

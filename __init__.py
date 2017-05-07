@@ -38,6 +38,7 @@ import local.handler.IssueHandler
 import local.handler.StatusHandler
 import local.handler.TravisHandler
 import local.handler.MessageHandler
+import local.handler.NetlifyHandler
 import local.handler.ReleaseHandler
 import local.handler.UnknownHandler
 import local.handler.AppVeyorHandler
@@ -56,6 +57,7 @@ reload(local.handler.IssueHandler)
 reload(local.handler.StatusHandler)
 reload(local.handler.TravisHandler)
 reload(local.handler.MessageHandler)
+reload(local.handler.NetlifyHandler)
 reload(local.handler.ReleaseHandler)
 reload(local.handler.UnknownHandler)
 reload(local.handler.AppVeyorHandler)

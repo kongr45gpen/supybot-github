@@ -55,6 +55,10 @@ conf.registerChannelValue(Github, 'showSuccessfulBuildMessages',
         registry.String('change',
         """Whether to show successful build messages - can be never, change or always"""))
 
+conf.registerChannelValue(Github, 'showSuccessfulDeployMessages',
+        registry.String('always',
+        """Whether to show successful deployment messages - can be never, change or always"""))
+
 conf.registerGlobalValue(Github, 'port',
         registry.Integer(8093,
         """The port where Github will send HTTP requests"""))

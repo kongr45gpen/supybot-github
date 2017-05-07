@@ -34,6 +34,7 @@ import IssueHandler
 import StatusHandler
 import TravisHandler
 import MessageHandler
+import NetlifyHandler
 import ReleaseHandler
 import UnknownHandler
 import AppVeyorHandler
@@ -166,6 +167,8 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             TravisHandler.handle(data, theme)
         elif 'pages' in data:
             WikiHandler.handle(data, theme)
+        elif 'screenshot_url' in data:
+            NetlifyHandler.handle(data, theme)
         elif 'state' in data:
             StatusHandler.handle(data, theme)
         elif 'commits' in data:

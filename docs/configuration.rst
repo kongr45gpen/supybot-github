@@ -111,6 +111,8 @@ Available configuration values
   :Default value: `False`
   :Type: Boolean
 
+.. _showSuccessfulBuildMessages-option:
+
 ``showSuccessfulBuildMessages``
   Whether to show build messages for non-failing builds on CI services, such
   as Travis and AppVeyor. Setting to ``never`` will not show any message when
@@ -119,6 +121,18 @@ Available configuration values
   the previous build was broken (i.e. whenever the build is fixed).
 
   :Default value: `change`
+  :Possible values: ``never``, ``change``, ``always``
+  :Type: Enum
+
+``showSuccessfulDeployMessages``
+  Whether to show build messages for non-failing builds on deployment services,
+  such as Netlify. Works exactly like :ref:`showSuccessfulBuildMessages <showSuccessfulBuildMessages-option>`:
+  Setting to ``never`` will not show any message when a deployment is
+  successful, setting to ``always`` will show all success messages, and setting
+  this to ``change`` will only notify about successful deployments, when the
+  previous one was broken (i.e. whenever the build is fixed).
+
+  :Default value: `always`
   :Possible values: ``never``, ``change``, ``always``
   :Type: Enum
 

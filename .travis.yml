@@ -23,3 +23,5 @@ after_success:
 notifications:
   webhooks:
     - http://helit.tech:8093/++alezakos
+
+sudo: false

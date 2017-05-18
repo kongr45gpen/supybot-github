@@ -197,6 +197,13 @@ class DefaultTheme(Theme):
             ircutils.mircColor(message, "light blue")
         ))
 
+    def more(self, branch, number, type):
+        self.msgs.append("%s: ...and %d more %s" % (
+            self.repo(branch),
+            number,
+            type
+        ))
+
     def unknown(self, eventType, action, actor, url):
         if action is not None:
             if eventType is None:

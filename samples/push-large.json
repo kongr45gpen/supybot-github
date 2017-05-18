@@ -1,0 +1,1076 @@
+{
+  "ref": "refs/heads/pullr1",
+  "before": "2c359e1f0285f1769360aa2f7c28160c85000f73",
+  "after": "2f3d9f6f066e51d4ab2ec7cb85b967c73ad5dc42",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "base_ref": null,
+  "compare": "https://github.com/kongr45gpen/test/compare/2c359e1f0285...2f3d9f6f066e",
+  "commits": [
+    {
+      "id": "de53df429d1963cae8344fc0dff104e14d1a39c2",
+      "tree_id": "70223a14d2c0988beb345e6e82bb65b5a8f9783d",
+      "distinct": true,
+      "message": "Take the season into account",
+      "timestamp": "2017-01-08T02:28:55+02:00",
+      "url": "https://github.com/kongr45gpen/test/commit/de53df429d1963cae8344fc0dff104e14d1a39c2",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "9fee30306cef4f1003ab9fec686a6defa1bf2206",
+      "tree_id": "802d357ce83066a8dd03e3775b91d1393673d1ad",
+      "distinct": true,
+      "message": "Remove extra line",
+      "timestamp": "2017-05-07T14:55:24+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/9fee30306cef4f1003ab9fec686a6defa1bf2206",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "7807bde73fe5f792792c13fc2512dcbd34657bdf",
+      "tree_id": "11f8b1f20b1a163e25938ef8160dc09b0257e659",
+      "distinct": true,
+      "message": "Remove another extra line",
+      "timestamp": "2017-05-07T14:55:41+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/7807bde73fe5f792792c13fc2512dcbd34657bdf",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "7d81cb47ce45c3f071b9036c3da504aa626adbc3",
+      "tree_id": "84734949517c32b9f26d2297a1198ed477e8144f",
+      "distinct": true,
+      "message": "Don't require sudo",
+      "timestamp": "2017-05-07T15:14:55+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/7d81cb47ce45c3f071b9036c3da504aa626adbc3",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        ".travis.yml"
+      ]
+    },
+    {
+      "id": "74df1587d734a6d208e64304d936d97cceaef36b",
+      "tree_id": "eecab32ea66d84fcf5930b33b2d49fc0fe1bd115",
+      "distinct": true,
+      "message": "Add a ruby file for good measure",
+      "timestamp": "2017-05-07T15:18:18+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/74df1587d734a6d208e64304d936d97cceaef36b",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+        "string.rb"
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+
+      ]
+    },
+    {
+      "id": "8923545e5ab340214e6f0fc3f74435e20ddb4042",
+      "tree_id": "c0e2497c97234ff43ee59672e14b0e4115b0e079",
+      "distinct": true,
+      "message": "Make sure newlines are added",
+      "timestamp": "2017-05-07T15:18:46+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/8923545e5ab340214e6f0fc3f74435e20ddb4042",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "string.rb"
+      ]
+    },
+    {
+      "id": "5f1fd2e80e8571702048b14ff0de38988e77819d",
+      "tree_id": "78d77aeb66f17b1d2321a266299e29d654c737c4",
+      "distinct": true,
+      "message": "Add documentation",
+      "timestamp": "2017-05-07T15:20:20+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/5f1fd2e80e8571702048b14ff0de38988e77819d",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "string.rb"
+      ]
+    },
+    {
+      "id": "7072c7dc2a14631169eaebc61e0c372275c346a4",
+      "tree_id": "990869c5dbe195b9172a9332dee1862e9d52b72e",
+      "distinct": true,
+      "message": "Add warning",
+      "timestamp": "2017-05-07T15:22:21+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/7072c7dc2a14631169eaebc61e0c372275c346a4",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "2f0297a483be69e68fd68ccc56a5210d1177fd85",
+      "tree_id": "9120505e638a355a6809499dafd503111ca29382",
+      "distinct": true,
+      "message": "Use funny programming conventions",
+      "timestamp": "2017-05-07T15:22:42+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/2f0297a483be69e68fd68ccc56a5210d1177fd85",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "57c15a6b41ef2f60981f973d7e47d3fec12d77d4",
+      "tree_id": "06e7047f4247ed2e23cf7d2b3516d88bbaeb06ed",
+      "distinct": true,
+      "message": "Add explanation",
+      "timestamp": "2017-05-07T15:23:09+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/57c15a6b41ef2f60981f973d7e47d3fec12d77d4",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "fe98936482cd6b890e4c643a6da87619a78934a6",
+      "tree_id": "e1343cfbbebc0a17daeb7132a01b0cad024d07e4",
+      "distinct": true,
+      "message": "Be more explanatory",
+      "timestamp": "2017-05-07T15:23:26+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/fe98936482cd6b890e4c643a6da87619a78934a6",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "42682ed8ea72d3cf6b0810a58de4d4e53c6cb774",
+      "tree_id": "984dbe3745f494428d8dfc17329d78453fe57983",
+      "distinct": true,
+      "message": "Be more verbose",
+      "timestamp": "2017-05-07T15:23:36+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/42682ed8ea72d3cf6b0810a58de4d4e53c6cb774",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "0cc63c2e8ad320a704d0ee6a7c074c98935aeac3",
+      "tree_id": "3b1b03fc70ab9fa748952f81e011012f35a0b22a",
+      "distinct": true,
+      "message": "Remove a reference",
+      "timestamp": "2017-05-07T15:23:49+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/0cc63c2e8ad320a704d0ee6a7c074c98935aeac3",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "9a615601d81c20f1ee097adccbe795b500c7e855",
+      "tree_id": "4fa570f848bda223c3603a21cb33d46e8efecb54",
+      "distinct": true,
+      "message": "Duplicate the \"The flagOnSpawn plugin is very easy to use. After you load it (it doesn't require any parameters), set the variable _flagonspawn according to your preferences.\" line.",
+      "timestamp": "2017-05-07T15:24:08+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/9a615601d81c20f1ee097adccbe795b500c7e855",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "016ea964b18fa839b177756b76c81eb07ba55e3e",
+      "tree_id": "1d1ad6dad470fbd3f578bdbfbb4a8190e6a63742",
+      "distinct": true,
+      "message": "Addaverylargetextthatappearsasasignleandverylargelinesoastotesthowmuchandwellthebotcanhandlewordswithoutspacesinbetweenthesamegoesforourpluginandanyircclientsusedbyusers",
+      "timestamp": "2017-05-07T15:24:55+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/016ea964b18fa839b177756b76c81eb07ba55e3e",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "4cd1e6c2623ea50321f1abf7dd6f39654482e6c5",
+      "tree_id": "1c8587ed411acf29a274fd6c96ef8b4c6e719267",
+      "distinct": true,
+      "message": "Line games",
+      "timestamp": "2017-05-07T15:26:26+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/4cd1e6c2623ea50321f1abf7dd6f39654482e6c5",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "2f3d9f6f066e51d4ab2ec7cb85b967c73ad5dc42",
+      "tree_id": "c1e2924243291696a386b29c5b786271b704ed07",
+      "distinct": true,
+      "message": "Merge branch 'pullr1' of github.com:kongr45gpen/test into pullr1",
+      "timestamp": "2017-05-07T15:27:00+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/2f3d9f6f066e51d4ab2ec7cb85b967c73ad5dc42",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    }
+  ],
+  "head_commit": {
+    "id": "2f3d9f6f066e51d4ab2ec7cb85b967c73ad5dc42",
+    "tree_id": "c1e2924243291696a386b29c5b786271b704ed07",
+    "distinct": true,
+    "message": "Merge branch 'pullr1' of github.com:kongr45gpen/test into pullr1",
+    "timestamp": "2017-05-07T15:27:00+03:00",
+    "url": "https://github.com/kongr45gpen/test/commit/2f3d9f6f066e51d4ab2ec7cb85b967c73ad5dc42",
+    "author": {
+      "name": "kongr45gpen",
+      "email": "electrovesta@gmail.com",
+      "username": "kongr45gpen"
+    },
+    "committer": {
+      "name": "kongr45gpen",
+      "email": "electrovesta@gmail.com",
+      "username": "kongr45gpen"
+    },
+    "added": [
+
+    ],
+    "removed": [
+
+    ],
+    "modified": [
+      "README.md"
+    ]
+  },
+  "repository": {
+    "id": 7406434,
+    "name": "test",
+    "full_name": "kongr45gpen/test",
+    "owner": {
+      "name": "kongr45gpen",
+      "email": "electrovesta@gmail.com",
+      "login": "kongr45gpen",
+      "id": 720678,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/720678?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/kongr45gpen",
+      "html_url": "https://github.com/kongr45gpen",
+      "followers_url": "https://api.github.com/users/kongr45gpen/followers",
+      "following_url": "https://api.github.com/users/kongr45gpen/following{/other_user}",
+      "gists_url": "https://api.github.com/users/kongr45gpen/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/kongr45gpen/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/kongr45gpen/subscriptions",
+      "organizations_url": "https://api.github.com/users/kongr45gpen/orgs",
+      "repos_url": "https://api.github.com/users/kongr45gpen/repos",
+      "events_url": "https://api.github.com/users/kongr45gpen/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/kongr45gpen/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "private": false,
+    "html_url": "https://github.com/kongr45gpen/test",
+    "description": "You can safely ignore this repo :)",
+    "fork": false,
+    "url": "https://github.com/kongr45gpen/test",
+    "forks_url": "https://api.github.com/repos/kongr45gpen/test/forks",
+    "keys_url": "https://api.github.com/repos/kongr45gpen/test/keys{/key_id}",
+    "collaborators_url": "https://api.github.com/repos/kongr45gpen/test/collaborators{/collaborator}",
+    "teams_url": "https://api.github.com/repos/kongr45gpen/test/teams",
+    "hooks_url": "https://api.github.com/repos/kongr45gpen/test/hooks",
+    "issue_events_url": "https://api.github.com/repos/kongr45gpen/test/issues/events{/number}",
+    "events_url": "https://api.github.com/repos/kongr45gpen/test/events",
+    "assignees_url": "https://api.github.com/repos/kongr45gpen/test/assignees{/user}",
+    "branches_url": "https://api.github.com/repos/kongr45gpen/test/branches{/branch}",
+    "tags_url": "https://api.github.com/repos/kongr45gpen/test/tags",
+    "blobs_url": "https://api.github.com/repos/kongr45gpen/test/git/blobs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/kongr45gpen/test/git/tags{/sha}",
+    "git_refs_url": "https://api.github.com/repos/kongr45gpen/test/git/refs{/sha}",
+    "trees_url": "https://api.github.com/repos/kongr45gpen/test/git/trees{/sha}",
+    "statuses_url": "https://api.github.com/repos/kongr45gpen/test/statuses/{sha}",
+    "languages_url": "https://api.github.com/repos/kongr45gpen/test/languages",
+    "stargazers_url": "https://api.github.com/repos/kongr45gpen/test/stargazers",
+    "contributors_url": "https://api.github.com/repos/kongr45gpen/test/contributors",
+    "subscribers_url": "https://api.github.com/repos/kongr45gpen/test/subscribers",
+    "subscription_url": "https://api.github.com/repos/kongr45gpen/test/subscription",
+    "commits_url": "https://api.github.com/repos/kongr45gpen/test/commits{/sha}",
+    "git_commits_url": "https://api.github.com/repos/kongr45gpen/test/git/commits{/sha}",
+    "comments_url": "https://api.github.com/repos/kongr45gpen/test/comments{/number}",
+    "issue_comment_url": "https://api.github.com/repos/kongr45gpen/test/issues/comments{/number}",
+    "contents_url": "https://api.github.com/repos/kongr45gpen/test/contents/{+path}",
+    "compare_url": "https://api.github.com/repos/kongr45gpen/test/compare/{base}...{head}",
+    "merges_url": "https://api.github.com/repos/kongr45gpen/test/merges",
+    "archive_url": "https://api.github.com/repos/kongr45gpen/test/{archive_format}{/ref}",
+    "downloads_url": "https://api.github.com/repos/kongr45gpen/test/downloads",
+    "issues_url": "https://api.github.com/repos/kongr45gpen/test/issues{/number}",
+    "pulls_url": "https://api.github.com/repos/kongr45gpen/test/pulls{/number}",
+    "milestones_url": "https://api.github.com/repos/kongr45gpen/test/milestones{/number}",
+    "notifications_url": "https://api.github.com/repos/kongr45gpen/test/notifications{?since,all,participating}",
+    "labels_url": "https://api.github.com/repos/kongr45gpen/test/labels{/name}",
+    "releases_url": "https://api.github.com/repos/kongr45gpen/test/releases{/id}",
+    "deployments_url": "https://api.github.com/repos/kongr45gpen/test/deployments",
+    "created_at": 1357130000,
+    "updated_at": "2017-01-03T21:40:06Z",
+    "pushed_at": 1494160028,
+    "git_url": "git://github.com/kongr45gpen/test.git",
+    "ssh_url": "git@github.com:kongr45gpen/test.git",
+    "clone_url": "https://github.com/kongr45gpen/test.git",
+    "svn_url": "https://github.com/kongr45gpen/test",
+    "homepage": "",
+    "size": 20,
+    "stargazers_count": 0,
+    "watchers_count": 0,
+    "language": null,
+    "has_issues": true,
+    "has_projects": true,
+    "has_downloads": true,
+    "has_wiki": true,
+    "has_pages": false,
+    "forks_count": 1,
+    "mirror_url": null,
+    "open_issues_count": 4,
+    "forks": 1,
+    "open_issues": 4,
+    "watchers": 0,
+    "default_branch": "pullr1",
+    "stargazers": 0,
+    "master_branch": "pullr1"
+  },
+  "pusher": {
+    "name": "kongr45gpen",
+    "email": "electrovesta@gmail.com"
+  },
+  "sender": {
+    "login": "kongr45gpen",
+    "id": 720678,
+    "avatar_url": "https://avatars0.githubusercontent.com/u/720678?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/kongr45gpen",
+    "html_url": "https://github.com/kongr45gpen",
+    "followers_url": "https://api.github.com/users/kongr45gpen/followers",
+    "following_url": "https://api.github.com/users/kongr45gpen/following{/other_user}",
+    "gists_url": "https://api.github.com/users/kongr45gpen/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/kongr45gpen/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/kongr45gpen/subscriptions",
+    "organizations_url": "https://api.github.com/users/kongr45gpen/orgs",
+    "repos_url": "https://api.github.com/users/kongr45gpen/repos",
+    "events_url": "https://api.github.com/users/kongr45gpen/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/kongr45gpen/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "distinct_commits": [
+    {
+      "id": "de53df429d1963cae8344fc0dff104e14d1a39c2",
+      "tree_id": "70223a14d2c0988beb345e6e82bb65b5a8f9783d",
+      "distinct": true,
+      "message": "Take the season into account",
+      "timestamp": "2017-01-08T02:28:55+02:00",
+      "url": "https://github.com/kongr45gpen/test/commit/de53df429d1963cae8344fc0dff104e14d1a39c2",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "9fee30306cef4f1003ab9fec686a6defa1bf2206",
+      "tree_id": "802d357ce83066a8dd03e3775b91d1393673d1ad",
+      "distinct": true,
+      "message": "Remove extra line",
+      "timestamp": "2017-05-07T14:55:24+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/9fee30306cef4f1003ab9fec686a6defa1bf2206",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "7807bde73fe5f792792c13fc2512dcbd34657bdf",
+      "tree_id": "11f8b1f20b1a163e25938ef8160dc09b0257e659",
+      "distinct": true,
+      "message": "Remove another extra line",
+      "timestamp": "2017-05-07T14:55:41+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/7807bde73fe5f792792c13fc2512dcbd34657bdf",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "7d81cb47ce45c3f071b9036c3da504aa626adbc3",
+      "tree_id": "84734949517c32b9f26d2297a1198ed477e8144f",
+      "distinct": true,
+      "message": "Don't require sudo",
+      "timestamp": "2017-05-07T15:14:55+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/7d81cb47ce45c3f071b9036c3da504aa626adbc3",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        ".travis.yml"
+      ]
+    },
+    {
+      "id": "74df1587d734a6d208e64304d936d97cceaef36b",
+      "tree_id": "eecab32ea66d84fcf5930b33b2d49fc0fe1bd115",
+      "distinct": true,
+      "message": "Add a ruby file for good measure",
+      "timestamp": "2017-05-07T15:18:18+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/74df1587d734a6d208e64304d936d97cceaef36b",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+        "string.rb"
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+
+      ]
+    },
+    {
+      "id": "8923545e5ab340214e6f0fc3f74435e20ddb4042",
+      "tree_id": "c0e2497c97234ff43ee59672e14b0e4115b0e079",
+      "distinct": true,
+      "message": "Make sure newlines are added",
+      "timestamp": "2017-05-07T15:18:46+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/8923545e5ab340214e6f0fc3f74435e20ddb4042",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "string.rb"
+      ]
+    },
+    {
+      "id": "5f1fd2e80e8571702048b14ff0de38988e77819d",
+      "tree_id": "78d77aeb66f17b1d2321a266299e29d654c737c4",
+      "distinct": true,
+      "message": "Add documentation",
+      "timestamp": "2017-05-07T15:20:20+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/5f1fd2e80e8571702048b14ff0de38988e77819d",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "string.rb"
+      ]
+    },
+    {
+      "id": "7072c7dc2a14631169eaebc61e0c372275c346a4",
+      "tree_id": "990869c5dbe195b9172a9332dee1862e9d52b72e",
+      "distinct": true,
+      "message": "Add warning",
+      "timestamp": "2017-05-07T15:22:21+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/7072c7dc2a14631169eaebc61e0c372275c346a4",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "2f0297a483be69e68fd68ccc56a5210d1177fd85",
+      "tree_id": "9120505e638a355a6809499dafd503111ca29382",
+      "distinct": true,
+      "message": "Use funny programming conventions",
+      "timestamp": "2017-05-07T15:22:42+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/2f0297a483be69e68fd68ccc56a5210d1177fd85",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "57c15a6b41ef2f60981f973d7e47d3fec12d77d4",
+      "tree_id": "06e7047f4247ed2e23cf7d2b3516d88bbaeb06ed",
+      "distinct": true,
+      "message": "Add explanation",
+      "timestamp": "2017-05-07T15:23:09+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/57c15a6b41ef2f60981f973d7e47d3fec12d77d4",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "fe98936482cd6b890e4c643a6da87619a78934a6",
+      "tree_id": "e1343cfbbebc0a17daeb7132a01b0cad024d07e4",
+      "distinct": true,
+      "message": "Be more explanatory",
+      "timestamp": "2017-05-07T15:23:26+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/fe98936482cd6b890e4c643a6da87619a78934a6",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "42682ed8ea72d3cf6b0810a58de4d4e53c6cb774",
+      "tree_id": "984dbe3745f494428d8dfc17329d78453fe57983",
+      "distinct": true,
+      "message": "Be more verbose",
+      "timestamp": "2017-05-07T15:23:36+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/42682ed8ea72d3cf6b0810a58de4d4e53c6cb774",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "0cc63c2e8ad320a704d0ee6a7c074c98935aeac3",
+      "tree_id": "3b1b03fc70ab9fa748952f81e011012f35a0b22a",
+      "distinct": true,
+      "message": "Remove a reference",
+      "timestamp": "2017-05-07T15:23:49+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/0cc63c2e8ad320a704d0ee6a7c074c98935aeac3",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "9a615601d81c20f1ee097adccbe795b500c7e855",
+      "tree_id": "4fa570f848bda223c3603a21cb33d46e8efecb54",
+      "distinct": true,
+      "message": "Duplicate the \"The flagOnSpawn plugin is very easy to use. After you load it (it doesn't require any parameters), set the variable _flagonspawn according to your preferences.\" line.",
+      "timestamp": "2017-05-07T15:24:08+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/9a615601d81c20f1ee097adccbe795b500c7e855",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README"
+      ]
+    },
+    {
+      "id": "016ea964b18fa839b177756b76c81eb07ba55e3e",
+      "tree_id": "1d1ad6dad470fbd3f578bdbfbb4a8190e6a63742",
+      "distinct": true,
+      "message": "Προσθήκηενόςκειμένουσταελληνικάχρησιμοποιώνταςτηδιεθνήκωδικοποίησηγιουτιεφοχτώκαιέναμεγάλοκομμίτμέσετζγιατηνδοκιμήτουσούπιμποτγκίτχαμππλάγκινκαιτονχειρισμόαπόαυτόδιεθνοποιημένωνμηνυμάτων",
+      "timestamp": "2017-05-07T15:24:55+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/016ea964b18fa839b177756b76c81eb07ba55e3e",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "4cd1e6c2623ea50321f1abf7dd6f39654482e6c5",
+      "tree_id": "1c8587ed411acf29a274fd6c96ef8b4c6e719267",
+      "distinct": true,
+      "message": "Line games",
+      "timestamp": "2017-05-07T15:26:26+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/4cd1e6c2623ea50321f1abf7dd6f39654482e6c5",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "2f3d9f6f066e51d4ab2ec7cb85b967c73ad5dc42",
+      "tree_id": "c1e2924243291696a386b29c5b786271b704ed07",
+      "distinct": true,
+      "message": "Merge branch 'pullr1' of github.com:kongr45gpen/test into pullr1",
+      "timestamp": "2017-05-07T15:27:00+03:00",
+      "url": "https://github.com/kongr45gpen/test/commit/2f3d9f6f066e51d4ab2ec7cb85b967c73ad5dc42",
+      "author": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "committer": {
+        "name": "kongr45gpen",
+        "email": "electrovesta@gmail.com",
+        "username": "kongr45gpen"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "README.md"
+      ]
+    }
+  ],
+  "ref_name": "pullr1"
+}

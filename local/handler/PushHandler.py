@@ -90,7 +90,7 @@ def handle(data, theme):
                 url = urls
             )
 
-    for commit in data['commits']:
+    def __commit(commit):
         if 'username' in commit['author']:
             author = commit['author']['username']
         else:
@@ -99,15 +99,34 @@ def handle(data, theme):
         commitBranch = branch
 
         if not commit['distinct'] and not configValue('showMergedCommits'):
-            continue
+            return False
 
         if isMerge and not commit['distinct']:
-            commitBranch = "%s -> %s" % ( baseBranch, branch )
+            commitBranch = "%s -> %s" % (baseBranch, branch)
 
         theme.commit(
-            branch = commitBranch,
-            author = author,
-            id = commit['id'],
-            message = commit['message'],
-            url = getShortURL(commit['url'])
+            branch=commitBranch,
+            author=author,
+            id=commit['id'],
+            message=commit['message'],
+            url=getShortURL(commit['url'])
         )
+
+        return True
+
+    i = 0
+    for commit in data['commits']:
+        max = configValue('maxCommitCount')
+        print "len of data commits is " + str(len(data['commits'])) + " while max+1= " + str(max+1)
+        if max != 0 and len(data['commits']) != max + 1 and i >= max:
+            theme.more(
+                branch = branch,
+                number = len(data['commits']) - i,
+                type = "commits"
+            )
+            break
+
+        if __commit(commit):
+            i += 1
+
+

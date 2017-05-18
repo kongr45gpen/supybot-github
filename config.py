@@ -93,4 +93,7 @@ conf.registerChannelValue(Github, 'alwaysShowForcedPushes',
         registry.Boolean(True,
         """Whether to always show force-pushes, even if hidePush is set to True"""))
 
+conf.registerChannelValue(Github, 'maxCommitCount',
+        registry.Integer(7,
+        """The maximum number of commits to show (0 to disable)"""))
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

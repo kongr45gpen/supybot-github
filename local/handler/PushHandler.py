@@ -117,7 +117,6 @@ def handle(data, theme):
     i = 0
     for commit in data['commits']:
         max = configValue('maxCommitCount')
-        print "len of data commits is " + str(len(data['commits'])) + " while max+1= " + str(max+1)
         if max != 0 and len(data['commits']) != max + 1 and i >= max:
             theme.more(
                 branch = branch,

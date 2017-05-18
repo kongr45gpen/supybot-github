@@ -111,7 +111,7 @@ def colorAction(action):
                   "failed", "errored", "failure", "still failing",
                   "broken", "error"]:
         return ircutils.bold(ircutils.mircColor(action, "red"))
-    if action in ["assigned", "merged"]:
+    if action in ["assigned", "merged", "synchronize"]:
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
     if action in ["reopened", "pending"]:
         return ircutils.bold(ircutils.mircColor(action, "blue"))

@@ -259,3 +259,15 @@ Available configuration values
   :Default value: `False`
   :Type: Boolean
   :Scope: `Channel`
+
+``maxCommitCount``
+  The maximum number of commits to show in one push. Prevents spamming channels,
+  especially in cases of merges. Set to `0` to disable and allow infinite
+  commit messages to be sent.
+
+  .. image:: _static/maxCommitCount.png
+     :scale: 75
+
+  :Default value: `7`
+  :Type: Integer
+  :Scope: `Channel`

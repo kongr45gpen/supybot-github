@@ -9,4 +9,4 @@ echo $hash
 
 echo -n "$DATA" > ~/repos/supybot-github/cmpr
 
-curl --header "X-GitHub-Event: $1" --header "X-Hub-Signature: sha1=$hash" --data "$DATA" http://localhost:8093/
+curl --header "X-GitHub-Event: $1" --header "X-Hub-Signature: sha1=$hash" --header "X-GitHub-Delivery: nil" --data "$DATA" http://localhost:8093/

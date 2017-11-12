@@ -104,6 +104,10 @@ def maxLen(msg, maxn=400, splitLines=True):
 def colorAction(action):
     """Give an action string (e.g. created, edited) and get a nice IRC colouring"""
 
+    # Fix past tense for some github verbs
+    if action in ["synchronize"]:
+        action += "d"
+
     if action in ["created", "opened", "tagged", "success", "passed", "fixed",
                   "published", "completed", "ready"]:
         return ircutils.bold(ircutils.mircColor(action, "green"))
@@ -111,7 +115,7 @@ def colorAction(action):
                   "failed", "errored", "failure", "still failing",
                   "broken", "error"]:
         return ircutils.bold(ircutils.mircColor(action, "red"))
-    if action in ["assigned", "merged", "synchronize"]:
+    if action in ["assigned", "merged", "synchronized"]:
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
     if action in ["reopened", "pending"]:
         return ircutils.bold(ircutils.mircColor(action, "blue"))

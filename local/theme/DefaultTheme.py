@@ -83,18 +83,30 @@ class DefaultTheme(Theme):
             formattedActor = ircutils.bold(formattedActor)
 
         extra = ''
+        formattedFiller = type
         if action == 'assigned':
-            extra = " to %s" % ircutils.bold(ircutils.mircColor(assignee, "green"))
+            if assignee == actor:
+                # Don't show assignee name twice
+                action = 'self-assigned'
+            else:
+                extra = " to %s" % ircutils.bold(ircutils.mircColor(assignee, "green"))
         elif action == 'unassigned':
             extra = " from %s" % ircutils.mircColor(assignee, "green")
-        elif action == 'labeled' or action == 'unlabeled':
+        elif action == 'labeled':
+            # This is not the same syntax as 'unlabeled', since adding a label
+            # is a more frequent action than removing one, and adding more
+            # filler text would make the message harder to read
             extra = " as %s" % ircutils.mircColor(labelName, hexToMirc(labelColor))
+        elif action == 'unlabeled':
+            # Grammar gets weird here
+            action = 'removed'
+            formattedFiller = "%s label from" % ircutils.mircColor(labelName, hexToMirc(labelColor))
 
         self.msgs.append( "%s: %s %s %s #%s%s%s%s %s%s" % (
             self.repo(),
             formattedActor,
             colorAction(action),
-            type,
+            formattedFiller,
             issueNo,
             " \"%s\"" % (ircutils.bold(issueTitle)) if showName else '',
             " by %s" % ircutils.mircColor(creator,"green") if creator != actor else '',

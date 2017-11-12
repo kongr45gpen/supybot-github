@@ -100,9 +100,9 @@ def maxLen(msg, maxn=400, splitLines=True):
         ret = msg
     return ret
 
-
+# TODO: Use a better data structure for this?
 def colorAction(action):
-    """Give an action string (e.g. created, edited) and get a nice IRC colouring"""
+    """Give an action string (e.g. created, edited) and get a nice IRC colouring."""
 
     # Fix past tense for some github verbs
     if action in ["synchronize"]:
@@ -113,9 +113,10 @@ def colorAction(action):
         return ircutils.bold(ircutils.mircColor(action, "green"))
     if action in ["deleted", "closed", "re-tagged", "deleted tag",
                   "failed", "errored", "failure", "still failing",
-                  "broken", "error"]:
+                  "broken", "error", "removed"]:
         return ircutils.bold(ircutils.mircColor(action, "red"))
-    if action in ["assigned", "merged", "synchronized"]:
+    if action in ["assigned", "self-assigned", "merged", "synchronized",
+                  "labeled"]:
         return ircutils.bold(ircutils.mircColor(action, "light blue"))
     if action in ["reopened", "pending"]:
         return ircutils.bold(ircutils.mircColor(action, "blue"))

@@ -202,6 +202,19 @@ class GithubTestCase(ExpectationPluginTestCase):
             it().should.contain('https://github.com/kongr45gpen/test/issues/6#issuecomment-181134370')
         )
 
+    def testIssueSelfAssign(self):
+        self.sendRequest('issue-assign-self')
+
+        self.describe('first message',
+            it().should.contain('kongr45gpen'),
+            it().should.contain('supybot-github'),
+            it().should.contain('self-assigned'),
+            it().should.contain('issue'),
+            it().should.contain('#22'),
+            it().should.contain('Handle duplicate notifications for branches and tags'),
+            it().should.contain('https://github.com/kongr45gpen/supybot-github/issues/22')
+        )
+
     def testPullRequestCreate(self):
         self.sendRequest('pr-create')
 

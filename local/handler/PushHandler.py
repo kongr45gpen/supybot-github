@@ -57,7 +57,8 @@ def handle(data, theme):
             forced = data['forced']
         )
     elif branched:
-        action = "force %s" % (action,)
+        if data['forced']:
+            action = "force %s" % (action,)
 
         if isTag:
             theme.tag(

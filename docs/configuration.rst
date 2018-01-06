@@ -60,9 +60,22 @@ Available configuration values
   :Type: String
   :Scope: `Global`
 
+``address``
+  The IP address or hostname that the HTTP server receiving event information
+  will bind to. The default empty value of ``''`` or ``0.0.0.0`` will work for
+  almost all cases.
+
+  :Default value: ````
+  :Type: String
+  :Scope: `Global`
+
+  A plugin reload will be required so that changes in this value can be applied.
+
 ``port``
   The port which will be used by the HTTP server to receive event information
-  from Github and other services
+  from Github and other services.
+
+  A plugin reload will be required so that changes in this value can be applied.
 
   :Default value: `8093`
   :Type: Integer

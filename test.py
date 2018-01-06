@@ -7,17 +7,19 @@ from local.testing.ExpectationPluginTestCase import *
 class GithubTestCase(ExpectationPluginTestCase):
     plugins = ('Github',)
     port    = 27230
+    address = '127.0.0.1'
     files   = {}
     config  = { 'plugins.github.shortUrl': False,
                 'plugins.github.hidePush': False
               }
 
     def setUp(self):
-        # Set a different port from the default one to make testing while a
-        # supybot-github instance is running possible - we don't use the config
-        # variable because supybot's test framework sets the value after the
-        # plugin has been loaded
+        # Set a different port and address from the default one to make
+        # testing while a supybot-github instance is running possible - we
+        # don't use the config variable because supybot's test framework sets
+        # the value after the plugin has been loaded
         conf.supybot.plugins.get("Github").get('port').setValue(self.port)
+        conf.supybot.plugins.get("Github").get('address').setValue(self.address)
         PluginTestCase.setUp(self)
 
 

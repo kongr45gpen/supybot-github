@@ -59,6 +59,10 @@ conf.registerChannelValue(Github, 'showSuccessfulDeployMessages',
         registry.String('always',
         """Whether to show successful deployment messages - can be never, change or always"""))
 
+conf.registerGlobalValue(Github, 'address',
+        registry.String('',
+        """The IP address or hostname to which the HTTP server will bind. The default empty value ('') should work for most cases."""))
+
 conf.registerGlobalValue(Github, 'port',
         registry.Integer(8093,
         """The port where Github will send HTTP requests"""))

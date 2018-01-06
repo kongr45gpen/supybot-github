@@ -58,6 +58,7 @@ class Github(callbacks.Plugin):
     This should describe how to use this plugin."""
 
     threaded = True
+    address  = Utility.configValue('address')
     port     = Utility.configValue('port')
     messages = []
     pass
@@ -69,7 +70,7 @@ class Github(callbacks.Plugin):
 
     def ServerStart(self, httpd):
         try:
-            log.info('Server Starts - %s:%s' % ('', self.port))
+            log.info('Server Starts - %s:%s' % (self.address, self.port))
             httpd.serve_forever()
         except:
             return
@@ -79,7 +80,7 @@ class Github(callbacks.Plugin):
         self.__parent = super(Github, self)
         self.__parent.__init__(irc)
         server_class = BaseHTTPServer.HTTPServer
-        self.httpd = server_class(('', self.port), RequestHandler.GithubHandler)
+        self.httpd = server_class((self.address, self.port), RequestHandler.GithubHandler)
         t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
         t.daemon = False
         t.start()

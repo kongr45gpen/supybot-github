@@ -1,4 +1,4 @@
-from DefaultTheme import DefaultTheme
+from .DefaultTheme import DefaultTheme
 
 from ..utility import *
 

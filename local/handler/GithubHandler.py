@@ -5,12 +5,12 @@ import json
 import time
 import random
 import socket
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import hashlib
-import urlparse
+import urllib.parse
 import threading
-import BaseHTTPServer
+import http.server
 from time import strftime
 
 import supybot.log as log
@@ -27,30 +27,30 @@ import supybot.callbacks as callbacks
 from ..globals import *
 from ..utility import *
 
-import PingHandler
-import PushHandler
-import WikiHandler
-import IssueHandler
-import StatusHandler
-import TravisHandler
-import MessageHandler
-import NetlifyHandler
-import ReleaseHandler
-import UnknownHandler
-import AppVeyorHandler
-import CreateDeleteHandler
-import IssueCommentHandler
+from . import PingHandler
+from . import PushHandler
+from . import WikiHandler
+from . import IssueHandler
+from . import StatusHandler
+from . import TravisHandler
+from . import MessageHandler
+from . import NetlifyHandler
+from . import ReleaseHandler
+from . import UnknownHandler
+from . import AppVeyorHandler
+from . import CreateDeleteHandler
+from . import IssueCommentHandler
 
 from .. import theme as themes
 
 #TODO: Use a better name and location for this
-class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class GithubHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(s):
         """Respond to a POST request."""
         length = int(s.headers['Content-Length'])
         payload = s.rfile.read(length).decode('utf-8')
         if 'content-type' not in s.headers or s.headers['content-type'] == 'application/x-www-form-urlencoded':
-            post_data = urlparse.parse_qs(payload)
+            post_data = urllib.parse.parse_qs(payload)
             data = json.loads(post_data['payload'][0])
         else:
             data = json.loads(payload)
@@ -81,7 +81,7 @@ class GithubHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # Analyse the URL
         i = 0
         for part in path:
-            part = urllib.unquote(part)
+            part = urllib.parse.unquote(part)
             if i == 1 and requireCode:
                 receivedcode = part
 

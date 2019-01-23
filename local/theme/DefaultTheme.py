@@ -1,4 +1,4 @@
-from Theme import Theme
+from .Theme import Theme
 
 from ..utility import *
 

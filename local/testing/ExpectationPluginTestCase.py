@@ -9,7 +9,7 @@ from sys import stdout
 from time import sleep
 
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 class ExpectationPluginTestCase(PluginTestCase):
     plugins       = {}
@@ -18,10 +18,10 @@ class ExpectationPluginTestCase(PluginTestCase):
         m = self._feedMsg('get ' + query)
         manyEs = tcolors.FAIL + 'E' * len(args) + tcolors.ENDC
         if m is None:
-            print manyEs
-            raise TimeoutError, query
+            print(manyEs)
+            raise TimeoutError(query)
         if m.args[1].startswith('Error:'):
-            print manyEs
+            print(manyEs)
             self.fail('%r errored: %s' % (query, m.args[1]))
 
         errors = []
@@ -37,10 +37,10 @@ class ExpectationPluginTestCase(PluginTestCase):
         stdout.flush()
 
         if errors:
-            print "\n%sWhile describing %s" % (tcolors.FAIL, query)
+            print("\n%sWhile describing %s" % (tcolors.FAIL, query))
             for error in errors:
-                print "- Failed to assert that %s" % (error,)
-            print tcolors.ENDC
+                print("- Failed to assert that %s" % (error,))
+            print(tcolors.ENDC)
             self.fail("%i assertions failed while describing %s" % (len(errors), query))
 
     def sendRequest(self, file):
@@ -52,7 +52,7 @@ class ExpectationPluginTestCase(PluginTestCase):
             with open('samples/' + file + '.json', 'r') as content_file:
                 content = content_file.read()
             self.files[file] = content
-        urllib.urlopen('http://localhost:' + str(self.port), 'payload=' + content)
+        urllib.request.urlopen('http://localhost:' + str(self.port), 'payload=' + content)
 
     def conf(self, name, value):
         """Sets one of the plugin's configuration values"""

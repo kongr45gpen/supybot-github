@@ -2,7 +2,7 @@ import re
 import math
 import random
 import string
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from datetime import datetime, timedelta
 
 import supybot.log as log
@@ -11,7 +11,7 @@ import supybot.world as world
 import supybot.ircutils as ircutils
 import supybot.registry as registry
 
-import globals
+from . import globals
 
 
 def registryValue(plugin, name, channel=None, value=True):
@@ -138,8 +138,8 @@ def getShortURL(longurl):
         # Temporarily disabled
         url = longurl
         try:
-            req = urllib2.Request("https://git.io/", data)
-            response = urllib2.urlopen(req)
+            req = urllib.request.Request("https://git.io/", data)
+            response = urllib.request.urlopen(req)
             url = response.info().getheader('Location')
         except IOError as e:
             # Bad luck

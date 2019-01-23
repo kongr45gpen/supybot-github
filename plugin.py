@@ -50,6 +50,8 @@ from .local import globals
 from .local.handler import GithubHandler as RequestHandler
 from .local import utility as Utility
 
+from imp import reload
+
 globals.init()
 
 

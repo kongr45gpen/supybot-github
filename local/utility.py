@@ -138,9 +138,9 @@ def getShortURL(longurl):
         # Temporarily disabled
         url = longurl
         try:
-            req = urllib.request.Request("https://git.io/", data)
+            req = urllib.request.Request("https://git.io/", data.encode())
             response = urllib.request.urlopen(req)
-            url = response.info().getheader('Location')
+            url = response.getheader('Location')
         except IOError as e:
             # Bad luck
             log.warning("URL shortening failed with: %s" % (e.message,))

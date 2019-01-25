@@ -72,7 +72,7 @@ def parseBrackets(bracketConfig):
     if "M" in bracketConfig:
         return tuple(bracketConfig.split('M', 1))
     else:
-        mid = len(bracketConfig) / 2
+        mid = math.floor(len(bracketConfig) / 2)
         if len(bracketConfig) % 2 == 0:
             return (bracketConfig[:mid], bracketConfig[mid:])
         else:

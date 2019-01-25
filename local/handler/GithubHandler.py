@@ -105,22 +105,22 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
             s.send_response(200)
             s.send_header('Content-type', 'text/plain')
             s.end_headers()
-            s.wfile.write("Thanks!\n")
-            s.wfile.write(s.path.split('/'))
-            s.wfile.write("\n")
+            s.wfile.write("Thanks!\n".encode())
+            s.wfile.write(repr(s.path.lstrip('/').split('/')).encode())
+            s.wfile.write("\n".encode())
         except socket.error:
             pass
 
         if requireCode and receivedcode != configValue('passcode'):
             # The password is wrong
-            s.wfile.write("The password is wrong\n")
+            s.wfile.write("The password is wrong\n".encode())
             return
 
         # Handle Github secrets
         secret = getChannelSecret(channel)
         if secret is not None:
             if not 'X-Hub-Signature' in s.headers:
-                s.wfile.write("This channel requires a secret\n")
+                s.wfile.write("This channel requires a secret\n".encode())
                 return
 
             digest = "sha1=%s" % (hmac.new(secret, payload, hashlib.sha1).hexdigest(),)
@@ -130,7 +130,7 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
             log.debug("provided digest: %s", provided)
 
             if not secureCompare(digest, provided):
-                s.wfile.write("Invalid secret key\n")
+                s.wfile.write("Invalid secret key\n".encode())
                 return
 
         brackets = parseBrackets(configValue('brackets'))

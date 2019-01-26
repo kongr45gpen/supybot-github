@@ -267,7 +267,7 @@ def _hex_to_rgb(value):
 
 def _colourDistance(a, b):
     # Source: http://www.compuphase.com/cmetric.htm
-    rmean = (a[0] + b[0]) / 2
+    rmean = math.floor((a[0] + b[0]) / 2)
     red = a[0] - b[0]
     green = a[1] - b[1]
     blue = a[2] - b[2]

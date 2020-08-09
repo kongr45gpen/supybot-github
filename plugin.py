@@ -28,11 +28,11 @@
 import re
 import json
 import time
-import Queue
-import urllib
-import urlparse
+import queue
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import threading
-import BaseHTTPServer
+import http.server
 
 import supybot.dbi as dbi
 import supybot.log as log
@@ -46,9 +46,11 @@ import supybot.ircutils as ircutils
 import supybot.registry as registry
 import supybot.callbacks as callbacks
 
-import local.globals as globals
-import local.handler.GithubHandler as RequestHandler
-import local.utility as Utility
+from .local import globals
+from .local.handler import GithubHandler as RequestHandler
+from .local import utility as Utility
+
+from imp import reload
 
 globals.init()
 
@@ -79,7 +81,7 @@ class Github(callbacks.Plugin):
     def __init__(self, irc):
         self.__parent = super(Github, self)
         self.__parent.__init__(irc)
-        server_class = BaseHTTPServer.HTTPServer
+        server_class = http.server.HTTPServer
         self.httpd = server_class((self.address, self.port), RequestHandler.GithubHandler)
         t = threading.Thread(target=self.ServerStart, args=(self.httpd,))
         t.daemon = False

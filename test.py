@@ -2,7 +2,7 @@
 from supybot.log import info
 from supybot.test import *
 
-from local.testing.ExpectationPluginTestCase import *
+from .local.testing.ExpectationPluginTestCase import *
 
 class GithubTestCase(ExpectationPluginTestCase):
     plugins = ('Github',)

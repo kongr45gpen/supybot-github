@@ -23,54 +23,55 @@ __contributors__ = {}
 __url__ = 'https://github.com/kongr45gpen/supybot-github'
 
 
-import config
-import plugin
+from . import config
+from . import plugin
+from imp import reload
 reload(plugin) # In case we're being reloaded.
 # Add more reloads here if you add third-party modules and want them to be
 # reloaded when this plugin is reloaded.  Don't forget to import them as well!
-import local.globals
-import local.utility
-import local.handler.GithubHandler as RequestHandler
-import local.handler.PingHandler
-import local.handler.PushHandler
-import local.handler.WikiHandler
-import local.handler.IssueHandler
-import local.handler.StatusHandler
-import local.handler.TravisHandler
-import local.handler.MessageHandler
-import local.handler.NetlifyHandler
-import local.handler.ReleaseHandler
-import local.handler.UnknownHandler
-import local.handler.AppVeyorHandler
-import local.handler.CreateDeleteHandler
-import local.handler.IssueCommentHandler
-import local.theme.Theme
-import local.theme.DefaultTheme
-import local.theme.CompactTheme
-reload(local.globals)
-reload(local.utility)
+from .local import globals
+from .local import utility
+from .local.handler import GithubHandler as RequestHandler
+from .local.handler import PingHandler
+from .local.handler import PushHandler
+from .local.handler import WikiHandler
+from .local.handler import IssueHandler
+from .local.handler import StatusHandler
+from .local.handler import TravisHandler
+from .local.handler import MessageHandler
+from .local.handler import NetlifyHandler
+from .local.handler import ReleaseHandler
+from .local.handler import UnknownHandler
+from .local.handler import AppVeyorHandler
+from .local.handler import CreateDeleteHandler
+from .local.handler import IssueCommentHandler
+from .local.theme import Theme
+from .local.theme import DefaultTheme
+from .local.theme import CompactTheme
+reload(globals)
+reload(utility)
 reload(RequestHandler)
-reload(local.handler.PingHandler)
-reload(local.handler.PushHandler)
-reload(local.handler.WikiHandler)
-reload(local.handler.IssueHandler)
-reload(local.handler.StatusHandler)
-reload(local.handler.TravisHandler)
-reload(local.handler.MessageHandler)
-reload(local.handler.NetlifyHandler)
-reload(local.handler.ReleaseHandler)
-reload(local.handler.UnknownHandler)
-reload(local.handler.AppVeyorHandler)
-reload(local.handler.CreateDeleteHandler)
-reload(local.handler.IssueCommentHandler)
-reload(local.theme.Theme)
-reload(local.theme.DefaultTheme)
-reload(local.theme.CompactTheme)
+reload(PingHandler)
+reload(PushHandler)
+reload(WikiHandler)
+reload(IssueHandler)
+reload(StatusHandler)
+reload(TravisHandler)
+reload(MessageHandler)
+reload(NetlifyHandler)
+reload(ReleaseHandler)
+reload(UnknownHandler)
+reload(AppVeyorHandler)
+reload(CreateDeleteHandler)
+reload(IssueCommentHandler)
+reload(Theme)
+reload(DefaultTheme)
+reload(CompactTheme)
 
-local.globals.init()
+globals.init()
 
 if world.testing:
-    import test
+    from . import test
 
 Class = plugin.Class
 configure = config.configure

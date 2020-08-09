@@ -2,7 +2,7 @@ import re
 import math
 import random
 import string
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from datetime import datetime, timedelta
 
 import supybot.log as log
@@ -11,7 +11,7 @@ import supybot.world as world
 import supybot.ircutils as ircutils
 import supybot.registry as registry
 
-import globals
+from . import globals
 
 
 def registryValue(plugin, name, channel=None, value=True):
@@ -72,7 +72,7 @@ def parseBrackets(bracketConfig):
     if "M" in bracketConfig:
         return tuple(bracketConfig.split('M', 1))
     else:
-        mid = len(bracketConfig) / 2
+        mid = math.floor(len(bracketConfig) / 2)
         if len(bracketConfig) % 2 == 0:
             return (bracketConfig[:mid], bracketConfig[mid:])
         else:
@@ -138,9 +138,9 @@ def getShortURL(longurl):
         # Temporarily disabled
         url = longurl
         try:
-            req = urllib2.Request("https://git.io/", data)
-            response = urllib2.urlopen(req)
-            url = response.info().getheader('Location')
+            req = urllib.request.Request("https://git.io/", data.encode())
+            response = urllib.request.urlopen(req)
+            url = response.getheader('Location')
         except IOError as e:
             # Bad luck
             log.warning("URL shortening failed with: %s" % (e.message,))
@@ -267,7 +267,7 @@ def _hex_to_rgb(value):
 
 def _colourDistance(a, b):
     # Source: http://www.compuphase.com/cmetric.htm
-    rmean = (a[0] + b[0]) / 2
+    rmean = math.floor((a[0] + b[0]) / 2)
     red = a[0] - b[0]
     green = a[1] - b[1]
     blue = a[2] - b[2]

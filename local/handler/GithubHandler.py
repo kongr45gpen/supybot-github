@@ -123,7 +123,7 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
                 s.wfile.write("This channel requires a secret\n".encode())
                 return
 
-            digest = "sha1=%s" % (hmac.new(secret, payload, hashlib.sha1).hexdigest(),)
+            digest = "sha1=%s" % (hmac.new(bytes(secret, 'utf-8'), bytes(payload, 'utf-8'), hashlib.sha1).hexdigest())
             log.debug("expected digest: %s", digest)
 
             provided = s.headers['X-Hub-Signature']

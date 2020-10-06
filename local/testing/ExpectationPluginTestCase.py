@@ -54,6 +54,8 @@ class ExpectationPluginTestCase(PluginTestCase):
             self.files[file] = content
         content = bytes('payload=' + content, 'utf-8')
         urllib.request.urlopen('http://localhost:' + str(self.port), content)
+        # Tests on Travis fail randomly, so let's slow things down...
+        sleep(1)
 
     def conf(self, name, value):
         """Sets one of the plugin's configuration values"""

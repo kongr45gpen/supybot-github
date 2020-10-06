@@ -52,7 +52,8 @@ class ExpectationPluginTestCase(PluginTestCase):
             with open('samples/' + file + '.json', 'r') as content_file:
                 content = content_file.read()
             self.files[file] = content
-        urllib.request.urlopen('http://localhost:' + str(self.port), 'payload=' + content)
+        content = bytes('payload=' + content, 'utf-8')
+        urllib.request.urlopen('http://localhost:' + str(self.port), content)
 
     def conf(self, name, value):
         """Sets one of the plugin's configuration values"""

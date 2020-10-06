@@ -197,7 +197,7 @@ def randomString(length):
 
 def secureCompare(s1, s2):
     """Securely compare two strings"""
-    return sum(i != j for i, j in zip(s1, s2)) is 0
+    return sum(i != j for i, j in zip(s1, s2)) == 0
 
 
 def getChannelSecret(channel):

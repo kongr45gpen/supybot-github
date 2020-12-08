@@ -16,6 +16,11 @@ Screenshot
 ----------
 ![ ](http://i.imgur.com/2SmUOU2.png)
 
+GitHub Actions Integration
+--------------------------
+
+The GitHub Actions infrastructure doesn't have a webhooks, so instead there is a [GitHub Actions Integration available on the marketplace](https://github.com/marketplace/actions/supybot-irc-messages-action).
+
 Todo
 ----
 Check out [the Github issue tracker](https://github.com/kongr45gpen/supybot-github/issues?state=open).

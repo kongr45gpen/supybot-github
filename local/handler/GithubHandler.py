@@ -52,7 +52,12 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
         payload = s.rfile.read(length).decode('utf-8')
         if 'content-type' not in s.headers or s.headers['content-type'] == 'application/x-www-form-urlencoded':
             post_data = urllib.parse.parse_qs(payload)
-            data = json.loads(post_data['payload'][0])
+            if 'payload' in post_data:
+                data = json.loads(post_data['payload'][0])
+            else:
+                data = {}
+                for key, value in post_data.iteritems():
+                    data[key] = value[0]
         else:
             data = json.loads(payload)
 

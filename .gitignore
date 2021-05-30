@@ -1,4 +1,9 @@
+# Plugin files
+/cmpr
+/requests
+
 *.py[cod]
+*.bak
 
 # C extensions
 *.so

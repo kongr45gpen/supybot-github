@@ -23,31 +23,31 @@ __contributors__ = {}
 __url__ = 'https://github.com/kongr45gpen/supybot-github'
 
 
-from . import config
-from . import plugin
+import config
+import plugin
 from imp import reload
 reload(plugin) # In case we're being reloaded.
 # Add more reloads here if you add third-party modules and want them to be
 # reloaded when this plugin is reloaded.  Don't forget to import them as well!
-from .local import globals
-from .local import utility
-from .local.handler import GithubHandler as RequestHandler
-from .local.handler import PingHandler
-from .local.handler import PushHandler
-from .local.handler import WikiHandler
-from .local.handler import IssueHandler
-from .local.handler import StatusHandler
-from .local.handler import TravisHandler
-from .local.handler import MessageHandler
-from .local.handler import NetlifyHandler
-from .local.handler import ReleaseHandler
-from .local.handler import UnknownHandler
-from .local.handler import AppVeyorHandler
-from .local.handler import CreateDeleteHandler
-from .local.handler import IssueCommentHandler
-from .local.theme import Theme
-from .local.theme import DefaultTheme
-from .local.theme import CompactTheme
+from local import globals
+from local import utility
+from local.handler import GithubHandler as RequestHandler
+from local.handler import PingHandler
+from local.handler import PushHandler
+from local.handler import WikiHandler
+from local.handler import IssueHandler
+from local.handler import StatusHandler
+from local.handler import TravisHandler
+from local.handler import MessageHandler
+from local.handler import NetlifyHandler
+from local.handler import ReleaseHandler
+from local.handler import UnknownHandler
+from local.handler import AppVeyorHandler
+from local.handler import CreateDeleteHandler
+from local.handler import IssueCommentHandler
+from local.theme import Theme
+from local.theme import DefaultTheme
+from local.theme import CompactTheme
 reload(globals)
 reload(utility)
 reload(RequestHandler)
@@ -71,10 +71,9 @@ reload(CompactTheme)
 globals.init()
 
 if world.testing:
-    from . import test
+    import test
 
 Class = plugin.Class
 configure = config.configure
-
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

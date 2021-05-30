@@ -46,9 +46,9 @@ import supybot.ircutils as ircutils
 import supybot.registry as registry
 import supybot.callbacks as callbacks
 
-from .local import globals
-from .local.handler import GithubHandler as RequestHandler
-from .local import utility as Utility
+from local import globals
+from local.handler import GithubHandler as RequestHandler
+from local import utility as Utility
 
 from imp import reload
 

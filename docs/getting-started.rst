@@ -5,6 +5,8 @@ Getting started with supybot-github
 
 Supybot-github should contain a few sane defaults to get you started.
 
+.. _installation:
+
 Installation
 ------------
 
@@ -37,4 +39,26 @@ This should be enough to get you started!
 If everything was set up correctly, your bot should drop an inspiring quote on
 the channel you configured in the 3rd step.
 
-.. _`Install Limnoria`: http://doc.supybot.aperio.fr/en/latest/use/install.html
+.. _`Install Limnoria`: https://docs.limnoria.net/use/install.html
+
+Development
+-----------
+
+In order to work on supybot-github, you normally have to set up an IRC server,
+the supybot bot, and the rest of the configuration, as shown in
+:ref:`installation`.
+
+However, we are providing a command-line script to make your life a bit easier,
+which returns the executed message without the rest of the hassle. Just follow
+these instructions:
+
+1. `Install Limnoria`_ or any other supybot variant. No further configuration
+   is needed!
+
+2. Run python in the plugin's directory, passing it a `.json` with Github's
+   payload::
+
+       python . samples/push-v3.json
+
+After running the above, you should see a coloured output with the produced
+message.

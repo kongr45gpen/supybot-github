@@ -133,6 +133,9 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
                 s.wfile.write("Invalid secret key\n".encode())
                 return
 
+        GithubHandler.process_data(data, channel)
+
+    def process_data(data, channel=None):
         brackets = parseBrackets(configValue('brackets'))
         themeName = configValue('theme')
 
@@ -199,7 +202,7 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
         if not world.testing:
             for msg in msgs:
                 for irc in world.ircs:
-                    irc.queueMsg(ircmsgs.privmsg(channel, msg))
+                    irc.queueMsg(ircmsgs.privmsg(channel or globals.channel, msg))
 
     def finish(self):
         try:

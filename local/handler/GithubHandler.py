@@ -38,6 +38,7 @@ from . import NetlifyHandler
 from . import ReleaseHandler
 from . import UnknownHandler
 from . import AppVeyorHandler
+from . import GitlabPushHandler
 from . import CreateDeleteHandler
 from . import IssueCommentHandler
 
@@ -133,9 +134,9 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
                 s.wfile.write("Invalid secret key\n".encode())
                 return
 
-        GithubHandler.process_data(data, channel)
+        GithubHandler.process_data(data, channel, eventType)
 
-    def process_data(data, channel=None):
+    def process_data(data, channel=None, eventType=None):
         brackets = parseBrackets(configValue('brackets'))
         themeName = configValue('theme')
 
@@ -170,6 +171,12 @@ class GithubHandler(http.server.BaseHTTPRequestHandler):
             TravisHandler.handle(data, theme)
         elif 'pages' in data:
             WikiHandler.handle(data, theme)
+        elif 'object_kind' in data and 'event_name' in data:
+            if data['event_name'] == "push":
+                GitlabPushHandler.handle(data, theme)
+            else:
+                data['eventType'] = data['event_name']
+                UnknownHandler.handle(data, theme)
         elif 'screenshot_url' in data:
             NetlifyHandler.handle(data, theme)
         elif 'state' in data:

@@ -43,6 +43,7 @@ from local.handler import NetlifyHandler
 from local.handler import ReleaseHandler
 from local.handler import UnknownHandler
 from local.handler import AppVeyorHandler
+from local.handler import GitlabPushHandler
 from local.handler import CreateDeleteHandler
 from local.handler import IssueCommentHandler
 from local.theme import Theme
@@ -62,6 +63,7 @@ reload(NetlifyHandler)
 reload(ReleaseHandler)
 reload(UnknownHandler)
 reload(AppVeyorHandler)
+reload(GitlabPushHandler)
 reload(CreateDeleteHandler)
 reload(IssueCommentHandler)
 reload(Theme)

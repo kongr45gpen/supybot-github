@@ -1,0 +1,106 @@
+{
+    "after": "7ea2cd49ed151e59e4c4967b8e26e6b53db37a0e",
+    "before": "2002431b7b41cf66998bdd1f4103262c86cd4efb",
+    "checkout_sha": "7ea2cd49ed151e59e4c4967b8e26e6b53db37a0e",
+    "commits": [
+        {
+            "added": [],
+            "author": {
+                "email": "test@gmail.com",
+                "name": "Konstantinos Papadopoulos"
+            },
+            "id": "7ea2cd49ed151e59e4c4967b8e26e6b53db37a0e",
+            "message": "Merge branch 'message-templates' into 'master'\n\nMessage templates\n\nCloses #58\n\nSee merge request acubesat/obc/ecss-services!57",
+            "modified": [
+                "CMakeLists.txt",
+                "inc/Message.hpp",
+                "inc/Services/Parameter.hpp",
+                "test/Message.cpp",
+                "test/Services/Parameter.cpp"
+            ],
+            "removed": [],
+            "timestamp": "2021-05-16T12:52:35+00:00",
+            "title": "Merge branch 'message-templates' into 'master'",
+            "url": "https://gitlab.com/kongr45gpen/ecss-services/-/commit/7ea2cd49ed151e59e4c4967b8e26e6b53db37a0e"
+        },
+        {
+            "added": [],
+            "author": {
+                "email": "test@gmail.com",
+                "name": "kongr45gpen"
+            },
+            "id": "9ff328dceb69d683d9b9e64416ce6da3a02b92b2",
+            "message": "Message templates\n",
+            "modified": [
+                "CMakeLists.txt",
+                "inc/Message.hpp",
+                "inc/Services/Parameter.hpp",
+                "test/Message.cpp",
+                "test/Services/Parameter.cpp"
+            ],
+            "removed": [],
+            "timestamp": "2021-05-16T12:52:34+00:00",
+            "title": "Message templates",
+            "url": "https://gitlab.com/kongr45gpen/ecss-services/-/commit/9ff328dceb69d683d9b9e64416ce6da3a02b92b2"
+        },
+        {
+            "added": [],
+            "author": {
+                "email": "test@gmail.com",
+                "name": "Ioannis Papadopoulos"
+            },
+            "id": "2002431b7b41cf66998bdd1f4103262c86cd4efb",
+            "message": "Merge branch 'memcpy_to_stdcopy' into 'master'\n\nReplace memcpy with std::copy. Closes #16\n\nCloses #16\n\nSee merge request acubesat/obc/ecss-services!56",
+            "modified": [
+                ".idea/codeStyles/Project.xml",
+                "inc/Message.hpp",
+                "src/Message.cpp",
+                "src/MessageParser.cpp",
+                "test/MessageParser.cpp"
+            ],
+            "removed": [],
+            "timestamp": "2021-05-15T11:26:18+00:00",
+            "title": "Merge branch 'memcpy_to_stdcopy' into 'master'",
+            "url": "https://gitlab.com/kongr45gpen/ecss-services/-/commit/2002431b7b41cf66998bdd1f4103262c86cd4efb"
+        }
+    ],
+    "event_name": "push",
+    "message": null,
+    "object_kind": "push",
+    "project": {
+        "avatar_url": "https://assets.gitlab-static.net/uploads/-/system/project/avatar/26999114/ecss-services.png",
+        "ci_config_path": null,
+        "default_branch": "fdir",
+        "description": "A C++ implementation of the ECSS Packet Utilization Standard",
+        "git_http_url": "https://gitlab.com/kongr45gpen/ecss-services.git",
+        "git_ssh_url": "git@gitlab.com:kongr45gpen/ecss-services.git",
+        "homepage": "https://gitlab.com/kongr45gpen/ecss-services",
+        "http_url": "https://gitlab.com/kongr45gpen/ecss-services.git",
+        "id": 26999114,
+        "name": "ECSS-E-ST-70-41C Services",
+        "namespace": "kongr45gpen",
+        "path_with_namespace": "kongr45gpen/ecss-services",
+        "ssh_url": "git@gitlab.com:kongr45gpen/ecss-services.git",
+        "url": "git@gitlab.com:kongr45gpen/ecss-services.git",
+        "visibility_level": 20,
+        "web_url": "https://gitlab.com/kongr45gpen/ecss-services"
+    },
+    "project_id": 26999114,
+    "push_options": {},
+    "ref": "refs/heads/fdir",
+    "repository": {
+        "description": "A C++ implementation of the ECSS Packet Utilization Standard",
+        "git_http_url": "https://gitlab.com/kongr45gpen/ecss-services.git",
+        "git_ssh_url": "git@gitlab.com:kongr45gpen/ecss-services.git",
+        "homepage": "https://gitlab.com/kongr45gpen/ecss-services",
+        "name": "ECSS-E-ST-70-41C Services",
+        "url": "git@gitlab.com:kongr45gpen/ecss-services.git",
+        "visibility_level": 20
+    },
+    "total_commits_count": 3,
+    "user_avatar": "https://secure.gravatar.com/avatar/237485d64005289a16ab3dcf7e04969a?s=80&d=identicon",
+    "user_email": "",
+    "user_id": 3637,
+    "user_name": "kongr45gpen",
+    "user_username": "kongr45gpen"
+}

@@ -50,10 +50,9 @@ from .local import globals
 from .local.handler import GithubHandler as RequestHandler
 from .local import utility as Utility
 
-from imp import reload
-
 globals.init()
 
+import importlib
 
 class Github(callbacks.Plugin):
     """Add the help for \"@plugin help Github\" here
@@ -95,8 +94,8 @@ class Github(callbacks.Plugin):
         self.httpd.server_close()
         self.httpd.shutdown()
         self.__parent.die()
-        reload(RequestHandler)
-        reload(Utility)
+        importlib.reload(RequestHandler)
+        importlib.reload(Utility)
 
     def get(self, irc, msg, args, order, type, garbage):
         """[<order>] [<type>] [<garbage>]

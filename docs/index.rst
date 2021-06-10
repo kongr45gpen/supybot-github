@@ -50,7 +50,7 @@ Support
 If you are having issues, please open up an issue at the
 `issue tracker <https://github.com/kongr45gpen/supybot-github/issues>`_.
 
-You can also pay a visit to the :code:`##alezakos` channel on the Freenode IRC network.
+You can also pay a visit to the :code:`##alezakos` channel on the Libera.Chat IRC network.
 
 Further Reading
 ---------------

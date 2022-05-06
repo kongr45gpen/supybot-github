@@ -134,17 +134,7 @@ def getShortURL(longurl):
     if configValue("shortURL") is False or not getShortURL.github.match(longurl):
         url = longurl
     else:
-        data = 'url=%s' % (longurl)
-        # Temporarily disabled
         url = longurl
-        try:
-            req = urllib.request.Request("https://git.io/", data.encode())
-            response = urllib.request.urlopen(req)
-            url = response.getheader('Location')
-        except IOError as e:
-            # Bad luck
-            log.warning("URL shortening failed with: %s" % (e.message,))
-            url = longurl
     return ircutils.mircColor(url, "purple")
 
 
